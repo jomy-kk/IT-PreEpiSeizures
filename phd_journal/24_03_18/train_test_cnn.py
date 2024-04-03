@@ -1,4 +1,5 @@
 from datetime import timedelta
+from os.path import exists
 
 import keras
 import numpy as np
@@ -7,29 +8,45 @@ from sklearn.model_selection import train_test_split
 from ltbio.processing.formaters import Normalizer, Segmenter
 from read import *
 
-# 1) Get all EEG signals (with ages)
-signals = read_all_eeg('KJPP', N=10)
 
-# 2) Normalise and segment signals and associate targets
-normalizer = Normalizer(method='minmax')
-segmenter = Segmenter(timedelta(seconds=5))
-objects, targets = [], []
-for i, signal in enumerate(signals):
-    if i % 100 == 0:
-        print(f"Processed {i/len(signals)*100:.2f}% of signals")
-    signal = normalizer(signal)
-    signal = segmenter(signal)
-    age = signal._Biosignal__patient._Patient__age
-    n_segments = len(signal['T5'].subdomains)
-    for j in range(n_segments):
-        objects.append(signal._vblock(j))
-        targets.append(age)
+SEG_LEN = 5  # seconds
+objects_filename = f"kjpp_objects_{SEG_LEN}s.npy"
+targets_filename = f"kjpp_targets_{SEG_LEN}s.npy"
 
-# Divide targets by 12 to get age in years
-targets = [age / 12 / 12 for age in targets]
+if exists(objects_filename) and exists(targets_filename):
+    objects = np.load(objects_filename)
+    targets = np.load(targets_filename)
+else:
+    # 1) Get all EEG signals (with ages)
+    signals = read_all_eeg('KJPP', N=10)
 
-# Remove objects that do not have the shape (20, 640)
-objects = [obj for obj in objects if obj.shape == (20, 640)]
+    # 2) Normalise and segment signals and associate targets
+    normalizer = Normalizer(method='minmax')
+    segmenter = Segmenter(timedelta(seconds=5))
+    objects, targets = [], []
+    for i, signal in enumerate(signals):
+        if i % 100 == 0:
+            print(f"Processed {i/len(signals)*100:.2f}% of signals")
+        signal = normalizer(signal)
+        signal = segmenter(signal)
+        age = signal._Biosignal__patient._Patient__age / 12 /12  # Divide targets by 12 to get age in years
+        n_segments = len(signal['T5'].subdomains)
+        for j in range(n_segments):
+            v_block = signal._vblock(j)
+            if v_block.shape == (20, 640):  # Remove objects that do not have the shape (20, 640)
+                objects.append(v_block)
+                targets.append(age)
+
+    assert len(objects) == len(targets)
+
+    # Save objects and targets
+    np.save(objects_filename, objects)
+    np.save(targets_filename, targets)
+
+    del signals
+
+exit(0)
+
 
 # 3) Define model
 """
@@ -43,11 +60,16 @@ Architecture:
     Linear Layer: (16, 1)
 """
 model = keras.Sequential([
-    #keras.layers.InputLayer(input_shape=(20, 640)),
-    keras.layers.Conv1D(128, 7, strides=3, padding='same', activation='relu'),
-    keras.layers.Conv1D(64, 7, strides=3, padding='same', activation='relu'),
-    keras.layers.Conv1D(32, 7, strides=3, padding='same', activation='relu'),
-    keras.layers.Conv1D(16, 7, strides=3, padding='same', activation='relu'),
+    keras.layers.InputLayer(input_shape=(20, 640)),
+    keras.layers.Reshape((20, 640, 1)),
+    keras.layers.Conv1D(16, 7, strides=(1, 3), padding='same', activation='sigmoid'),
+    keras.layers.BatchNormalization(),
+    keras.layers.Conv1D(32, 7, strides=(1, 3), padding='same', activation='sigmoid'),
+    keras.layers.BatchNormalization(),
+    keras.layers.Conv1D(64, 7, strides=(1, 3), padding='same', activation='sigmoid'),
+    keras.layers.BatchNormalization(),
+    keras.layers.Conv1D(128, 7, strides=(1, 3), padding='same', activation='sigmoid'),
+    keras.layers.BatchNormalization(),
     keras.layers.GlobalAveragePooling1D(),
     keras.layers.Dense(1)
 ])
@@ -73,16 +95,6 @@ training_conditions = {
     ]
 }
 
-# Activate GPUs
-import tensorflow as tf
-gpus = tf.config.experimental.list_physical_devices('GPU')
-if gpus:
-    try:
-        for gpu in gpus:
-            tf.config.experimental.set_memory_growth(gpu, True)
-    except RuntimeError as e:
-        print(e)
-
 # 4) Train and test model
 # Split dataset
 dataset = list(zip(objects, targets))
@@ -104,4 +116,12 @@ print(f"Test loss: {loss}")
 print(f"Test MAE: {mae}")
 print(f"Test MSE: {mse}")
 print(f"Test R2: {r2}")
+
+# Plot predictions
+import matplotlib.pyplot as plt
+predictions = model.predict(test_objects)
+plt.scatter(test_targets, predictions)
+plt.xlabel('True Age')
+plt.ylabel('Predicted Age')
+plt.show()
 

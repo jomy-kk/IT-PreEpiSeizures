@@ -39,27 +39,29 @@ kjpp_std = kjpp.std()
 
 # 1.5. Get targets
 kjpp_targets = read_ages('KJPP')
+kjpp['targets'] = None
+for index in kjpp.index:
+    kjpp.loc[index, 'targets'] = kjpp_targets[index]
+# 1.6. Drop subjects without targets
+kjpp = kjpp.dropna()
 
 
 ############
 # 2. Get all elderly instances
-#insight = read_all_features('INSIGHT')
-#insight = insight[FEATURES_SELECTED]
+insight = read_all_features('INSIGHT')
+insight = insight[FEATURES_SELECTED]
+# create a new column "Dataset" and assign 'INSIGHT' to all rows
+insight['Dataset'] = 'INSIGHT'
 brainlat = read_all_features('BrainLat')
 brainlat = brainlat[FEATURES_SELECTED]
-#miltiadous = read_all_features('Miltiadous Dataset')
-#miltiadous = miltiadous[FEATURES_SELECTED]
-#elderly = pd.concat([insight, brainlat, miltiadous], axis=0)
-elderly = brainlat
+brainlat['Dataset'] = 'BrainLat'
+miltiadous = read_all_features('Miltiadous Dataset')
+miltiadous = miltiadous[FEATURES_SELECTED]
+miltiadous['Dataset'] = 'Miltiadous Dataset'
+elderly = pd.concat([insight, brainlat, miltiadous], axis=0)
 
 # 2.1. Drop subject_sessions with nans
 elderly = elderly.dropna()
-
-# 2.3. Normalise each feature column to have the same max and min as the KJPP
-# So, the min of elderly needs to be the min of KJPP, and the max of elderly needs to be the max of KJPP
-elderly = (elderly - elderly.min()) / (elderly.max() - elderly.min())
-elderly = elderly * (kjpp_max - kjpp_min) + kjpp_min  # Comment if want to be normalised to [0, 1]
-
 
 # 2.4. Get targets
 insight_targets = read_mmse('INSIGHT')
@@ -83,41 +85,97 @@ for index in elderly.index:
 
 # 2.5. Drop subjects without targets
 elderly = elderly.dropna()
+
+def calibration(dataset, reference, A=None, B=None, C=None):
+    # A. Pre-Normalisation; A1: auto-normalisation [0, 1]; A2: reference-normalisation [min_ref, max_ref]
+    if A == 1:
+        dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
+    elif A == 2:
+        dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
+        dataset = dataset * (reference.max() - reference.min()) + reference.min()
+
+    # B. Ages Stochastic Signature
+    # None: no calibration
+    # [((mmse_ref_min, mmse_ref_max, age_ref_min, age_ref_max), (mmse_apply_min, mmse_apply_max)), ...]: calibration by reference
+    targets = dataset['targets']
+    if B is not None:
+        for ref_points, apply_interval in B:
+            mmse_ref_min, mmse_ref_max, age_ref_min, age_ref_max = ref_points
+            mmse_ref_dataset = dataset[(mmse_ref_min <= dataset['targets']) & (dataset['targets'] <= mmse_ref_max)]
+            mmse_ref_dataset = mmse_ref_dataset[FEATURES_SELECTED]
+
+            kjpp_ref_dataset = reference[(age_ref_min <= reference['targets']) & (reference['targets'] <= age_ref_max)]
+            kjpp_ref_dataset_mean = kjpp_ref_dataset.mean()
+            kjpp_ref_dataset_std = kjpp_ref_dataset.std()
+
+            for feature in mmse_ref_dataset.columns:
+                old_mean = mmse_ref_dataset[feature].mean()
+                old_std = mmse_ref_dataset[feature].std()
+                new_mean = kjpp_ref_dataset_mean[feature]
+                new_std = kjpp_ref_dataset_std[feature]
+                # transform
+                mmse_ref_dataset[feature] = (mmse_ref_dataset[feature] - old_mean) * (new_std / old_std) + new_mean
+
+            # Understand the transformation done to reference MMSe point and apply it to the remaining of the dataset
+            before = dataset[(dataset['targets'] <= mmse_ref_max) & (dataset['targets'] >= mmse_ref_min)]
+            before = before[FEATURES_SELECTED]
+            # Get the difference
+            diff = mmse_ref_dataset.mean() - before.mean()
+
+            # Apply the difference to the rest of the dataset
+            mmse_apply_min, mmse_apply_max = apply_interval
+            mmse_non_ref = dataset[(dataset['targets'] <= mmse_apply_max) & (dataset['targets'] >= mmse_apply_min)]
+            mmse_non_ref = mmse_non_ref[FEATURES_SELECTED]
+            mmse_non_ref = mmse_non_ref + diff
+
+            # unaffected part of the dataset
+            indexes_affected = mmse_non_ref.index.union(mmse_ref_dataset.index)
+            mmse_unaffected = dataset.drop(indexes_affected)
+
+            # Concatenate
+            dataset = pd.concat([mmse_unaffected, mmse_ref_dataset, mmse_non_ref])
+            # add the targets back
+            dataset['targets'] = targets
+
+    dataset = dataset[FEATURES_SELECTED]
+    # C. Normalisation; B1: auto-normalisation [0, 1]; B2: reference-normalisation [min_ref, max_ref]
+    if C == 1:
+        dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
+    elif C == 2:
+        dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
+        dataset = dataset * (reference.max() - reference.min()) + reference.min()
+
+    return dataset
+
+
+# 3. Make some calibrations
+A, C = 0, 2
+
+# 3.1. Adjust INSIGHT subjects with perfect MMSE to KJPP adults
+B = [((30, 30, 17.5, 25), (0, 29))]
+insight = elderly[elderly['Dataset'] == 'INSIGHT']
+insight = calibration(insight, kjpp, A, B, C)
+
+# 3.2. Adjust BrainLat subjects with 24<=MMSE<=30 to KJPP children aged 13-19
+B = [((24, 30, 13, 19), (0, 23))]
+brainlat = elderly[elderly['Dataset'] == 'BrainLat']
+brainlat = calibration(brainlat, kjpp, A, B, C)
+
+# 3.3. Adjust Miltiadous subjects with perfect MMSE to KJPP adults
+B = [((30, 30, 17.5, 25), (0, 29))]
+miltiadous = elderly[elderly['Dataset'] == 'Miltiadous Dataset']
+miltiadous = calibration(miltiadous, kjpp, A, B, C)
+
+# 3.4. Concatenate all datasets
+elderly = pd.concat([insight, brainlat, miltiadous], axis=0)
+
+# Remove targets and Dataset from elderly DataFrame
 elderly_targets = elderly['targets']
+elderly = elderly.drop(columns=['targets'])
 
-"""
-# EXTRA
-# Transform MMSE=30 to pre-defined KJPP mean and std
-mmse_30 = elderly[elderly['targets'] == 30]
-mmse_30 = mmse_30.drop(columns=['targets'])
-
-for feature in mmse_30.columns:
-    old_mean = mmse_30[feature].mean()
-    old_std = mmse_30[feature].std()
-    new_mean = kjpp_mean[feature]
-    new_std = kjpp_std[feature]
-    # transform
-    mmse_30[feature] = (mmse_30[feature] - old_mean) * (new_std / old_std) + new_mean
-# Understand the transformation done to MMSE=30 and apply it to the rest of the dataset (MMSE<30)
-mmse_30_before = elderly[elderly['targets'] == 30]
-mmse_30_before = mmse_30_before.drop(columns=['targets'])
-# Get the difference
-diff = mmse_30.mean() - mmse_30_before.mean()
-# Apply the difference to the rest of the dataset
-non_mmse_30 = elderly[elderly['targets'] < 30]
-non_mmse_30 = non_mmse_30.drop(columns=['targets'])
-non_mmse_30 = non_mmse_30 + diff
-# Concatenate
-elderly = pd.concat([non_mmse_30, mmse_30])
-# Add targets again
-#elderly['targets'] = elderly_targets
-"""
-# Min-max normalisation now only
-#elderly = (elderly - elderly.min()) / (elderly.max() - elderly.min())
-#elderly = elderly * (kjpp_max - kjpp_min) + kjpp_min
-
-# Remove targets column  # Uncomment when not using the EXTRA step
-elderly = elderly.drop(columns='targets')
+# Remove targets from KJPP DataFrame
+kjpp_targets = kjpp['targets']
+kjpp = kjpp.drop(columns='targets')
 
 
 """

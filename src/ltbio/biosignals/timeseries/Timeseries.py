@@ -1474,7 +1474,7 @@ class Timeseries():
         """
         For internal usage.
 
-        Segments the Timseries in equal junks. If the Timeseries is already segmented, if concatenates all before re-segmenting.
+        Segments the Timseries in equal junks.
 
         :param window_length:
         :param overlap_length:
