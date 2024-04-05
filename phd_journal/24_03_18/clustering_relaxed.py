@@ -87,6 +87,9 @@ for index in elderly.index:
 elderly = elderly.dropna()
 
 def calibration(dataset, reference, A=None, B=None, C=None):
+    targets = dataset['targets']
+    dataset = dataset[FEATURES_SELECTED]
+
     # A. Pre-Normalisation; A1: auto-normalisation [0, 1]; A2: reference-normalisation [min_ref, max_ref]
     if A == 1:
         dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
@@ -97,7 +100,7 @@ def calibration(dataset, reference, A=None, B=None, C=None):
     # B. Ages Stochastic Signature
     # None: no calibration
     # [((mmse_ref_min, mmse_ref_max, age_ref_min, age_ref_max), (mmse_apply_min, mmse_apply_max)), ...]: calibration by reference
-    targets = dataset['targets']
+
     if B is not None:
         for ref_points, apply_interval in B:
             mmse_ref_min, mmse_ref_max, age_ref_min, age_ref_max = ref_points
@@ -137,7 +140,6 @@ def calibration(dataset, reference, A=None, B=None, C=None):
             # add the targets back
             dataset['targets'] = targets
 
-    dataset = dataset[FEATURES_SELECTED]
     # C. Normalisation; B1: auto-normalisation [0, 1]; B2: reference-normalisation [min_ref, max_ref]
     if C == 1:
         dataset = (dataset - dataset.min()) / (dataset.max() - dataset.min())
@@ -149,7 +151,7 @@ def calibration(dataset, reference, A=None, B=None, C=None):
 
 
 # 3. Make some calibrations
-A, C = 0, 2
+A, C = 2, 2
 
 # 3.1. Adjust INSIGHT subjects with perfect MMSE to KJPP adults
 B = [((30, 30, 17.5, 25), (0, 29))]
@@ -213,7 +215,8 @@ def distance(x: np.ndarray, y: np.ndarray, measure:str = 'euclidean') -> float:
     elif measure == 'chebyshev':
         return np.max(np.abs(x - y))
     elif measure == 'minkowski':
-        return np.sum((x - y) ** 2) ** (1/2)
+        p = 1.5
+        return np.sum(np.abs(x - y) ** p) ** (1/p)
     else:
         raise ValueError("Invalid measure")
 
@@ -245,7 +248,7 @@ true_elderly_clusters = [get_cluster_by_mmse(mmse) for mmse in elderly_targets]
 confusion_matrix = np.zeros((2, 2))
 for true, pred in zip(true_elderly_clusters, predicted_elderly_clusters):
     confusion_matrix[true, pred] += 1
-confusion_matrix = confusion_matrix / np.sum(confusion_matrix, axis=1)[:, None]
+#confusion_matrix = confusion_matrix / np.sum(confusion_matrix, axis=1)[:, None]  # uncomment for relative values
 plt.imshow(confusion_matrix, cmap='Blues')
 # Write percentages on the plot
 for i in range(2):

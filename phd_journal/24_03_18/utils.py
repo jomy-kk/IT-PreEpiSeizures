@@ -7,6 +7,7 @@ def feature_wise_normalisation(features: DataFrame, method: str = 'mean-std') ->
     The given DataFrame must be in the shape (n_samples, n_features).
     """
     coefficients = DataFrame([features.min(), features.max(), features.mean(), features.std()], index=['min', 'max', 'mean', 'std'])
+    #coefficients.to_csv('kjpp_coefficients.csv')
     if method == 'mean-std':
         return (features-coefficients.loc['mean'])/coefficients.loc['std']
     elif method == 'min-max':

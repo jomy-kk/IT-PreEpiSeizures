@@ -15,8 +15,6 @@
 
 from typing import Set
 
-from multimethod import multimethod
-
 from ltbio.biosignals.modalities.Biosignal import Biosignal
 from ltbio.biosignals.sources.BiosignalSource import BiosignalSource
 from ltbio.biosignals.timeseries import Timeseries

@@ -122,7 +122,7 @@ features = [features.loc[code].to_numpy() for code in sessions]
 
 # 2.2) Associate targets to features
 dataset = []
-ages = read_targets('KJPP')
+ages = read_ages('KJPP')
 for session, session_features in zip(sessions, features):
     age = ages[session]
     dataset.append((session_features, age))

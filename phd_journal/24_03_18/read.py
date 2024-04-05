@@ -40,10 +40,14 @@ def read_all_features(dataset) -> DataFrame:
     pli = read_pli_features(dataset)
     return spectral.join(hjorth).join(pli)
 
-def read_ages(dataset: str) -> dict[str, float|int]:
+def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_as_given.csv', sep=';')
         return {row['EEG_GUID']: row['AgeMonthEEG'] / 12 for _, row in df.iterrows()}
+    if dataset == 'INSIGHT':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/SocioDemog.csv', sep=',')
+        return {int(row['CODE']): row['AGE'] for _, row in df.iterrows()}
+
 
 def read_mmse(dataset: str) -> dict[str, float|int]:
     if dataset == 'INSIGHT':
@@ -55,6 +59,12 @@ def read_mmse(dataset: str) -> dict[str, float|int]:
     if dataset == 'Miltiadous Dataset':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/participants.tsv', sep='\t')
         return {row['participant_id']: row['MMSE'] for _, row in df.iterrows()}
+
+
+def read_brainage(dataset: str) -> dict[int, float]:
+    if dataset == 'INSIGHT':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/brainage_scores.csv', sep=',')
+        return {int(row['CODE']): row['BRAIN AGE'] for _, row in df.iterrows()}
 
 
 def read_all_eeg(dataset: str, N=None) -> Collection[EEG]:
