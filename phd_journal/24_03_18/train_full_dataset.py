@@ -40,13 +40,15 @@ def train_full_dataset(model, dataset, random_state):
 
     # 8. Plot regression between ground truth and predictions with seaborn and draw regression curve
     import seaborn as sns
-    plt.figure(figsize=((3.5,3.2)))
-    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.4})
+    plt.figure(figsize=((5.2,5)))
+    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3})
     #plt.title(str(model))
     plt.xlabel('True Age (years)')
     plt.ylabel('Predicted Age (years)')
-    plt.xlim(2, 20)
-    plt.ylim(2, 20)
+    plt.xlim(2.5, 20)
+    plt.xticks((2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20))
+    plt.ylim(2.5, 20)
+    plt.yticks((2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20))
     plt.tight_layout()
     plt.show()
 
@@ -105,7 +107,6 @@ adult_stochastics = DataFrame([adult_features.mean(axis=0),
                               columns=feature_names)
 adult_stochastics.to_csv('kjpp_adult_stochastic_pattern.csv')
 
-exit(0)
 
 # 3) Define model
 model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0, loss='absolute_error',

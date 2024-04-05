@@ -55,6 +55,7 @@ for index in elderly.index:
     if key in insight_brainages:
         targets.loc[index] = insight_brainages[key] - insight_ages[key]
 
+"""
 # 2.2) Calibrate features with target > 1 making them have the same mean and std of KJPP adults
 cal_ref = elderly[targets > 1]
 adult_stochastics = read_csv('kjpp_adult_stochastic_pattern.csv', index_col=0)
@@ -78,6 +79,7 @@ cal_non_ref = cal_non_ref * (diff_std / cal_non_ref.std()) + diff_mean
 
 # Concatenate
 elderly = pd.concat([cal_ref, cal_non_ref])
+"""
 
 # 4) Load model
 from pickle import load
