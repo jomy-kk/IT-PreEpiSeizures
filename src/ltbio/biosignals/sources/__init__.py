@@ -6,3 +6,4 @@ from ltbio.biosignals.sources.HSM import HSM
 from ltbio.biosignals.sources.MITDB import MITDB
 from ltbio.biosignals.sources.Seer import Seer
 from ltbio.biosignals.sources.Sense import Sense
+from ltbio.biosignals.sources.AFDB import AFDB
