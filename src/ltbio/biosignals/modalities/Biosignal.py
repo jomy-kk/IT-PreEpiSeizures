@@ -1470,6 +1470,11 @@ class Biosignal(ABC):
         return biosignal
 
 
+    def __del__(self):
+        for channel in self.__timeseries.values():
+            del(channel)
+
+
 class DerivedBiosignal(Biosignal):
     """
     A DerivedBiosignal is a set of Timeseries of some extracted feature from an original Biosignal.

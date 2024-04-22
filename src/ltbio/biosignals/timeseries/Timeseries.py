@@ -577,6 +577,13 @@ class Timeseries():
                 self.__memory_map[:] = self.__samples[:]
                 self.__memory_map.flush()  # release memory in RAM; don't know if this is actually helping
 
+
+        def __del__(self):
+            if hasattr(self, '_Segment__memory_map'):
+                self.__memory_map._mmap.close()
+                del self.__memory_map
+                del self.__samples
+
         def __hash__(self):
             return hash(self.__initial_datetime) * hash(self.__final_datetime) * hash(self.__samples)
 
@@ -1592,6 +1599,10 @@ class Timeseries():
         # Create a memory map for the array
         for seg in self:
             seg._memory_map(path)
+
+    def __del__(self):
+        for segment in self.__segments:
+            del segment
 
     def __getstate__(self):
         """
