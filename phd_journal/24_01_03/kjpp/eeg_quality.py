@@ -10,8 +10,8 @@ from ltbio.biosignals.timeseries import Timeline
 from ltbio.processing.formaters import Segmenter, Normalizer
 
 
-common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/1'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/1'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
 
 # Get recursively all .biosignal files in common_path
 all_files = glob(join(common_path, '**/*.biosignal'), recursive=True)

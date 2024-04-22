@@ -153,39 +153,42 @@ for filepath in all_files:
     if not exists(subject_out_path):
         mkdir(subject_out_path)
 
-    # Load Biosignal
-    x = EEG.load(filepath)
-    x = x[channel_order]  # get only channels of interest
+    subject_out_filepath = join(subject_out_path, 'Spectral#Channels.csv')
+    if not exists(subject_out_filepath):
 
-    # Get only signal with quality
-    good = Timeline.load(join(common_path, filename + '_good.timeline'))
-    x = x[good]
+        # Load Biosignal
+        x = EEG.load(filepath)
+        x = x[channel_order]  # get only channels of interest
 
-    # Normalize
-    x = normalizer(x)
+        # Get only signal with quality
+        good = Timeline.load(join(common_path, filename + '_good.timeline'))
+        x = x[good]
 
-    # Extract all spectral features
-    window_type = 'hamming'
-    window_length = timedelta(seconds=4)  # 2 seconds
-    window_overlap = window_length / 2  # 50% overlap
+        # Normalize
+        x = normalizer(x)
 
-    # Segmentation parameters
-    segment_length = timedelta(seconds=4)  # 4 seconds
-    segment_overlap = segment_length / 2  # 50% overlap
-    feature_names, features = extract_spectral_features(x, window_type, window_length, window_overlap,
-                                                        segment_length, segment_overlap, subject_out_path, normalise=False)
-    if features is None:
-        continue  # no features extracted
+        # Extract all spectral features
+        window_type = 'hamming'
+        window_length = timedelta(seconds=4)  # 2 seconds
+        window_overlap = window_length / 2  # 50% overlap
 
-    # Convert to dataframe
-    df = DataFrame(features).T
-    df.columns = feature_names
-    df.index = [filename, ]
+        # Segmentation parameters
+        segment_length = timedelta(seconds=4)  # 4 seconds
+        segment_overlap = segment_length / 2  # 50% overlap
+        feature_names, features = extract_spectral_features(x, window_type, window_length, window_overlap,
+                                                            segment_length, segment_overlap, subject_out_path, normalise=False)
+        if features is None:
+            continue  # no features extracted
 
-    # Save
-    df.to_csv(join(subject_out_path, 'Spectral#Channels.csv'))
+        # Convert to dataframe
+        df = DataFrame(features).T
+        df.columns = feature_names
+        df.index = [filename, ]
 
-    # Delete "spectral.csv" if it exists
-    #old_file = join(subject_out_path, 'spectral.csv')
-    #if exists(old_file):
-    #    remove(old_file)
+        # Save
+        df.to_csv(subject_out_filepath, index=True, header=True)
+
+        # Delete "spectral.csv" if it exists
+        #old_file = join(subject_out_path, 'spectral.csv')
+        #if exists(old_file):
+        #    remove(old_file)

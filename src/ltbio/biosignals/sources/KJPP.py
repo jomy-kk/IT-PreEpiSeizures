@@ -8,6 +8,7 @@ from os.path import join, exists
 import numpy as np
 from pandas import read_csv
 from scipy.io import loadmat
+from simple_icd_10 import is_valid_item
 
 from .. import Timeseries
 from ..modalities import EEG
@@ -144,7 +145,7 @@ class KJPP(BiosignalSource):
         return timeseries
 
     @staticmethod
-    def __find_code_sex_age_diagnoses_medication(session_code) -> tuple[str, str, Sex, float, list[MedicalCondition], Medication]:
+    def __find_code_sex_age_diagnoses_medication(session_code) -> tuple[str, Sex, float, list[MedicalCondition], Medication]:
         metadata = read_csv(KJPP.demographic_csv, sep=';')
         row = metadata[metadata['SESSION'] == session_code].iloc[0]  # try to find the session code in the demographics file
         if row is not None:
@@ -161,7 +162,72 @@ class KJPP(BiosignalSource):
                 raise LookupError(f"Age not found for session code {session_code}.")
             else:
                 age = row['EEG AGE MONTHS'] / 12  # age was in months
-            diagnoses_codes = ['F'+str(d.replace(',', '.')) for d in row['MAS11':'MAS6'] if str(d) != 'nan']
+
+            # DIAGNOSES
+            # They are ICD-10 codes, but they are grouped by the Multi-Axial System (MAS) of the DSM-V.
+            axis1 = [str(d).replace(',', '.') for d in row['MAS11':'MAS15'] if str(d) != 'nan']  # add 'F' to make them ICD-10 codes
+            axis1 = ['F0' + str(d) if float(d) < 10 else 'F'+str(d) for d in axis1]  # add leading 0 to single-digit codes
+            axis2 = [str(d).replace(',', '.') for d in row['MAS21':'MAS25'] if str(d) != 'nan']  # add 'F' to make them ICD-10 codes
+            axis2 = ['F0' + str(d) if float(d) < 10 else 'F'+str(d) for d in axis2]  # add leading 0 to single-digit codes
+
+            axis3 = str(row['MAS3']).replace(',', '.')
+            if str(axis3) == 'nan':
+                axis3 = []
+            else:
+                axis3 = float(axis3)
+
+                if 0 <= axis3 <= 9:  # physician meant the levels 1-9
+                    if axis3.is_integer():  # it should be an integer, if not it's an IQ score
+                        if axis3 >= 5:
+                            match axis3:
+                                case 5:
+                                    axis3 = ['F70', ]
+                                case 6:
+                                    axis3 = ['F71', ]
+                                case 7:
+                                    axis3 = ['F72', ]
+                                case 8:
+                                    axis3 = ['F73', ]
+                                case 9:
+                                    axis3 = ['F78', ]
+                        else:
+                            axis3 = []  # IQ score >= 70 => no diagnosis
+                    else:
+                        axis3 = ['F73', ]  # IQ score < 20
+
+
+                elif 70 <= axis3 <= 74 or 78 <= axis3 <= 79:  # physician meant the F-letter codes
+                    axis3 = ['F' + str(axis3), ]
+
+                elif 10 <= axis3 < 70:
+                    if axis3 < 20:
+                        axis3 = ['F73', ]
+                    elif axis3 < 35:
+                        axis3 = ['F72', ]
+                    elif axis3 < 50:
+                        axis3 = ['F71', ]
+                    elif axis3 < 70:
+                        axis3 = ['F70', ]
+
+                else:
+                    axis3 = []
+
+            axis4 = [str(d.replace(',', '.')) for d in row['MAS41':'MAS45'] if str(d) != 'nan']
+            for i, d in enumerate(axis4):
+                if float(d) < 10:
+                    d = '0' + str(d)
+                assigned = False
+                for letter in ('G', 'Q', 'R', 'C', 'D', 'Z', 'H', 'I', 'E', 'J', 'L', 'O', 'M', 'N', 'K', 'Y',):  # from the most statistically likely to the least
+                    if is_valid_item(letter + d):
+                        axis4[i] = letter + d
+                        assigned = True
+                        break
+                if not assigned:
+                    axis4[i] = 'Axis4:' + d
+
+            # We'll not include axes 5 and 6, as they are usually not relevant for biosignal analysis
+            diagnoses_codes = axis1 + axis2 + axis3 + axis4
+
             diagnoses = []
             for d in diagnoses_codes:
                 try:
@@ -177,7 +243,7 @@ class KJPP(BiosignalSource):
                     diagnoses.append(d)
             medication = UnstructuredNotes(row['MEDICATION'])
 
-            return (row['PATIENT'], row['SESSION'], sex, age, diagnoses, medication)
+            return (row['PATIENT'], sex, age, diagnoses, medication)
         else:
             raise FileNotFoundError(f"Session code {session_code} not found in demographics file '{KJPP.demographic_csv}'.")
 
@@ -194,9 +260,9 @@ class KJPP(BiosignalSource):
         """
 
         session_code = os.path.split(path)[-1]
-        patient_code, patient_code_short, sex, age, diagnoses, medication = KJPP.__find_code_sex_age_diagnoses_medication(session_code)
+        patient_code, sex, age, diagnoses, medication = KJPP.__find_code_sex_age_diagnoses_medication(session_code)
 
-        return Patient(code=patient_code_short,
+        return Patient(code=patient_code,
                        age=age,
                        sex=sex,
                        conditions=tuple(diagnoses),

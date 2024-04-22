@@ -83,3 +83,17 @@ def read_all_eeg(dataset: str, N=None) -> Collection[EEG]:
             x = x[good]
             all_biosignals.append(x)
     return all_biosignals
+
+
+def read_disorders(dataset: str) -> dict[str, list[str]]:
+    if dataset == 'KJPP':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata.csv', sep=';')
+        res = {}
+        for _, row in df.iterrows():
+            # get list of diagnosis (columns index 8 to 33 inclusive)
+            diagnosis = [str(d) for d in row[8:34] if str(d) != 'nan']
+            res[row['SESSION']] = diagnosis
+        return res
+    else:
+        raise NotImplementedError(f"Disorders not implemented for dataset {dataset}.")
+4
