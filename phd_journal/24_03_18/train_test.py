@@ -107,8 +107,8 @@ print("Number of features selected:", len(features.columns))
 # 1.2.) Remove outliers
 # FIXME
 print("Number of subjects before removing outliers:", len(features))
-OUTLIERS = [  8,  40,  59, 212, 229, 247, 264, 294, 309, 356, 388, 391, 429, 437, 448, 460, 465, 512, 609, 653, 687, 688, 771, 808, 831, 872, 919]
-features = features.drop(features.index[OUTLIERS])
+#OUTLIERS = [  8,  40,  59, 212, 229, 247, 264, 294, 309, 356, 388, 391, 429, 437, 448, 460, 465, 512, 609, 653, 687, 688, 771, 808, 831, 872, 919]
+#features = features.drop(features.index[OUTLIERS])
 print("Number of subjects after removing outliers:", len(features))
 
 # Normalise feature vectors

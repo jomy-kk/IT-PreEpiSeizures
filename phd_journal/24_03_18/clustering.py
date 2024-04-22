@@ -160,12 +160,12 @@ true_elderly_clusters = [get_cluster_by_mmse(mmse) for mmse in elderly_targets]
 confusion_matrix = np.zeros((4, 4))
 for true, pred in zip(true_elderly_clusters, predicted_elderly_clusters):
     confusion_matrix[true, pred] += 1
-confusion_matrix = confusion_matrix / np.sum(confusion_matrix, axis=1)[:, None]
+#confusion_matrix = confusion_matrix / np.sum(confusion_matrix, axis=1)[:, None]
 plt.imshow(confusion_matrix, cmap='Blues')
 # Write percentages on the plot
 for i in range(4):
     for j in range(4):
-        plt.text(j, i, f"{confusion_matrix[i, j]:.2f}", ha='center', va='center', color='black')
+        plt.text(j, i, f"{confusion_matrix[i, j]}", ha='center', va='center', color='black')
 plt.colorbar()
 plt.xlabel('Found Similarity to Age Group...')
 plt.xticks([0, 1, 2, 3], ['0-5', '5-8', '8-13', '13-24'])

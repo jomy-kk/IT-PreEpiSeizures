@@ -15,6 +15,10 @@ from ..sources.BiosignalSource import BiosignalSource
 from ..timeseries.Unit import Volt, Multiplier
 from ...clinical import Patient, BodyLocation
 from ...clinical.Patient import Sex
+from ...clinical.conditions.ICDCode import ICDCode
+from ...clinical.conditions.MedicalCondition import MedicalCondition
+from ...clinical.medications import Medication
+from ...clinical.medications.UnstructuredNotes import UnstructuredNotes
 
 
 class KJPP(BiosignalSource):
@@ -140,19 +144,42 @@ class KJPP(BiosignalSource):
         return timeseries
 
     @staticmethod
-    def __find_code_sex_age(session_code) -> tuple[str, str, Sex, int]:
+    def __find_code_sex_age_diagnoses_medication(session_code) -> tuple[str, str, Sex, float, list[MedicalCondition], Medication]:
         metadata = read_csv(KJPP.demographic_csv, sep=';')
-        row = metadata[metadata['EEG_GUID'] == session_code].iloc[0]  # try to find the session code in the demographics file
+        row = metadata[metadata['SESSION'] == session_code].iloc[0]  # try to find the session code in the demographics file
         if row is not None:
             """ # For future, when the demographics file is updated
             sex = Sex.M if row['SEX'] == 'Male' else Sex.F if row['SEX'] == 'Female' else Sex._
             return (row['PATIENT CODE'], row['PATIENT CODE (short)'], sex, row['AGE']*12)  # age was in months
             """
-            # Get value in "Gender" column of that row
-            sex = Sex.M if row['Gender'] == 'Male' else Sex.F if row['Gender'] == 'Female' else Sex._
-            return (row['PatientGUID'], row['PatientGUID'], sex, row['AgeMonthEEG'] * 12)  # age was in months
+            # SEX
+            sex = Sex.M if row['GENDER'] == 'Male' else Sex.F if row['GENDER'] == 'Female' else Sex._
+
+            # AGE
+            age = row['EEG AGE MONTHS']
+            if np.isnan(age):
+                raise LookupError(f"Age not found for session code {session_code}.")
+            else:
+                age = row['EEG AGE MONTHS'] / 12  # age was in months
+            diagnoses_codes = ['F'+str(d.replace(',', '.')) for d in row['MAS11':'MAS6'] if str(d) != 'nan']
+            diagnoses = []
+            for d in diagnoses_codes:
+                try:
+                    # Is there a diagnosis age?
+                    diagnosis_age = str(row['DIAGNOSIS AGE MONTHS'])
+                    if diagnosis_age != 'nan':
+                        diagnosis_age = float(diagnosis_age)/12  # age was in months
+                        diagnoses.append(ICDCode(d, diagnosis_age-age))
+                    else:
+                        diagnoses.append(ICDCode(d))
+                except ValueError:
+                    print(f"ICD code {d} not found.")
+                    diagnoses.append(d)
+            medication = UnstructuredNotes(row['MEDICATION'])
+
+            return (row['PATIENT'], row['SESSION'], sex, age, diagnoses, medication)
         else:
-            raise LookupError(f"Session code {session_code} not found in demographics file '{KJPP.demographic_csv}'.")
+            raise FileNotFoundError(f"Session code {session_code} not found in demographics file '{KJPP.demographic_csv}'.")
 
     @staticmethod
     def _patient(path, **options):
@@ -167,9 +194,14 @@ class KJPP(BiosignalSource):
         """
 
         session_code = os.path.split(path)[-1]
-        patient_code, patient_code_short, sex, age = KJPP.__find_code_sex_age(session_code)
+        patient_code, patient_code_short, sex, age, diagnoses, medication = KJPP.__find_code_sex_age_diagnoses_medication(session_code)
 
-        return Patient(code=patient_code_short, age=age, sex=sex, name=patient_code)  # keep the long patient code as name for backwards compatibility
+        return Patient(code=patient_code_short,
+                       age=age,
+                       sex=sex,
+                       conditions=tuple(diagnoses),
+                       medications=(medication, ),
+                       name=patient_code)  # keep the long patient code as name for backwards compatibility
 
     @staticmethod
     def _acquisition_location(path, type, **options):

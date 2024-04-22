@@ -27,7 +27,7 @@ elderly = elderly.dropna()
 
 # 2.1) With mean-std of KJPP
 #elderly = feature_wise_normalisation_with_coeffs(elderly, 'mean-std', 'kjpp_stochastic_pattern.csv')
-elderly = feature_wise_normalisation(elderly, 'mean-std')
+#elderly = feature_wise_normalisation(elderly, 'mean-std')
 
 
 # 3) Get all targets
@@ -82,6 +82,7 @@ elderly = pd.concat([cal_ref, cal_non_ref])
 elderly = feature_wise_normalisation(elderly, 'mean-std')
 """
 
+"""
 # 3) Data Augmentation in the underrepresented MMSE groups
 # MMSE groups: 0-9, 9-15, 15-20, 20-24, 24-26, 26-30
 # We'll augment the 0-9, 9-15, 15-20, 20-24, 24-26 groups because they are underrepresented
@@ -126,6 +127,7 @@ assert all([samples == max_samples for samples in mmse_groups_samples_after])
 print("Number of samples after augmentation:")
 print(mmse_groups)
 print(mmse_groups_samples_after)
+"""
 
 # 4) Load model
 from pickle import load
