@@ -42,8 +42,8 @@ def read_all_features(dataset) -> DataFrame:
 
 def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
-        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_as_given.csv', sep=';')
-        return {row['EEG_GUID']: row['AgeMonthEEG'] / 12 for _, row in df.iterrows()}
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata.csv', sep=';')
+        return {row['SESSION']: row['EEG AGE MONTHS'] / 12 for _, row in df.iterrows()}
     if dataset == 'INSIGHT':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/SocioDemog.csv', sep=',')
         return {int(row['CODE']): row['AGE'] for _, row in df.iterrows()}
