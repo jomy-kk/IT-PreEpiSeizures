@@ -101,12 +101,9 @@ class HjorthParameters(ABC):
 class ConnectivityFeatures(ABC):
 
     @staticmethod
-    def pli(biosignal, method: str, window_length: timedelta = timedelta(seconds=5),
+    def __get_values_by_epoch(biosignal, method: str, window_length: timedelta = timedelta(seconds=5),
             fmin: float = None, fmax: float = None,
             channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
-        """
-        Computes Phase Lag Index between all channel pairs of the given Biosignal.
-        """
 
         # Get biosignal as a matrix: (n_channels, n_samples)
         biosignal_matrix = biosignal.to_array(channel_order=channel_order)
@@ -128,6 +125,30 @@ class ConnectivityFeatures(ABC):
                                             faverage=True,
                                             names=channel_order,
                                             verbose=False)
+
+    @staticmethod
+    def pli(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
+        """Computes Phase Lag Index between all channel pairs of the given Biosignal."""
+        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'pli', window_length, fmin, fmax, channel_order)
+
+    @staticmethod
+    def coh(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
+        """Computes Phase Lag Index between all channel pairs of the given Biosignal."""
+        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'cph', window_length, fmin, fmax, channel_order)
+
+    @staticmethod
+    def ppc(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
+        """Computes Phase Lag Index between all channel pairs of the given Biosignal."""
+        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'ppc', window_length, fmin, fmax, channel_order)
+
+    @staticmethod
+    def gc(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
+        """Computes Phase Lag Index between all channel pairs of the given Biosignal."""
+        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'gc', window_length, fmin, fmax, channel_order)
 
 
 class SpectralFeatures(ABC):
