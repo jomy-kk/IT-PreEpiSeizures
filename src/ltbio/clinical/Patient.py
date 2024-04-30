@@ -62,8 +62,24 @@ class Patient():
         return self.__code
 
     @property
+    def name(self):
+        return self.__name
+
+    @property
+    def age(self):
+        return self.__age
+
+    @property
+    def sex(self):
+        return self.__sex
+
+    @property
     def conditions(self):
         return self.__conditions
+
+    @property
+    def medications(self):
+        return self.__medications
 
     @property
     def notes(self):
