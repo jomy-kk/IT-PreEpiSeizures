@@ -136,7 +136,7 @@ class ConnectivityFeatures(ABC):
     def coh(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,
             channel_order: tuple[str | BodyLocation] = None) -> SpectralConnectivity:
         """Computes Phase Lag Index between all channel pairs of the given Biosignal."""
-        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'cph', window_length, fmin, fmax, channel_order)
+        return ConnectivityFeatures.__get_values_by_epoch(biosignal, 'coh', window_length, fmin, fmax, channel_order)
 
     @staticmethod
     def ppc(biosignal, window_length: timedelta = timedelta(seconds=5), fmin: float = None, fmax: float = None,

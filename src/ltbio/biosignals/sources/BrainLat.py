@@ -80,8 +80,8 @@ class BrainLat(BiosignalSource):
         with open(BrainLat.demographic_csv) as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
-                if row['id EEG'] == patient_code:
-                    return Sex.M if int(row['sex']) == 1 else Sex.F, row['Age']
+                if row['ID'] == patient_code:
+                    return Sex.M if int(row['Sex']) == 1 else Sex.F, row['Age']
         raise ValueError(f"Patient code {patient_code} not found in demographics file '{BrainLat.demographic_csv}'.")
 
     @staticmethod

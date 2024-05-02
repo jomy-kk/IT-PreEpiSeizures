@@ -7,14 +7,13 @@ from ltbio.biosignals.sources.BrainLat import BrainLat
 from ltbio.biosignals.sources.KJPP import KJPP
 
 common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_fixed'
-#common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/test'
 out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
-# socio_demog = '/Volumes/MMIS-Saraiv/Datasets/KJPP/demographics.csv'  # For future, when the demographics file is updated
-socio_demog = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/Demographics_AD_EEG_data.csv'
+socio_demog = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/metadata.csv'
 source = BrainLat(socio_demog)
 
 # Get recursively all .set files in common_path
 all_session_directories = glob(join(common_path, '*.set'))
+all_session_directories = sorted(all_session_directories)
 
 for session_directory in all_session_directories:
     filename = split(session_directory)[-1]
@@ -22,11 +21,14 @@ for session_directory in all_session_directories:
     # Make Biosignal object
     try:
         x = EEG(session_directory, source)
-    except LookupError:
-        print(f"No age for {filename}.")
+    except LookupError as e:
+        print(f"No age for {filename}: {e}")
         continue
     except FileNotFoundError:
         print(f"No files for {filename}.")
+        continue
+    except ValueError as e:
+        print(e)
         continue
     # Structure its name
     short_patient_code = x.patient_code

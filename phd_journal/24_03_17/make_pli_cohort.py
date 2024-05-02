@@ -5,11 +5,11 @@ import pandas as pd
 
 # FIXME: Change the path to the dataset
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
-#dataset_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
-dataset_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features'
+dataset_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
+#dataset_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features'
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
 
-for filename in ('PLI#Channels.csv', 'PLI#Regions.csv'):
+for filename in ('Connectivity#Channels.csv', 'Connectivity#Regions.csv'):
     # Find all the files with the given name
     all_files = glob(join(dataset_path, '**', filename), recursive=True)
     # Load all and concatenate

@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.feature_selection import RFE, VarianceThreshold, SelectKBest, SelectPercentile, r_regression, f_regression, \
-    mutual_info_regression
+    mutual_info_regression, RFECV
 from sklearn.model_selection import train_test_split, cross_val_score, KFold, ShuffleSplit
 
 from read import *
@@ -16,6 +16,27 @@ def rfe_selection(model, features, targets, n_features_to_select, step, feature_
     Recursive feature elimination
     """
     selector = RFE(estimator=model, n_features_to_select=n_features_to_select, step=step, verbose=2)
+    features_transformed = selector.fit_transform(features, targets)
+
+    # Get indices of the selected features
+    scores = selector.ranking_
+    indices = tuple(selector.get_support(indices=True))
+    sorted_indices = sorted(indices, key=lambda i: scores[i], reverse=True)
+
+    print("Selected features (in descending order of score):")
+    print(sorted_indices)
+    if feature_names is not None:
+        print([feature_names[i] for i in sorted_indices])
+
+    return features_transformed, indices
+
+
+def cv_feature_selection(model, features, targets, cv, step, feature_names):
+    """
+    Recursive feature elimination with cross-validation
+    """
+    selector = RFECV(estimator=model, cv=cv, min_features_to_select=10, step=step, verbose=2, scoring='absolute_error',
+                     n_jobs=-1)
     features_transformed = selector.fit_transform(features, targets)
 
     # Get indices of the selected features
@@ -171,6 +192,13 @@ def train_test_cv(model, cv, objects, targets):
     print("Cross-Validation min score:", scores.min())
 
 
+def stratified_split(features, targets, val_size, random_state=0):
+    """
+    Returns stratified train and validation sets, by MMSE bins.
+    """
+    pass
+
+
 # 1.1) Get all features
 insight = read_all_features('INSIGHT')
 brainlat = read_all_features('BrainLat')
@@ -264,8 +292,8 @@ for i, session in enumerate(sessions):
     dataset.append((features[i], targets[session]))
 
 
-# 5) Separate 50% only for feature selection
-dataset, dataset_feature_selection = train_test_split(dataset, test_size=0.5, random_state=0)
+# 5) Separate 70% for feature selection + (CV) training  [STRATIFIED]
+dataset_train, dataset_val = train_test_split(dataset, test_size=0.7, stratify=targets, shuffle=True, random_state=0)
 
 # 5.1) Define CV scheme
 cv = KFold(10, shuffle=True)  # leave 10% out, non-overlapping test sets
@@ -275,25 +303,24 @@ model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0
                                   learning_rate=0.04,)
 
 # 6. Feature Selection
-print("Size of the dataset for feature selection:", len(dataset_feature_selection))
-print("Number of features:", len(dataset_feature_selection[0][0]))
-objects = np.array([x[0] for x in dataset_feature_selection])
-targets = np.array([x[1] for x in dataset_feature_selection])
-# different methods
-transformed_features, indices = rfe_selection(model, objects, targets, feature_names=feature_names, n_features_to_select=50, step=5)
+print("Size of the dataset for feature selection:", len(dataset_train))
+print("Number of features:", len(dataset_train[0][0]))
+objects = np.array([x[0] for x in dataset_train])
+targets = np.array([x[1] for x in dataset_train])
+transformed_features, indices = cv_feature_selection(model, objects, targets, cv=cv, feature_names=feature_names, step=5)
 
-# update dataset for training and testing
-dataset = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset]
+# update dataset_val for CV training
+dataset_val = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset_val]
 
 # print the selected features names
 print("Selected features:")
 print([feature_names[i] for i in indices])
 
 # 5. Train and Test
-print("Size of the dataset:", len(dataset))
-print("Number of features:", len(dataset[0][0]))
-objects = np.array([x[0] for x in dataset])
-targets = np.array([x[1] for x in dataset])
+print("Size of the dataset:", len(dataset_val))
+print("Number of features:", len(dataset_val[0][0]))
+objects = np.array([x[0] for x in dataset_val])
+targets = np.array([x[1] for x in dataset_val])
 train_test_cv(model, cv, objects, targets)
 
 

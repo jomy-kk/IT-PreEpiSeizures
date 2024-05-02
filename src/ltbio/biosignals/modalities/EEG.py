@@ -73,10 +73,44 @@ class EEG(Biosignal):
         Computes Phase Lag Index per channel.
         :return: A matrix of float values, one cell per each pair of channels.
         """
-        res = ConnectivityFeatures.pli(self, 'pli', window_length, fmin, fmax, channel_order=channel_order)
+        res = ConnectivityFeatures.pli(self, window_length, fmin, fmax, channel_order=channel_order)
         res_matrix = res.get_data('dense')[:, :, 0]
         assert res.names == channel_order
         return res_matrix
+
+    def coh(self, window_length: timedelta, fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> np.ndarray:
+        """
+        Computes Coherence per channel.
+        :return: A matrix of float values, one cell per each pair of channels.
+        """
+        res = ConnectivityFeatures.coh(self, window_length, fmin, fmax, channel_order=channel_order)
+        res_matrix = res.get_data('dense')[:, :, 0]
+        assert res.names == channel_order
+        return res_matrix
+
+    def gc(self, window_length: timedelta, fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> np.ndarray:
+        """
+        Computes Granger Causality per channel.
+        :return: A matrix of float values, one cell per each pair of channels.
+        """
+        res = ConnectivityFeatures.gc(self, window_length, fmin, fmax, channel_order=channel_order)
+        res_matrix = res.get_data('dense')[:, :, 0]
+        assert res.names == channel_order
+        return res_matrix
+
+    def ppc(self, window_length: timedelta, fmin: float = None, fmax: float = None,
+            channel_order: tuple[str | BodyLocation] = None) -> np.ndarray:
+        """
+        Computes Pairwise Phase Consistency per channel.
+        :return: A matrix of float values, one cell per each pair of channels.
+        """
+        res = ConnectivityFeatures.ppc(self, window_length, fmin, fmax, channel_order=channel_order)
+        res_matrix = res.get_data('dense')[:, :, 0]
+        assert res.names == channel_order
+        return res_matrix
+
 
     def psd(self, window_length: timedelta, fmin: float = None, fmax: float = None,
             channel_order: tuple[str | BodyLocation] = None) -> np.ndarray:
