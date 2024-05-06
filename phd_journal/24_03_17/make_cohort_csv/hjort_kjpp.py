@@ -7,9 +7,9 @@ import pandas as pd
 from pandas import read_csv, DataFrame
 
 # FIXME: Change this path to the correct one. It works with all.
-datasets_path = "/Volumes/MMIS-Saraiv/Datasets/KJPP/features/1"
+#datasets_path = "/Volumes/MMIS-Saraiv/Datasets/KJPP/features/1"
 #datasets_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
-#datasets_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
+datasets_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
 #datasets_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
 
 
@@ -28,6 +28,7 @@ for session in all_sessions:
     all_dataframes.append(this_session_dataframe)
 res = pd.concat(all_dataframes, axis=0)
 
+"""
 # Only for KJPP
 datasets_path = "/Volumes/MMIS-Saraiv/Datasets/KJPP/features/2"
 all_sessions = listdir(datasets_path)  # List all directories in 'features' directory with os.listdir
@@ -46,6 +47,7 @@ for session in all_sessions:
 
 all_dataframes.append(res)
 res = pd.concat(all_dataframes, axis=0)
+"""
 
 # Save to CSV
 res.to_csv(join(datasets_path, 'Cohort#Hjorth#Channels.csv'))

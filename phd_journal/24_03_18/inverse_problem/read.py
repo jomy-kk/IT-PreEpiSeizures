@@ -29,16 +29,26 @@ def read_pli_features(dataset: str, regions=True) -> DataFrame:
     if dataset == 'INSIGHT':
         dataset = 'DZNE/INSIGHT/EEG'
     if regions:
-        path = join(common_datasets_path, dataset, features_dir, 'Cohort#PLI#Regions.csv')
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Regions.csv')
     else:
-        path = join(common_datasets_path, dataset, features_dir, 'Cohort#PLI#Channels.csv')
-    return pd.read_csv(path, index_col=0)
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Channels.csv')
+    res = pd.read_csv(path, index_col=0)
+    return res
+
 
 def read_all_features(dataset) -> DataFrame:
     spectral = read_spectral_features(dataset)
     hjorth = read_hjorth_features(dataset)
     pli = read_pli_features(dataset)
     return spectral.join(hjorth).join(pli)
+
+
+def read_all_features_multiples() -> DataFrame:
+    connectivity = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Connectivity#Regions$Multiple.csv'), index_col=0)
+    spectral = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Spectral#Channels$Multiple.csv'), index_col=0)
+    hjorth = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Hjorth#Channels$Multiple.csv'), index_col=0)
+    return pd.concat([connectivity, spectral, hjorth], axis=1)
+
 
 def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
@@ -54,7 +64,7 @@ def read_mmse(dataset: str) -> dict[str, float|int]:
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/cognition_m0.csv', sep=',')
         return {row['CODE']: int(row['MMSE']) for _, row in df.iterrows() if row['MMSE'] not in ('MD', 'NA')}
     if dataset == 'BrainLat':
-        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/BrainLat/metadata.csv', sep=';')
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/BrainLat/metadata.csv', sep=',')
         return {row['ID']: row['MMSE equivalent'] for _, row in df.iterrows()}
     if dataset == 'Miltiadous Dataset':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/participants.tsv', sep='\t')

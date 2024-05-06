@@ -7,9 +7,9 @@ import pandas as pd
 from pandas import read_csv, DataFrame
 
 # FIXME: Change this path to the correct one. It works with all.
-datasets_path = "/Volumes/MMIS-Saraiv/Datasets/KJPP/features"
+#datasets_path = "/Volumes/MMIS-Saraiv/Datasets/KJPP/features"
 #datasets_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
-#datasets_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
+datasets_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
 #datasets_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
 
 

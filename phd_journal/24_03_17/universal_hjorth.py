@@ -12,8 +12,8 @@ from ltbio.biosignals.timeseries import Timeline
 from ltbio.processing.formaters import Segmenter, Normalizer
 
 # FIXME: Change common_path and out_common_path to applicable paths
-common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/1'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features/1'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
 
 #################################
 # DO NOT CHANGE ANYTHING BELOW

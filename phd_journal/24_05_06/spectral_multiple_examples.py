@@ -4,24 +4,28 @@ from os import mkdir, remove
 from os.path import join, exists
 
 import numpy as np
+import pandas as pd
 from pandas import DataFrame
 
 from ltbio.biosignals.modalities import EEG
 from ltbio.biosignals.timeseries import Timeline
 from ltbio.features.Features import SpectralFeatures
 from ltbio.processing.PSD import PSD
-from ltbio.processing.formaters import Normalizer
+from ltbio.processing.formaters import Normalizer, Segmenter
 
 # FIXME: Change this to the correct path
-common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
-
+common_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/denoised_biosignal'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
 
 #############################################
 # DO NOT CHANGE ANYTHING BELOW THIS LINE
 
 # Get recursively all .biosignal files in common_path
 all_files = glob(join(common_path, '**/*.biosignal'), recursive=True)
+
+# Read targets
+mmse = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/participants.tsv', sep='\t', index_col=0)
+mmse = mmse['MMSE']
 
 # Processing tools
 normalizer = Normalizer(method='minmax')
@@ -41,7 +45,7 @@ bands = {
 
 
 def extract_spectral_features(eeg: EEG, fft_window_type: str, fft_window_length: timedelta, fft_window_overlap: timedelta,
-                              segment_length: timedelta = None, segment_overlap: timedelta = None, subject_out_path = None, normalise=False):
+                              segment_length: timedelta = None, segment_overlap: timedelta = None, normalise: bool = True):
     """
     Extracts all spectral features from an EEG signal
     :param eeg: mne.Raw object
@@ -59,7 +63,7 @@ def extract_spectral_features(eeg: EEG, fft_window_type: str, fft_window_length:
     if segment_length is None:  # in seconds
         segment_length = eeg_duration  # no segmentation
     if segment_overlap is None:  # in seconds
-        segment_overlap = segment_length  # no overlap
+        segment_overlap = timedelta(seconds=0)  # no overlap
 
     segment_length, segment_overlap = segment_length.total_seconds(), segment_overlap.total_seconds()
 
@@ -73,87 +77,80 @@ def extract_spectral_features(eeg: EEG, fft_window_type: str, fft_window_length:
     }
 
     # Go by segments with overlap
-    feature_names, features = None, []
+    all_windows = []
     total_segments_analised, total_segments = 0, 0
-    for i in range(int(segment_length), int(eeg_duration), int(segment_overlap)):
+
+    domain = eeg['T5'].domain
+    for i, interval in enumerate(domain):
+        z = eeg[interval]
+        if z.duration < timedelta(seconds=segment_length):
+            continue
+        print(f"Segment {i + 1} of {len(domain)}")
         total_segments += 1
-        #print(f'Window from {i-segment_length}s to {i}s')
-        start = eeg.initial_datetime + timedelta(seconds=i-segment_length)
-        end = eeg.initial_datetime + timedelta(seconds=i)
-        try:
-            eeg_segment = eeg[start: end]
-        except IndexError:
-            #print("\tWindow discarded for being out-of-bounds.")
-            continue
 
-        if eeg_segment._n_segments > 1:
-            #print("\tWindow discarded for being in-between an interruption.")
-            continue
+        # Segment in windows
+        segmenter = Segmenter(timedelta(seconds=segment_length), timedelta(seconds=segment_overlap))
+        z = segmenter(z)
+        z_domain = z['T5'].domain
 
-        if eeg_segment.duration.total_seconds() < segment_length:
-            #print("\tWindow discarded for being too short.")
-            continue
+        seg_windows = []
+        for j, window in enumerate(z_domain):
+            if window.timedelta < timedelta(seconds=segment_length):
+                continue
+            y = z[window]
 
-        feature_names = []  # it's going to be overwritten in each iteration, because I'm lazy
-        seg_features = []  # let's store features for this segment here
+            window_features = {}
 
-        for channel_name in channel_order:
-            channel = eeg_segment._get_channel(channel_name)
+            for channel_name in channel_order:
+                channel = y._get_channel(channel_name)
 
-            # Compute PSD and total power
-            psd = PSD.fromTimeseries(channel, fft_window_type, fft_window_length, fft_window_overlap)
-            total_power = SpectralFeatures.total_power(psd)
+                # Compute PSD and total power
+                psd = PSD.fromTimeseries(channel, fft_window_type, fft_window_length, fft_window_overlap)
+                total_power = SpectralFeatures.total_power(psd)
 
-            # Go by bands
-            for band_name, (lower, upper) in bands.items():
-                psd_band = psd[lower:upper]
+                # Go by bands
+                for band_name, (lower, upper) in bands.items():
+                    psd_band = psd[lower:upper]
 
-                for feature_name, feature_function in feature_names_functions.items():
-                    feature_names.append(f"{feature_name}#{channel_name}#{band_name}")
-                    res = feature_function(psd_band)
-                    if feature_name == 'Spectral#RelativePower':
-                        res /= total_power
-                    seg_features.append(res)
+                    for feature_name, feature_function in feature_names_functions.items():
+                        res = feature_function(psd_band)
+                        if feature_name == 'Spectral#RelativePower':
+                            res /= total_power
+                        name = f"{feature_name}#{channel_name}#{band_name}"
+                        window_features[name] = res
 
-        # Append features of this segment
-        features.append(seg_features)
+            window_features = pd.DataFrame(window_features, index=[f"{filename}${i+1}${j+1}"])
+            seg_windows.append(window_features)
+
+        # Average every 5 windows in 'seg_windows'. Each average must contain exactly 5 windows, if not, we discard the last ones.
+        for k in range(0, len(seg_windows) - len(seg_windows) % 5, 5):
+            window_features = seg_windows[k:k + 5]
+            average_df = pd.concat(window_features, axis=0).mean()
+            all_windows.append(average_df)
+
         total_segments_analised += 1
 
     print(f"Contributing segments: {total_segments_analised} (out of {total_segments})")
     # Write in txt file "{total_segments_analised}/{total_segments}"
-    with open(join(subject_out_path, 'segments_used_for_spectral.txt'), 'w') as f:
-        f.write(f"{total_segments_analised}/{total_segments}")
+    #with open(join(subject_out_path, 'segments_used_for_spectral.txt'), 'w') as f:
+    #    f.write(f"{total_segments_analised}/{total_segments}")
 
-    # Average features across segments
-    if len(features) > 1:
-        print("=> Averaging features across segments")
-        features = np.mean(features, axis=0)
-    elif len(features) == 1:
-        print("=> Only one segment was able to extract from this subject (not average)")
-        features = features[0]
-    else:
-        print(f"=> No segments were proper for feature extraction. No extraction for subject-session {filename}.")
-        return None, None
-
-    features = np.array(features)
-
-    # Normalise features?
-    if normalise:
-        print("=> Normalising feature vectors")
-        features = (features - features.mean(axis=0)) / features.std(axis=0)
-
-    return feature_names, features
-
+    return all_windows
 
 
 for filepath in all_files:
     filename = filepath.split('/')[-1].split('.')[0]
+    # Process only if MMSE is <= 15
+    if mmse['sub-' + filename] > 15:
+        print(f"Skipping because MMSE is > 15")
+        continue
+
     print(filename)
     subject_out_path = join(out_common_path, filename)
     if not exists(subject_out_path):
         mkdir(subject_out_path)
 
-    subject_out_filepath = join(subject_out_path, 'Spectral#Channels.csv')
+    subject_out_filepath = join(subject_out_path, 'Spectral#Channels$Multiple.csv')
     if not exists(subject_out_filepath):
 
         # Load Biosignal
@@ -169,21 +166,19 @@ for filepath in all_files:
 
         # Extract all spectral features
         window_type = 'hamming'
-        window_length = timedelta(seconds=4)  # 2 seconds
+        window_length = timedelta(seconds=2.5)  # 2 seconds
         window_overlap = window_length / 2  # 50% overlap
 
         # Segmentation parameters
-        segment_length = timedelta(seconds=4)  # 4 seconds
-        segment_overlap = segment_length / 2  # 50% overlap
-        feature_names, features = extract_spectral_features(x, window_type, window_length, window_overlap,
-                                                            segment_length, segment_overlap, subject_out_path, normalise=False)
-        if features is None:
-            continue  # no features extracted
+        segment_length = timedelta(seconds=5)  # 5 seconds
+        segment_overlap = timedelta(seconds=0)  # no overlap
+
+        all_windows = extract_spectral_features(x, window_type, window_length, window_overlap,
+                                                            segment_length, segment_overlap, normalise=True)
 
         # Convert to dataframe
-        df = DataFrame(features).T
-        df.columns = feature_names
-        df.index = [filename, ]
+        df = DataFrame(all_windows)
+        df.index = [f"{filename}${i+1}" for i in range(len(df))]
 
         # Save
         df.to_csv(subject_out_filepath, index=True, header=True)

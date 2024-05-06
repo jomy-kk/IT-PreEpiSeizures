@@ -13,12 +13,14 @@ from ltbio.biosignals.timeseries import Timeline
 from ltbio.processing.formaters import Segmenter, Normalizer
 
 # FIXME: Change this to the correct path
-common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
+#common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
+#out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
 #common_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/denoised_biosignal'
 #out_common_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
 #common_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/autopreprocessed_biosignal'
 #out_common_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features/2'
 
 
 #############################################
@@ -216,10 +218,10 @@ for filepath in all_files:
             with open(join(subject_out_path, f'{conn_metric.upper()}.txt'), 'w') as f:
                 f.write(f'No good windows. Not saving this subject-session-band {conn_metric}.')
             # Delete old files
-            for file in (join(subject_out_path, 'Connectivity#Regions.csv'),
-                         join(subject_out_path, 'Connectivity#Channels.csv')):
-                if exists(file):
-                    remove(file)
+                for file in (join(subject_out_path, 'Connectivity#Regions.csv'),
+                             join(subject_out_path, 'Connectivity#Channels.csv')):
+                    if exists(file):
+                        remove(file)
         else:
             all_channels_pli = pd.concat(all_channels_pli, axis=1)
             all_regions_pli = pd.concat(all_regions_pli, axis=1)
@@ -230,7 +232,6 @@ for filepath in all_files:
         if exists(join(subject_out_path, f'{conn_metric.upper()}.txt')):
             remove(join(subject_out_path, f'{conn_metric.upper()}.txt'))
 
-
     if len(all_metrics_channels) != 0:
         # Concatenate all metrics in one DataFrame
         all_metrics_channels = pd.concat(all_metrics_channels, axis=1)
@@ -239,7 +240,6 @@ for filepath in all_files:
         # Save final DataFrames to CSV
         all_metrics_regions.to_csv(join(subject_out_path, f'Connectivity#Regions.csv'))
         all_metrics_channels.to_csv(join(subject_out_path, f'Connectivity#Channels.csv'))
-
 
 
 # get all old files with 'pli' on the name and delete them
