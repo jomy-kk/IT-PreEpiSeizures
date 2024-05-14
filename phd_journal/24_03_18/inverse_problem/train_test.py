@@ -10,17 +10,7 @@ from read import *
 from read import read_all_features
 from utils import feature_wise_normalisation
 
-
-def feature_importances(model):
-    importances = model.feature_importances_
-    importances = pd.Series(importances, index=feature_names)
-    importances = importances.nlargest(20) # Get max 20 features
-    fig, ax = plt.subplots()
-    importances.plot.bar(ax=ax)
-    ax.set_title("Feature importances using MDI")
-    ax.set_ylabel("Mean decrease in impurity")
-    fig.tight_layout()
-    plt.show()
+pd.options.mode.chained_assignment = None
 
 
 def augment(objects, targets):
@@ -86,9 +76,9 @@ def custom_cv(objects, targets, n_splits=5, test_size=0.3):
     training and test sets.
 
     1. Identify the minority target and select 30% of its instances for the test set.
-I   2. Identify the INSIGHT examples in the test set and exclude other examples from the same subjects from the training set.
-A   3. Augment the remaining examples that can be selected for training.
-S   4. Select the remaining examples for training.
+    2. Identify the INSIGHT examples in the test set and exclude other examples from the same subjects from the training set.
+    3. Augment the remaining examples that can be selected for training.
+    4. Select the remaining examples for training.
 
     Args:
         objects: A DataFrame of feature vectors
@@ -252,6 +242,14 @@ miltiadous = miltiadous.dropna(axis=0)  # drop sessions with missing values
 miltiadous_after = miltiadous.shape[0]
 print("Miltiadous shape (sessions w/ required features):", miltiadous.shape, f"({miltiadous_before - miltiadous_after} sessions dropped)")
 
+sapienza = read_all_features('Sapienza')
+sapienza = sapienza[FEATURES_SELECTED]
+print("Sapienza shape (all):", sapienza.shape)
+sapienza_before = sapienza.shape[0]
+sapienza = sapienza.dropna(axis=0)  # drop sessions with missing values
+sapienza_after = sapienza.shape[0]
+print("Sapienza shape (sessions w/ required features):", sapienza.shape, f"({sapienza_before - sapienza_after} sessions dropped)")
+
 # EXTRA: Read multiples examples (from fake subjects)
 multiples = read_all_features_multiples()
 multiples = multiples[FEATURES_SELECTED]
@@ -272,9 +270,9 @@ for feature in multiples.columns:
     data = scaling(data)
     multiples[feature] = data
 
-features = pd.concat([insight, brainlat, miltiadous, multiples], axis=0)
+features = pd.concat([insight, brainlat, miltiadous, multiples, sapienza], axis=0)
 print("Read all features. Final Shape:", features.shape)
-print(f"Discarded a total of {insight_before - insight_after + brainlat_before - brainlat_after + miltiadous_before - miltiadous_after} sessions with missing values.")
+print(f"Discarded a total of {insight_before - insight_after + brainlat_before - brainlat_after + miltiadous_before - miltiadous_after + sapienza_before - sapienza_after + multiples_before - multiples_after} sessions with missing values")
 
 # 1.2) Normalise feature vectors
 features = feature_wise_normalisation(features, method='min-max')
@@ -284,6 +282,7 @@ features = features.dropna(axis=1)
 insight_targets = read_mmse('INSIGHT')
 brainlat_targets = read_mmse('BrainLat')
 miltiadous_targets = read_mmse('Miltiadous Dataset')
+sapienza_targets = read_mmse('Sapienza')
 targets = Series()
 for index in features.index:
     if '_' in str(index):  # insight
@@ -293,6 +292,9 @@ for index in features.index:
     elif '-' in str(index):  # brainlat
         if index in brainlat_targets:
             targets.loc[index] = brainlat_targets[index]
+    elif 'PARTICIPANT' in str(index):  # sapienza
+        if index in sapienza_targets:
+            targets.loc[index] = sapienza_targets[index]
     else:  # miltiadous
         # parse e.g. 24 -> 'sub-024'; 1 -> 'sub-001'
         if '$' in str(index):  # EXTRA: multiple examples, remove the $ and the number after it; the target is the same

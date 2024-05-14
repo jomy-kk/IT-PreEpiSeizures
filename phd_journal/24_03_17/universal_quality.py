@@ -11,7 +11,7 @@ from ltbio.processing.formaters import Segmenter, Normalizer
 
 
 # FIXME: Change common_path to applicable path
-common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/denoised_biosignal'
 
 # Get recursively all .biosignal files in common_path
 all_files = glob(join(common_path, '*.biosignal'), recursive=True)

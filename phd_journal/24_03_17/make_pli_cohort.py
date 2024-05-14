@@ -6,7 +6,8 @@ import pandas as pd
 # FIXME: Change the path to the dataset
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
-dataset_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features'
+#dataset_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features'
+dataset_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/features'
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
 
 for filename in ('Connectivity#Channels.csv', 'Connectivity#Regions.csv'):

@@ -13,8 +13,8 @@ from ltbio.processing.PSD import PSD
 from ltbio.processing.formaters import Normalizer
 
 # FIXME: Change this to the correct path
-common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/denoised_biosignal'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/denoised_biosignal'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/features'
 
 
 #############################################

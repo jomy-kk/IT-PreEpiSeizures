@@ -19,9 +19,10 @@ from ltbio.processing.formaters import Segmenter, Normalizer
 #out_common_path = '/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features'
 #common_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/autopreprocessed_biosignal'
 #out_common_path = '/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/features'
-common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
-out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features/2'
-
+#common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/2'
+#out_common_path = '/Volumes/MMIS-Saraiv/Datasets/KJPP/features/2'
+common_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/denoised_biosignal'
+out_common_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/features'
 
 #############################################
 # DO NOT CHANGE ANYTHING BELOW THIS LINE

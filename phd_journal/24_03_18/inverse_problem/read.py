@@ -69,6 +69,9 @@ def read_mmse(dataset: str) -> dict[str, float|int]:
     if dataset == 'Miltiadous Dataset':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/participants.tsv', sep='\t')
         return {row['participant_id']: row['MMSE'] for _, row in df.iterrows()}
+    if dataset == 'Sapienza':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Sapienza/metadata.csv', sep=',')
+        return {row['ID']: row['MMSE'] for _, row in df.iterrows()}
 
 
 def read_brainage(dataset: str) -> dict[int, float]:
