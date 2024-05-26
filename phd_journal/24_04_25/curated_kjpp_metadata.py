@@ -1,13 +1,13 @@
 from glob import glob
+from os.path import exists
 
+import pandas as pd
 from pandas import DataFrame
 from pandas import read_csv
 import simple_icd_10 as icd
 
-from ltbio.biosignals.modalities import EEG
-from ltbio.clinical import Patient
-from ltbio.clinical.Patient import Sex
 
+out_filepath = '/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv'
 
 
 diagnoses_groups = {
@@ -23,6 +23,7 @@ diagnoses_groups = {
     'Somatoform Disorders': ['F45'],
     'Cognitive Disorders': ['F06.7', ],
     'Personality and Behaviour Disorders': ['F07', 'F59', 'F60', 'F63'],
+    'Mental and Behavioural from Psychoactives': ['F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'F19'],
     'Eating Disorders': ['F50'],
     'Mental Sleep Disorders': ['F51'],
     'Other Mental Disorders': ['F06.8', 'F09', 'F48', 'F54'],
@@ -60,6 +61,7 @@ diagnoses_groups = {
     'Congenital Nervous Malformations': ['Q00', 'Q01', 'Q02', 'Q03', 'Q04', 'Q05', 'Q06', 'Q07'],
     'Chromosomal Abnormalities': ['Q90', 'Q91', 'Q92', 'Q93', 'Q95', 'Q96', 'Q97', 'Q98', 'Q99'],
 }
+N_DIAGNOSES_GROUPS = len(diagnoses_groups)
 
 
 def get_group(query_code: str):
@@ -74,48 +76,130 @@ def get_group(query_code: str):
         return None
 
 
+# Resume DataFrame
+if exists(out_filepath):
+    df = read_csv(out_filepath)
+else:
+    df = DataFrame(columns=['PATIENT', 'SESSION', 'GENDER', 'AGE', 'EMU', 'MEDICATION', 'ALL DIAGNOSES CODES']
+                           + list(diagnoses_groups.keys()))
 
 # Read metadata_as_given
-metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata.csv', index_col=1, sep=';')
+metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_with_letters.csv', index_col=1, sep=';')
 
 # Get list of all .biosignal files
 all_files = glob('/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/**/*.biosignal', recursive=False)
-print("Number of files:", len(all_files))
+all_eeg_sessions = [f.split('/')[-1].split('.')[0] for f in all_files]
 
-df = DataFrame(columns=['PATIENT', 'SESSION', 'GENDER', 'AGE', 'EMU', 'MEDICATION', 'ALL DIAGNOSES CODES']
-                       + list(diagnoses_groups.keys()))
-N_DIAGNOSES_GROUPS = len(diagnoses_groups)
+if len(df) > 0:
+    all_eeg_sessions = list(set(all_eeg_sessions) - set(df['SESSION']))
+
+print("Number of files done:", len(df))
+print("Number of files left:", len(all_eeg_sessions))
 
 
-for i, file in enumerate(all_files):
-    eeg = EEG.load(file)
-    patient: Patient = eeg._Biosignal__patient
-    patient_code = patient.code
-    session_code = eeg.name
-    gender = 1 if patient.sex == Sex.M else 0 if patient.sex == Sex.F else None
-    age = patient.age
-    diagnoses = patient.conditions
-    medications = patient.medications[0].notes
+not_found = 0
+no_report_read = 0
+for eeg_session in all_eeg_sessions:
+    print("############################################")
+    print(eeg_session)
+
+    # Find if it is in metadata
+    if eeg_session not in metadata.index:
+        print(f"Session {eeg_session} not found in metadata.")
+        not_found += 1
+        continue
+
+    i = len(df)
+
+    row = metadata.loc[eeg_session]
+    patient_code = row['PATIENT']
+    gender = row['GENDER']
+    age = row['EEG AGE MONTHS'] / 12
 
     # Check in metadata if columns STUDY or UNIT contain KI.3 or KI3
-    study = str(metadata.loc[session_code]['STUDY'])
-    unit = str(metadata.loc[session_code]['UNIT'])
+    study = str(metadata.loc[eeg_session]['STUDY'])
+    unit = str(metadata.loc[eeg_session]['UNIT'])
     emu = 'KI.3' in study or 'KI3' in study or 'KI.3' in unit or 'KI3' in unit
 
-    # Add row to DataFrame with first 7 columns (general columns)
-    df.loc[len(df)] = [patient_code, session_code, gender, age, emu, medications, diagnoses] + [False] * N_DIAGNOSES_GROUPS
+    # Check if any report was read
+    if row.iloc[5:].isna().all():
+        print(f"No report read for session {eeg_session}.")
+        no_report_read += 1
+        diagnoses = 'no report'
+        medication = 'no report'
+        df.loc[i] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses] + [None] * N_DIAGNOSES_GROUPS
+    else:
+        diagnoses = []
+        # only MAS1 to MAS4 (inclusive)
+        for axis, d in row.iloc[5:21].items():
+            if not pd.isna(d):
+                # fit d to the expected format 'X00.0' or 'X00'
+                d = d.replace(' ', '')
+                d = d.replace('(', '')
+                if icd.is_valid_item(d):
+                    diagnoses.append(d)
+                    print(f"Valid >{d}<: {icd.get_description(d)}")
+                else:
+                    # Is it the German Modification?
+                    # ICD-10-GM codes have a 2nd digit at the end, like 'X00.00', we'll remove it
+                    if len(d.split('.')[-1]) > 1:
+                        d_international = d + d.split('.')[-1][0]  # keep only first digit after the dot
+                        if icd.is_valid_item(d_international):
+                            diagnoses.append(d_international)
+                            print(f"Valid >{d_international}< (originally >{d}<): {icd.get_description(d_international)}")
+                            continue
+                        else:
+                            print("Tried GM 'X00.00' -> 'X00.0', but still not valid vvv")
+                    # They can also have a subsection, 'X00.0', when the international code does not, 'X00'
+                    d_international = d.split('.')[0]  # discard the subsection
+                    if icd.is_valid_item(d_international):
+                        diagnoses.append(d_international)
+                        print(f"Valid >{d_international}< (originally >{d}<): {icd.get_description(d_international)}")
+                        continue
+                    else:
+                        print("Tried GM 'X00.0'->'X00', but still not valid vvv")
 
-    # Detail diagnoses: mark as True the group of the diagnosis (it can be more than one)
-    for d in diagnoses:
-        group = get_group(d.code)
-        if group:
-            df.loc[len(df), group] = True
+                    print(f"{axis} >{d}<")
+                    validated = False
+                    while not validated:
+                        answer = input("Enter the correct code ('u' if unreadable; 'n' if no code needed): ")
+                        if answer == 'u':
+                            d = f"{axis}|{d}"  # keep the same; maybe we'll know later
+                            validated = True
+                            diagnoses.append(d)
+                        elif answer == 'n':
+                            d = None
+                            validated = True
+                        else:
+                            d = answer
+                            if icd.is_valid_item(d):
+                                validated = True
+                                print(f"Valid >{d}<: {icd.get_description(d)}")
+                                diagnoses.append(d)
+                            else:
+                                print(f"Invalid code >{d}<")
 
-    if i == 10:
-        break
+        medication = row['MEDICATION']
 
+        # Add row to DataFrame with first 7 columns (general columns)
+        df.loc[i] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses] + [False] * N_DIAGNOSES_GROUPS
 
+        # Detail diagnoses: mark as True the group of the diagnosis (it can be more than one)
+        for d in diagnoses:
+            try:
+                group = get_group(d)
+                df.loc[i, group] = True
+            except ValueError:
+                print(f"No group found for >{d}<")
+                continue
 
+    # save at every row
+    df.to_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv', index=False)
 
+    print("Saved.")
 
+print(f"Sessions not found in metadata: {not_found}")
+print(f"Sessions without report read: {no_report_read}")
+print(f"Sessions with report read: {len(df)}")
 
+# Save

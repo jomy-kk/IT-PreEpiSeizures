@@ -8,7 +8,8 @@ from read import *
 from utils import *
 
 # FIXME
-FEATURES_SELECTED = ['Spectral#RelativePower#C3#beta1', 'Spectral#EdgeFrequency#C3#beta3', 'Spectral#RelativePower#C3#gamma', 'Spectral#EdgeFrequency#C4#alpha1', 'Spectral#RelativePower#C4#beta3', 'Spectral#EdgeFrequency#C4#beta3', 'Spectral#EdgeFrequency#C4#gamma', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#EdgeFrequency#Cz#beta3', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#PeakFrequency#Cz#gamma', 'Spectral#RelativePower#F3#beta1', 'Spectral#Diff#F4#delta', 'Spectral#RelativePower#F7#beta3', 'Spectral#EdgeFrequency#F7#beta3', 'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F8#beta1', 'Spectral#EdgeFrequency#F8#beta3', 'Spectral#RelativePower#Fp1#beta1', 'Spectral#EdgeFrequency#Fp1#beta3', 'Spectral#Diff#Fp2#delta', 'Spectral#RelativePower#Fp2#beta1', 'Spectral#RelativePower#Fp2#beta3', 'Spectral#Diff#Fpz#beta2', 'Spectral#Entropy#O1#delta', 'Spectral#RelativePower#O1#beta2', 'Spectral#EdgeFrequency#O1#beta2', 'Spectral#EdgeFrequency#O1#beta3', 'Spectral#RelativePower#O2#delta', 'Spectral#PeakFrequency#O2#alpha1', 'Spectral#RelativePower#O2#beta1', 'Spectral#RelativePower#O2#beta3', 'Spectral#Diff#P3#beta1', 'Spectral#RelativePower#P3#beta3', 'Spectral#RelativePower#Pz#alpha1', 'Spectral#EdgeFrequency#Pz#beta3', 'Spectral#RelativePower#T4#alpha1', 'Spectral#RelativePower#T4#beta3', 'Spectral#RelativePower#T4#gamma', 'Spectral#EdgeFrequency#T5#beta2', 'Hjorth#Complexity#T5', 'Hjorth#Complexity#P4', 'Hjorth#Complexity#F7', 'Hjorth#Complexity#T4', 'Hjorth#Complexity#F8', 'Hjorth#Complexity#T3', 'Hjorth#Mobility#P3', 'PLI#Frontal(L)-Temporal(R)#alpha1', 'PLI#Frontal(L)-Occipital(L)#alpha1', 'PLI#Frontal(R)-Temporal(R)#alpha1', 'PLI#Temporal(R)-Parietal(R)#alpha1', 'PLI#Temporal(R)-Occipital(L)#alpha1', 'PLI#Parietal(R)-Occipital(L)#alpha1', 'PLI#Occipital(L)-Occipital(R)#alpha1', 'PLI#Temporal(R)-Occipital(R)#alpha2', 'PLI#Parietal(R)-Occipital(L)#alpha2', 'COH#Frontal(L)-Frontal(R)#theta', 'COH#Frontal(L)-Occipital(L)#theta', 'COH#Frontal(L)-Occipital(R)#alpha1', 'COH#Frontal(R)-Occipital(L)#alpha1', 'COH#Parietal(R)-Occipital(L)#alpha1', 'COH#Frontal(L)-Frontal(R)#alpha2', 'COH#Frontal(L)-Occipital(R)#alpha2', 'COH#Parietal(R)-Occipital(L)#alpha2', 'COH#Parietal(R)-Occipital(R)#alpha2', 'COH#Occipital(L)-Occipital(R)#alpha2', 'COH#Frontal(L)-Occipital(L)#beta1', 'COH#Temporal(R)-Parietal(R)#beta1', 'COH#Parietal(R)-Occipital(R)#beta1', 'COH#Frontal(L)-Parietal(L)#beta2', 'COH#Frontal(R)-Occipital(L)#beta2', 'COH#Frontal(L)-Temporal(R)#beta3', 'COH#Frontal(L)-Parietal(L)#beta3', 'COH#Frontal(L)-Occipital(L)#beta3', 'COH#Frontal(L)-Occipital(R)#beta3', 'COH#Frontal(R)-Occipital(L)#beta3', 'COH#Temporal(L)-Occipital(R)#beta3', 'COH#Frontal(L)-Occipital(R)#gamma', 'COH#Frontal(R)-Occipital(R)#gamma']
+# kjpp + eldersly features selected (80)
+FEATURES_SELECTED = ['Spectral#RelativePower#F3#gamma', 'Hjorth#Complexity#T3', 'Spectral#PeakFrequency#O1#beta3', 'Spectral#Entropy#Pz#beta1', 'Spectral#RelativePower#Cz#beta2', 'Spectral#Diff#P4#beta2', 'Spectral#Flatness#T5#alpha2', 'Spectral#PeakFrequency#Fz#beta3', 'Spectral#EdgeFrequency#T3#delta', 'PLI#Temporal(L)-Occipital(L)#beta1', 'Spectral#RelativePower#C4#delta', 'Spectral#PeakFrequency#F8#alpha1', 'Spectral#EdgeFrequency#Pz#gamma', 'Spectral#PeakFrequency#Cz#gamma', 'Spectral#Flatness#T6#gamma', 'Spectral#RelativePower#Fz#delta', 'Spectral#EdgeFrequency#Fz#beta3', 'Spectral#EdgeFrequency#F8#beta3', 'Spectral#Diff#Cz#gamma', 'Hjorth#Activity#C3', 'Spectral#RelativePower#Cz#delta', 'Spectral#RelativePower#Fp2#gamma', 'Spectral#Entropy#F7#theta', 'PLI#Temporal(L)-Parietal(L)#alpha2', 'Spectral#RelativePower#T4#beta1', 'Spectral#RelativePower#Cz#gamma', 'Hjorth#Activity#P4', 'Spectral#RelativePower#Fz#gamma', 'Spectral#RelativePower#P3#theta', 'Spectral#EdgeFrequency#O2#beta2', 'Spectral#Diff#C4#beta1', 'Spectral#RelativePower#C3#gamma', 'Spectral#RelativePower#P4#beta3', 'Spectral#PeakFrequency#Fp2#beta2', 'Spectral#EdgeFrequency#T3#theta', 'Spectral#RelativePower#Fp1#beta1', 'Hjorth#Mobility#Pz', 'Spectral#RelativePower#Fpz#gamma', 'Spectral#Diff#T4#beta1', 'Spectral#Entropy#P3#alpha1', 'Spectral#Flatness#F4#beta2', 'Spectral#Entropy#F4#beta2', 'Spectral#RelativePower#C4#gamma', 'Spectral#RelativePower#Cz#beta3', 'Spectral#RelativePower#O1#alpha2', 'Spectral#PeakFrequency#Fz#gamma', 'Spectral#PeakFrequency#F4#delta', 'Spectral#RelativePower#P4#alpha1', 'Spectral#PeakFrequency#P3#gamma', 'Spectral#RelativePower#O2#beta3', 'Hjorth#Mobility#P4', 'Hjorth#Complexity#Fp2', 'Spectral#Diff#P3#beta1', 'Spectral#RelativePower#C3#beta1', 'Spectral#EdgeFrequency#Cz#beta3', 'Spectral#Diff#C3#theta', 'Spectral#RelativePower#Fp1#beta2', 'Spectral#EdgeFrequency#F4#delta', 'Spectral#RelativePower#P3#beta3', 'Spectral#RelativePower#F3#theta', 'Spectral#Entropy#O2#delta', 'Spectral#PeakFrequency#C4#beta1', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#RelativePower#T6#beta1', 'Spectral#PeakFrequency#O2#theta', 'Spectral#Flatness#C4#gamma', 'Spectral#PeakFrequency#F7#gamma', 'Spectral#RelativePower#F7#gamma', 'Spectral#Diff#T5#beta1', 'Spectral#EdgeFrequency#Pz#beta3', 'Spectral#RelativePower#T3#beta3', 'Spectral#RelativePower#T4#gamma', 'Spectral#EdgeFrequency#F3#theta', 'Spectral#RelativePower#Fp2#beta1', 'Spectral#PeakFrequency#Fz#theta', 'Hjorth#Complexity#T5', 'Hjorth#Complexity#T4', 'Hjorth#Complexity#F8', 'Hjorth#Mobility#Cz', 'Spectral#PeakFrequency#Fp2#alpha1']
 
 # 1) Get all features
 features = read_all_features('KJPP')
@@ -17,21 +18,44 @@ features = read_all_features('KJPP')
 features = features[FEATURES_SELECTED]
 print("Number of features selected:", len(features.columns))
 
-# Drop sessions with missing values
+# drop sessions with missing values
 features = features.dropna()
+
+# 1.2) Remove outliers
+# FIXME
+"""
+print("Number of subjects before removing outliers:", len(features))
+OUTLIERS = [8,  40,  59, 212, 229, 247, 264, 294, 309, 356, 388, 391, 429, 437, 448, 460, 465, 512, 609, 653, 687, 688, 771, 808, 831, 872, 919]
+features = features.drop(features.index[OUTLIERS])
+print("Number of subjects after removing outliers:", len(features))
+"""
 
 # 2) Get targerts
 targets = Series()
 ages = read_ages('KJPP')
+n_age_not_found = 0
 for session in features.index:
-    age = ages[session]
-    targets.loc[session] = age
+    if session in ages:
+        age = ages[session]
+        targets.loc[session] = age
+    else:
+        print(f"Session {session} not found in ages")
+        n_age_not_found += 1
 
-# Drop targets with missing values
+# Drop sessions without age
+print(f"Number of sessions without age: {n_age_not_found}")
 targets = targets.dropna()
 features = features.loc[targets.index]
 
+
+
 # 3) Normalise features
+
+# 2.2) Between 0 and 1
+#features = feature_wise_normalisation_with_coeffs(features, 'mean-std', 'elderly_stochastic_pattern.csv')
+features = feature_wise_normalisation(features, 'min-max')
+
+
 """
 # 3.1) Calibrate features of adults (Age >= 18) to have the same mean and standard deviation as the elderly with MMSE == 30.
 cal_ref = features[targets >= 18]
@@ -52,8 +76,6 @@ cal_non_ref = cal_non_ref + diff_mean
 # Concatenate
 features = pd.concat([cal_ref, cal_non_ref])
 """
-# 2.2) Between 0 and 1
-features = feature_wise_normalisation(features, 'min-max')
 
 
 # 3) Convert features to an appropriate format
@@ -61,10 +83,14 @@ feature_names = features.columns.to_numpy()
 sessions = features.index.to_numpy()
 features = [features.loc[code].to_numpy() for code in sessions]
 
+#Size
+print("Number of subjects:", len(features))
+print("Number of features:", len(features[0]))
+
 
 # 4) Load model
 from pickle import load
-with open('old_model_80feat.pkl', 'rb') as file:
+with open('NEW_model_80feat.pkl', 'rb') as file:
     model = load(file)
 
 # 5) Predict
@@ -76,7 +102,7 @@ def is_good_developmental_age_estimate(age: float, mmse: int, margin:float=0) ->
     Checks if the MMSE estimate is within the acceptable range for the given age.
     A margin can be added to the acceptable range.
     """
-    assert 0 <= mmse <= 30, "MMSE must be between 0 and 30"
+    #assert 0 <= mmse <= 30, "MMSE must be between 0 and 30"
     assert 0 <= age, "Developmental age estimate must be positive"
 
     if age < 1.25:
@@ -117,8 +143,8 @@ plt.ylabel('MMSE Estimate (units)')
 plt.xlabel('Chronological Age (years)')
 plt.xlim(2, 20)
 plt.grid(linestyle='--', alpha=0.4)
-plt.scatter(accurate_x, accurate_y, color="#34AC8B", marker='.', alpha=0.3)
-plt.scatter(inaccurate_x, inaccurate_y, color="#34AC8B", marker='.', alpha=0.3)
+plt.scatter(accurate_x, accurate_y, color='g', marker='.', alpha=0.3)
+plt.scatter(inaccurate_x, inaccurate_y, color='r', marker='.', alpha=0.3)
 # remove box around plot
 plt.box(False)
 plt.show()
@@ -181,6 +207,7 @@ for age in targets:
             age_classes_assigned.append(i)
             break
 
+"""
 # confusion matrix
 conf_matrix = confusion_matrix(age_classes_assigned, mmse_classes_assigned)
 # plot
@@ -195,5 +222,5 @@ plt.show()
 
 
 
-
+"""
 

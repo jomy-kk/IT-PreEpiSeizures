@@ -1,12 +1,10 @@
 import numpy as np
-import seaborn as sns
 from matplotlib import pyplot as plt
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.feature_selection import RFE, VarianceThreshold, SelectKBest, SelectPercentile, r_regression, f_regression, \
-    mutual_info_regression, RFECV
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import train_test_split, cross_val_score
+    mutual_info_regression
+from sklearn.model_selection import train_test_split, cross_val_score, KFold, ShuffleSplit
 
 from read import *
 from read import read_all_features
@@ -18,27 +16,6 @@ def rfe_selection(model, features, targets, n_features_to_select, step, feature_
     Recursive feature elimination
     """
     selector = RFE(estimator=model, n_features_to_select=n_features_to_select, step=step, verbose=2)
-    features_transformed = selector.fit_transform(features, targets)
-
-    # Get indices of the selected features
-    scores = selector.ranking_
-    indices = tuple(selector.get_support(indices=True))
-    sorted_indices = sorted(indices, key=lambda i: scores[i], reverse=True)
-
-    print("Selected features (in descending order of score):")
-    print(sorted_indices)
-    if feature_names is not None:
-        print([feature_names[i] for i in sorted_indices])
-
-    return features_transformed, indices
-
-
-def cv_feature_selection(model, features, targets, cv, step, feature_names):
-    """
-    Recursive feature elimination with cross-validation
-    """
-    selector = RFECV(estimator=model, cv=cv, min_features_to_select=10, step=step, verbose=2, scoring='neg_mean_absolute_error',
-                     n_jobs=-1)
     features_transformed = selector.fit_transform(features, targets)
 
     # Get indices of the selected features
@@ -194,45 +171,17 @@ def train_test_cv(model, cv, objects, targets):
     print("Cross-Validation min score:", scores.min())
 
 
-def stratified_split(features, targets, val_size, random_state=0):
-    """
-    Returns stratified train and validation sets, by MMSE bins.
-    """
-    pass
-
-
 # 1.1) Get all features
 insight = read_all_features('INSIGHT')
-print("INSIGHT shape (all):", insight.shape)
-insight_before = insight.shape[0]
-insight = insight.dropna(axis=0)  # drop sessions with missing values
-insight_after = insight.shape[0]
-print("INSIGHT shape (w/values):", insight.shape, f"({insight_before - insight_after} sessions dropped)")
-
 brainlat = read_all_features('BrainLat')
-print("BrainLat shape (all):", brainlat.shape)
-brainlat_before = brainlat.shape[0]
-brainlat = brainlat.dropna(axis=0)  # drop sessions with missing values
-brainlat_after = brainlat.shape[0]
-print("BrainLat shape (w/values):", brainlat.shape, f"({brainlat_before - brainlat_after} sessions dropped)")
-
 miltiadous = read_all_features('Miltiadous Dataset')
-print("Miltiadous shape (all):", miltiadous.shape)
-miltiadous_before = miltiadous.shape[0]
-miltiadous = miltiadous.dropna(axis=0)  # drop sessions with missing values
-miltiadous_after = miltiadous.shape[0]
-print("Miltiadous shape (w/values):", miltiadous.shape, f"({miltiadous_before - miltiadous_after} sessions dropped)")
-
 features = pd.concat([insight, brainlat, miltiadous], axis=0)
-print("Read all features. Final Shape:", features.shape)
-print(f"Discarded a total of {insight_before - insight_after + brainlat_before - brainlat_after + miltiadous_before - miltiadous_after} sessions with missing values.")
+#features = features.dropna()  # Drop subject_sessions with nans
+print("Read all features. Shape:", features.shape)
 
 # 1.2) Normalise feature vectors
-feature_names_before = set(features.columns)
 features = feature_wise_normalisation(features, method='min-max')
 features = features.dropna(axis=1)
-feature_names_after = set(features.columns)
-print("After normalising features, these were discarded:", feature_names_before - feature_names_after)
 # We cannot normalise feature-wise when using variance threshold as feature selection, because all variances will be 1.
 
 # 2) Get targets
@@ -254,37 +203,27 @@ for index in features.index:
         if key:
             targets.loc[index] = miltiadous_targets[key]
 
-print("Read targets. Shape:", targets.shape)
-
 # Drop subject_sessions with nans targets
 targets = targets.dropna()
-features_sessions_before = set(features.index)
 features = features.loc[targets.index]
-features_sessions_after = set(features.index)
-print("After Dropping sessions with no targets - Shape:", features.shape)
-print("Dropped sessions:", features_sessions_before - features_sessions_after)
 
-# 3) Data Augmentation in the underrepresented MMSE scores
-print("DATA AUGMENTATION")
+# 3) Data Augmentation in the underrepresented MMSE groups
+# MMSE groups: 0-9, 9-15, 15-20, 20-24, 24-26, 26-30
+# We'll augment the 0-9, 9-15, 15-20, 20-24, 24-26 groups because they are underrepresented
+# We'll augment them until they have the same number of samples as the 26-30 group
 
-# Dynamically define the MMSE groups with bins of 2 MMSE scores
-mmse_scores = sorted(list(set(targets)))
 # Get the number of samples in each group
-mmse_distribution = [len(targets[targets == mmse]) for mmse in mmse_scores]
-# Get majority score
-max_samples = max(mmse_distribution)
+mmse_groups = ((0, 9), (10, 15), (16, 20), (21, 25), (26, 30))
+mmse_groups_samples = [len(targets[(mmse[0] <= targets) & (targets <= mmse[1])]) for mmse in mmse_groups]
+max_samples = max(mmse_groups_samples)
 
-print("MMSE distribution before augmentation:")
-for i, mmse in enumerate(mmse_scores):
-    print(f"MMSE {mmse}: {mmse_distribution[i]} examples")
-
-# Augment all underrepresented scores up to the size of the majority score
-for i, score in enumerate(mmse_scores):
-    if mmse_distribution[i] < max_samples:
+# Augment the underrepresented groups
+for i, mmse_group in enumerate(mmse_groups):
+    if mmse_groups_samples[i] < max_samples:
         # Get the number of samples to augment
-        n_samples_to_augment = max_samples - mmse_distribution[i]
+        n_samples_to_augment = max_samples - mmse_groups_samples[i]
         # Get the samples to augment
-        samples = features[targets == score]
+        samples = features[targets.between(mmse_group[0], mmse_group[1])]
         # Augment with gaussian noise with sensitivity S
         S = 0.1
         i = 0
@@ -303,11 +242,15 @@ for i, score in enumerate(mmse_scores):
                 i = 0
                 n_cycles += 1
 
-mmse_distribution_after = [len(targets[targets == mmse]) for mmse in mmse_scores]
-assert all([samples == max_samples for samples in mmse_distribution_after])
-print("MMSE distribution after augmentation:")
-for i, mmse in enumerate(mmse_scores):
-    print(f"MMSE {mmse}: {mmse_distribution_after[i]} examples")
+# Assert that the number of samples in each group is the same
+print("Number of samples before augmentation:")
+print(mmse_groups)
+print(mmse_groups_samples)
+mmse_groups_samples_after = [len(targets[(mmse[0] <= targets) & (targets <= mmse[1])]) for mmse in mmse_groups]
+assert all([samples == max_samples for samples in mmse_groups_samples_after])
+print("Number of samples after augmentation:")
+print(mmse_groups)
+print(mmse_groups_samples_after)
 
 # 4) Convert features to an appropriate format
 # e.g. {..., 'C9': (feature_names_C9, features_C9), 'C10': (feature_names_C10, features_C10), ...}
@@ -321,79 +264,36 @@ for i, session in enumerate(sessions):
     dataset.append((features[i], targets[session]))
 
 
-# 5) Separate 70% for feature selection + (CV) training  [STRATIFIED]
-dataset_train, dataset_val = train_test_split(dataset, test_size=0.3, stratify=targets, shuffle=True, random_state=0)
-print("Size of 'train' dataset:", len(dataset_train))
-print("Size of 'val' dataset:", len(dataset_val))
+# 5) Separate 50% only for feature selection
+dataset, dataset_feature_selection = train_test_split(dataset, test_size=0.5, random_state=0)
 
-# 5.1) Plot histogram of MMSE of the train set and val set
-plt.hist([x[1] for x in dataset_train], alpha=0.5, label='Feature Eng.', color='g')
-plt.hist([x[1] for x in dataset_val], alpha=0.5, label='Validation', color='r')
-plt.legend(loc='upper right')
-plt.show()
+# 5.1) Define CV scheme
+cv = KFold(10, shuffle=True)  # leave 10% out, non-overlapping test sets
 
-
-# 6.2) Define model
+# 5.2) Define model
 model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0, loss='absolute_error',
                                   learning_rate=0.04,)
 
-# 7. Feature Selection
-print("Number of features:", len(dataset_train[0][0]))
-objects = np.array([x[0] for x in dataset_train])
-targets = np.array([x[1] for x in dataset_train])
-transformed_features, indices = rfe_selection(model, objects, targets, n_features_to_select=80, feature_names=feature_names, step=5)
+# 6. Feature Selection
+print("Size of the dataset for feature selection:", len(dataset_feature_selection))
+print("Number of features:", len(dataset_feature_selection[0][0]))
+objects = np.array([x[0] for x in dataset_feature_selection])
+targets = np.array([x[1] for x in dataset_feature_selection])
+# different methods
+transformed_features, indices = rfe_selection(model, objects, targets, feature_names=feature_names, n_features_to_select=50, step=5)
 
-# 8. Get metrics for train set
-model.fit(transformed_features, targets)
-predictions = model.predict(transformed_features)
-print('---------------------------------')
-print('Train set metrics:')
-mse = mean_squared_error(targets, predictions)
-print(f'MSE: {mse}')
-mae = mean_absolute_error(targets, predictions)
-print(f'MAE: {mae}')
-r2 = r2_score(targets, predictions)
-print(f'R2: {r2}')
-# 8.1. Plot regression between ground truth and predictions with seaborn and draw regression curve
-plt.figure(figsize=((3.5,3.2)))
-sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.4}, color="#34AC8B")
-plt.xlabel('True MMSE (units)')
-plt.ylabel('Predicted MMSE (units)')
-plt.xlim(0, 30)
-plt.ylim(0, 30)
-plt.tight_layout()
-plt.show()
+# update dataset for training and testing
+dataset = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset]
 
-#########
-# VALIDATION
+# print the selected features names
+print("Selected features:")
+print([feature_names[i] for i in indices])
 
-# 9. Update dataset_val
-dataset_val = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset_val]
-objects = np.array([x[0] for x in dataset_val])
-targets = np.array([x[1] for x in dataset_val])
-
-# 10. Make predictions
-print("Size of validation dataset:", len(dataset_val))
-print("Number of features:", len(dataset_val[0][0]))
-predictions = model.predict(transformed_features)
-
-# 11. Get metrics for validation set
-print('---------------------------------')
-print('Validation set metrics:')
-mse = mean_squared_error(targets, predictions)
-print(f'MSE: {mse}')
-mae = mean_absolute_error(targets, predictions)
-print(f'MAE: {mae}')
-r2 = r2_score(targets, predictions)
-print(f'R2: {r2}')
-# 8.1. Plot regression between ground truth and predictions with seaborn and draw regression curve
-plt.figure(figsize=((3.5,3.2)))
-sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.4}, color="#34AC8B")
-plt.xlabel('True MMSE (units)')
-plt.ylabel('Predicted MMSE (units)')
-plt.xlim(0, 30)
-plt.ylim(0, 30)
-plt.tight_layout()
-plt.show()
+# 5. Train and Test
+print("Size of the dataset:", len(dataset))
+print("Number of features:", len(dataset[0][0]))
+objects = np.array([x[0] for x in dataset])
+targets = np.array([x[1] for x in dataset])
+train_test_cv(model, cv, objects, targets)
 
 
