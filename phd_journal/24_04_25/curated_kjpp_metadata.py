@@ -78,13 +78,24 @@ def get_group(query_code: str):
 
 # Resume DataFrame
 if exists(out_filepath):
-    df = read_csv(out_filepath)
+    df = read_csv(out_filepath, sep=';')
+    # Ensure the columns for diagnoses groups are present
+    """
+    if len(df.columns) != 7 + N_DIAGNOSES_GROUPS:
+        for group in diagnoses_groups.keys():
+            if group not in df.columns:
+                # add it to the end, all with nans
+                df[group] = None
+                print(f"Diagnoses group '{group}' column was missing.")
+    """
 else:
-    df = DataFrame(columns=['PATIENT', 'SESSION', 'GENDER', 'AGE', 'EMU', 'MEDICATION', 'ALL DIAGNOSES CODES']
-                           + list(diagnoses_groups.keys()))
+    df = DataFrame(columns=['PATIENT', 'SESSION', 'GENDER', 'AGE', 'EMU', 'MEDICATION', 'ALL DIAGNOSES CODES'])
+                           #+ list(diagnoses_groups.keys()))
+
+
 
 # Read metadata_as_given
-metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_with_letters.csv', index_col=1, sep=';')
+metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_with_letters.csv', index_col=0, sep=',')
 
 # Get list of all .biosignal files
 all_files = glob('/Volumes/MMIS-Saraiv/Datasets/KJPP/autopreprocessed_biosignal/**/*.biosignal', recursive=False)
@@ -109,8 +120,6 @@ for eeg_session in all_eeg_sessions:
         not_found += 1
         continue
 
-    i = len(df)
-
     row = metadata.loc[eeg_session]
     patient_code = row['PATIENT']
     gender = row['GENDER']
@@ -127,15 +136,17 @@ for eeg_session in all_eeg_sessions:
         no_report_read += 1
         diagnoses = 'no report'
         medication = 'no report'
-        df.loc[i] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses] + [None] * N_DIAGNOSES_GROUPS
+        df.loc[len(df)] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses]  #+ [None] * N_DIAGNOSES_GROUPS
     else:
         diagnoses = []
         # only MAS1 to MAS4 (inclusive)
-        for axis, d in row.iloc[5:21].items():
+        for axis, d in row.iloc[5:20].items():
             if not pd.isna(d):
                 # fit d to the expected format 'X00.0' or 'X00'
                 d = d.replace(' ', '')
                 d = d.replace('(', '')
+                d = d.replace('\t', '')
+                d = d.upper()
                 if icd.is_valid_item(d):
                     diagnoses.append(d)
                     print(f"Valid >{d}<: {icd.get_description(d)}")
@@ -179,11 +190,13 @@ for eeg_session in all_eeg_sessions:
                             else:
                                 print(f"Invalid code >{d}<")
 
-        medication = row['MEDICATION']
+        medication = f"'{row['MEDICATION']}'"
 
-        # Add row to DataFrame with first 7 columns (general columns)
-        df.loc[i] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses] + [False] * N_DIAGNOSES_GROUPS
+        # Append row to DataFrame with first 7 columns (general columns)
+        i = len(df)
+        df.loc[i] = [patient_code, eeg_session, gender, age, emu, medication, diagnoses] # + [False] * N_DIAGNOSES_GROUPS
 
+        """
         # Detail diagnoses: mark as True the group of the diagnosis (it can be more than one)
         for d in diagnoses:
             try:
@@ -192,9 +205,10 @@ for eeg_session in all_eeg_sessions:
             except ValueError:
                 print(f"No group found for >{d}<")
                 continue
+        """
 
     # save at every row
-    df.to_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv', index=False)
+    df.to_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv', index=False, sep=';')
 
     print("Saved.")
 

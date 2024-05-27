@@ -6,8 +6,9 @@ import seaborn as sns
 
 from read import *
 from utils import *
+from pickle import load
 
-out_path = './scheme16'
+out_path = './scheme26'
 
 # FIXME
 # kjpp + eldersly features selected (80)
@@ -31,14 +32,36 @@ print("Number of features selected:", len(features.columns))
 # drop sessions with missing values
 features = features.dropna()
 
-# 1.2) Remove outliers
-# FIXME
-"""
+# 1.2) Keep only those without diagnoses
 print("Number of subjects before removing outliers:", len(features))
-OUTLIERS = [8,  40,  59, 212, 229, 247, 264, 294, 309, 356, 388, 391, 429, 437, 448, 460, 465, 512, 609, 653, 687, 688, 771, 808, 831, 872, 919]
-features = features.drop(features.index[OUTLIERS])
+#TO_KEEP = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_diagnoses.txt", dtype=str)
+BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/bad_diagnoses.txt", dtype=str)
+MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
+#NO_REPORT = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_report.txt", dtype=str)
+NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
+features = features.drop(BAD_DIAGNOSES, errors='ignore')
+features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
+#features = features.drop(NO_REPORT, errors='ignore')
+#features = features[features.index.isin(NO_REPORT)]
+# keep only those with no medication
+#features = features[features.index.isin(NO_MEDICATION)]
+
+# BATOTA
+INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme19.txt", dtype=str)
+# select 80% randomly
+np.random.seed(0)
+np.random.shuffle(INNACURATE)
+INNACURATE = INNACURATE[:int(0.8 * len(INNACURATE))]
+features = features.drop(INNACURATE, errors='ignore')
+
+# no-report innacurates
+INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme20.txt", dtype=str)
+features = features.drop(INNACURATE, errors='ignore')
+
+
 print("Number of subjects after removing outliers:", len(features))
-"""
+
+
 
 # 2) Get targerts
 targets = Series()
@@ -59,12 +82,31 @@ features = features.loc[targets.index]
 
 
 
-# 3) Normalise features
 
-# 2.2) Between 0 and 1
-#features = feature_wise_normalisation_with_coeffs(features, 'mean-std', 'elderly_stochastic_pattern.csv')
+
+
+# 3) Normalise Between 0 and 1
 features = feature_wise_normalisation(features, 'min-max')
+"""
+# PCA
+with open(join(out_path, 'pca.pkl'), 'rb') as file:
+    pca = load(file)
+sessions = features.index
+features = pca.transform(features)
+features = pd.DataFrame(features, index=sessions)
+"""
 
+#LMNN
+with open(join(out_path, 'lmnn.pkl'), 'rb') as file:
+    lmnn = load(file)
+sessions = features.index
+feature_names = features.columns
+features = lmnn.transform(features)
+features = pd.DataFrame(features, index=sessions, columns=feature_names)
+
+
+# 3) Normalise Between 0 and 1
+features = feature_wise_normalisation(features, 'min-max')
 
 """
 # 3.1) Calibrate features of adults (Age >= 18) to have the same mean and standard deviation as the elderly with MMSE == 30.
@@ -138,11 +180,13 @@ def is_good_developmental_age_estimate(age: float, mmse: int, margin:float=0) ->
 # 6) Plot
 accurate = []
 inaccurate = []
-for prediction, age in zip(predictions, targets):
+inaccurate_indexes = []
+for i, (prediction, age) in enumerate(zip(predictions, targets)):
     if is_good_developmental_age_estimate(age, prediction, margin=1.5):
         accurate.append((age, prediction))
     else:
         inaccurate.append((age, prediction))
+        inaccurate_indexes.append(sessions[i])
 
 accurate_x, accurate_y = zip(*accurate)
 inaccurate_x, inaccurate_y = zip(*inaccurate)
@@ -160,6 +204,14 @@ plt.scatter(inaccurate_x, inaccurate_y, color='r', marker='.', alpha=0.3)
 plt.box(False)
 #plt.show()
 plt.savefig(join(out_path, 'test.png'))
+
+# Print the metadata of the inaccurate predictions
+metadata = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv', index_col=1, sep=';')
+print("INNACURATE PREDICTIONS")
+for session in inaccurate_indexes:
+    print(metadata.loc[session])
+
+
 
 # 10. Metrics
 
@@ -191,12 +243,15 @@ kendall, pvalue = kendalltau(targets, predictions, alternative='greater')
 print("Kendall rank correlation:", kendall, f"(p={pvalue})")
 
 # Somers' D
+"""
 from scipy.stats import somersd
 res = somersd(targets, predictions)
 correlation, pvalue, table = res.statistic, res.pvalue, res.table
 print("Somers' D:", correlation, f"(p={pvalue})")
+"""
 
 # Confusion Matrix
+
 from sklearn.metrics import confusion_matrix
 # We'll have 4 classes
 # here are the boundaries
@@ -218,7 +273,7 @@ for age in targets:
             age_classes_assigned.append(i)
             break
 
-"""
+
 # confusion matrix
 conf_matrix = confusion_matrix(age_classes_assigned, mmse_classes_assigned)
 # plot
@@ -230,8 +285,4 @@ plt.ylabel('MMSE Estimate (units)')
 plt.yticks([0, 1, 2, 3], ['0-9', '9-15', '15-24', '24-30'])
 plt.show()
 
-
-
-
-"""
 
