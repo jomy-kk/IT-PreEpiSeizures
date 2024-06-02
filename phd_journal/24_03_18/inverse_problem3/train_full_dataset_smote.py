@@ -1,7 +1,6 @@
 from pickle import dump
 
 import numpy as np
-from combat.pycombat import pycombat, estimate_batch_effects
 from matplotlib import pyplot as plt
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
@@ -10,7 +9,7 @@ from read import *
 from read import read_all_features
 from utils import feature_wise_normalisation
 
-out_path = './scheme25'
+out_path = './scheme28'
 
 
 def train_full_dataset(model, dataset):
@@ -133,21 +132,57 @@ features = pd.DataFrame(features, index=sessions, columns=[f'PC{i}' for i in ran
 ######################
 # SMOTE DATA AUGMENTATION
 
-from imblearn.over_sampling import SMOTE
-
+# 1. Old, kind of stupid way (SMOTE designed for classification)
+#from imblearn.over_sampling import SMOTE
 # let's make target 6 -> 4, and 12 -> 9, and 15->16
-targets = targets.replace(6, 4)
-targets = targets.replace(12, 9)
-targets = targets.replace(15, 16)
-smote = SMOTE(random_state=42, k_neighbors=1, sampling_strategy='auto')
-features, targets = smote.fit_resample(features, targets)
-######################
+#targets = targets.replace(6, 4)
+#targets = targets.replace(12, 9)
+#targets = targets.replace(15, 16)
+#smote = SMOTE(random_state=42, k_neighbors=1, sampling_strategy='auto')
+#features, targets = smote.fit_resample(features, targets)
 
+# 2. New way (SMOTE designed for regression)
+import smogn
+
+# Make features and targets in the same order
+features = features.loc[targets.index]
+# Make index sequential for features and targets
+features = features.reset_index(drop=True)
+targets = targets.reset_index(drop=True)
+
+# Histogram before
+plt.hist(targets, bins=30)
+plt.title("Before")
+plt.ylim((0, 230))
+plt.show()
+
+# Append column targets
+features['target'] = targets
+# Apply SMOGN to balance the datas
+features = smogn.smoter(
+    data = features,
+    samp_method = "balance",
+    y = 'target'
+)
+
+# Drop nans
+features = features.dropna(axis=0)
+
+# Drop column targets
+targets = features['target']
+features = features.drop(columns=['target'])
+
+# Histogram after
+plt.hist(targets, bins=30)
+plt.title("After")
+plt.ylim((0, 230))
+plt.show()
+
+######################
 
 # Normalise feature vectors AFTER
 features = feature_wise_normalisation(features, method='min-max')
 features = features.dropna(axis=1)
-
 
 # 4) Convert features to an appropriate format
 # e.g. {..., 'C9': (feature_names_C9, features_C9), 'C10': (feature_names_C10, features_C10), ...}
@@ -161,6 +196,7 @@ for i, session in enumerate(sessions):
     dataset.append((features[i], targets[session]))
 
 # Save perfect score stochastic pattern (mmse == 30)
+"""
 mmse30_features = [x[0] for x in dataset if x[1] == 30]
 mmse30_features = np.array(mmse30_features)
 mmse30_stochastics = DataFrame([mmse30_features.mean(axis=0),
@@ -169,8 +205,8 @@ mmse30_stochastics = DataFrame([mmse30_features.mean(axis=0),
                                 mmse30_features.max(axis=0)],
                                index=['mean', 'std', 'min', 'max'],
                                columns=feature_names)
-#mmse30_stochastics.to_csv('elderly_mmse30_stochastic_pattern.csv')
-
+mmse30_stochastics.to_csv('elderly_mmse30_stochastic_pattern.csv')
+"""
 
 # 3) Define model
 model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0, loss='absolute_error',

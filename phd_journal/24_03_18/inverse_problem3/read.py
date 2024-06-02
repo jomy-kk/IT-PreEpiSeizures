@@ -2,6 +2,7 @@ from os.path import join
 from typing import Collection
 
 import pandas as pd
+from numpy import argmax
 from pandas import DataFrame
 from glob import glob
 
@@ -12,40 +13,83 @@ common_datasets_path = '/Volumes/MMIS-Saraiv/Datasets'
 features_dir = 'features'
 
 
-def read_spectral_features(dataset: str) -> DataFrame:
+def read_spectral_features(dataset: str, multiples: bool) -> DataFrame:
     if dataset == 'INSIGHT':
         dataset = 'DZNE/INSIGHT/EEG'
-    path = join(common_datasets_path, dataset, features_dir, 'Cohort#Spectral#Channels.csv')
+    if not multiples:
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Spectral#Channels.csv')
+    else:
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Spectral#Channels$Multiple.csv')
     return pd.read_csv(path, index_col=0)
 
-def read_hjorth_features(dataset: str) -> DataFrame:
+def read_hjorth_features(dataset: str, multiples) -> DataFrame:
     if dataset == 'INSIGHT':
         dataset = 'DZNE/INSIGHT/EEG'
-    path = join(common_datasets_path, dataset, features_dir, 'Cohort#Hjorth#Channels.csv')
+    if not multiples:
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Hjorth#Channels.csv')
+    else:
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Hjorth#Channels$Multiple.csv')
     return pd.read_csv(path, index_col=0)
 
 
-def read_pli_features(dataset: str, regions=True) -> DataFrame:
+def read_pli_features(dataset: str, multiples: bool) -> DataFrame:
     if dataset == 'INSIGHT':
         dataset = 'DZNE/INSIGHT/EEG'
-    if regions:
+    if not multiples:
         path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Regions.csv')
     else:
-        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Channels.csv')
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Regions$Multiple.csv')
     return pd.read_csv(path, index_col=0)
 
-def read_all_features(dataset) -> DataFrame:
-    spectral = read_spectral_features(dataset)
-    hjorth = read_hjorth_features(dataset)
-    pli = read_pli_features(dataset)
-    return spectral.join(hjorth).join(pli)
 
-def read_all_features_multiples() -> DataFrame:
-    connectivity = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Connectivity#Regions$Multiple.csv'), index_col=0)
-    spectral = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Spectral#Channels$Multiple.csv'), index_col=0)
-    hjorth = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', features_dir, 'Cohort#Hjorth#Channels$Multiple.csv'), index_col=0)
-    return pd.concat([connectivity, spectral, hjorth], axis=1)
+def select_safe(all_features: DataFrame, dataset: str) -> DataFrame:
+    safe = pd.read_csv(join(common_datasets_path, dataset, features_dir, 'safe_multiples.csv'), index_col=0)
+    if dataset == 'Miltiadous Dataset':
+        safe.index = [format(n, '03') for n in safe.index]
 
+    # Indexes are: 'subject$multiple'
+    # Make two indices: 'subject' and 'multiple'
+    all_features['subject'] = all_features.index.str.split('$').str[0]
+    all_features['multiple'] = all_features.index.str.split('$').str[1]
+    all_features = all_features.set_index(['subject', 'multiple'])
+
+    res = pd.DataFrame(columns=all_features.columns)
+    # Iterate by subject
+    for subject in all_features.index.get_level_values('subject').unique():
+        this_safe_multiples = eval(safe.loc[subject].iloc[0])
+        this_subject_features = all_features.loc[subject]
+
+        if len(this_safe_multiples) == 0:  # no tuples
+            # keep only the middle multiple of this subject
+            to_keep = this_subject_features.iloc[len(this_subject_features) // 2]
+            to_keep = to_keep.to_frame().T
+            to_keep.index = [subject]
+            res = pd.concat([res, to_keep])
+        elif len(this_safe_multiples) == 1:  # one tuple
+            # keep all the multiples mentioned in that tuple
+            to_keep = this_subject_features.iloc[list(this_safe_multiples[0])]
+            to_keep.index = [f"{subject}${x}" for x in to_keep.index]
+            res = pd.concat([res, to_keep])
+        elif len(this_safe_multiples) > 1:  # more than one tuple
+            # Heuristic: choose the tuple with the highest difference between its elements
+            furthest_away_tuple = max(this_safe_multiples, key=lambda t: sum(t[i+1] - t[i] for i in range(len(t)-1)))
+            to_keep = this_subject_features.iloc[list(furthest_away_tuple)]
+            to_keep.index = [f"{subject}${x}" for x in to_keep.index]
+            res = pd.concat([res, to_keep])
+
+    return res
+
+
+def read_all_features(dataset, multiples=False) -> DataFrame:
+    spectral = read_spectral_features(dataset, multiples)
+    hjorth = read_hjorth_features(dataset, multiples)
+    pli = read_pli_features(dataset, multiples)
+    res = spectral.join(hjorth).join(pli)
+
+    if not multiples or dataset == 'INSIGHT' or dataset == 'KJPP':
+        return res
+    else:
+        return select_safe(res, dataset)
 
 def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
