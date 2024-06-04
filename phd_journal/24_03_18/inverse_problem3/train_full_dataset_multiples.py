@@ -9,7 +9,7 @@ from read import *
 from read import read_all_features
 from utils import feature_wise_normalisation
 
-out_path = './scheme29'
+out_path = './scheme35'
 
 
 def train_full_dataset(model, dataset):
@@ -67,6 +67,7 @@ features = pd.concat([brainlat, miltiadous, sapienza, insight], axis=0)
 print("Read all features. Shape:", features.shape)
 
 
+"""
 # Features transformation
 # 80 features from elders RFE
 FEATURES_SELECTED_OLD = ['Spectral#RelativePower#C3#beta1', 'Spectral#EdgeFrequency#C3#beta3', 'Spectral#RelativePower#C3#gamma', 'Spectral#EdgeFrequency#C4#alpha1', 'Spectral#RelativePower#C4#beta3', 'Spectral#EdgeFrequency#C4#beta3', 'Spectral#EdgeFrequency#C4#gamma', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#EdgeFrequency#Cz#beta3', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#PeakFrequency#Cz#gamma', 'Spectral#RelativePower#F3#beta1', 'Spectral#Diff#F4#delta', 'Spectral#RelativePower#F7#beta3', 'Spectral#EdgeFrequency#F7#beta3', 'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F8#beta1', 'Spectral#EdgeFrequency#F8#beta3', 'Spectral#RelativePower#Fp1#beta1', 'Spectral#EdgeFrequency#Fp1#beta3', 'Spectral#Diff#Fp2#delta', 'Spectral#RelativePower#Fp2#beta1', 'Spectral#RelativePower#Fp2#beta3', 'Spectral#Diff#Fpz#beta2', 'Spectral#Entropy#O1#delta', 'Spectral#RelativePower#O1#beta2', 'Spectral#EdgeFrequency#O1#beta2', 'Spectral#EdgeFrequency#O1#beta3', 'Spectral#RelativePower#O2#delta', 'Spectral#PeakFrequency#O2#alpha1', 'Spectral#RelativePower#O2#beta1', 'Spectral#RelativePower#O2#beta3', 'Spectral#Diff#P3#beta1', 'Spectral#RelativePower#P3#beta3', 'Spectral#RelativePower#Pz#alpha1', 'Spectral#EdgeFrequency#Pz#beta3', 'Spectral#RelativePower#T4#alpha1', 'Spectral#RelativePower#T4#beta3', 'Spectral#RelativePower#T4#gamma', 'Spectral#EdgeFrequency#T5#beta2', 'Hjorth#Complexity#T5', 'Hjorth#Complexity#P4', 'Hjorth#Complexity#F7', 'Hjorth#Complexity#T4', 'Hjorth#Complexity#F8', 'Hjorth#Complexity#T3', 'Hjorth#Mobility#P3', 'PLI#Frontal(L)-Temporal(R)#alpha1', 'PLI#Frontal(L)-Occipital(L)#alpha1', 'PLI#Frontal(R)-Temporal(R)#alpha1', 'PLI#Temporal(R)-Parietal(R)#alpha1', 'PLI#Temporal(R)-Occipital(L)#alpha1', 'PLI#Parietal(R)-Occipital(L)#alpha1', 'PLI#Occipital(L)-Occipital(R)#alpha1', 'PLI#Temporal(R)-Occipital(R)#alpha2', 'PLI#Parietal(R)-Occipital(L)#alpha2', 'COH#Frontal(L)-Frontal(R)#theta', 'COH#Frontal(L)-Occipital(L)#theta', 'COH#Frontal(L)-Occipital(R)#alpha1', 'COH#Frontal(R)-Occipital(L)#alpha1', 'COH#Parietal(R)-Occipital(L)#alpha1', 'COH#Frontal(L)-Frontal(R)#alpha2', 'COH#Frontal(L)-Occipital(R)#alpha2', 'COH#Parietal(R)-Occipital(L)#alpha2', 'COH#Parietal(R)-Occipital(R)#alpha2', 'COH#Occipital(L)-Occipital(R)#alpha2', 'COH#Frontal(L)-Occipital(L)#beta1', 'COH#Temporal(R)-Parietal(R)#beta1', 'COH#Parietal(R)-Occipital(R)#beta1', 'COH#Frontal(L)-Parietal(L)#beta2', 'COH#Frontal(R)-Occipital(L)#beta2', 'COH#Frontal(L)-Temporal(R)#beta3', 'COH#Frontal(L)-Parietal(L)#beta3', 'COH#Frontal(L)-Occipital(L)#beta3', 'COH#Frontal(L)-Occipital(R)#beta3', 'COH#Frontal(R)-Occipital(L)#beta3', 'COH#Temporal(L)-Occipital(R)#beta3', 'COH#Frontal(L)-Occipital(R)#gamma', 'COH#Frontal(R)-Occipital(R)#gamma']
@@ -78,6 +79,12 @@ for feature in FEATURES_SELECTED_OLD:
 FEATURES_SELECTED = list(set(FEATURES_SELECTED))
 features = features[FEATURES_SELECTED]
 print("Number of features selected:", len(features.columns))
+features = features.dropna(axis=0)
+"""
+
+# new: MI + RFE (932 -> 200 -> 80 features)
+FEATURES_SELECTED = ['Spectral#PeakFrequency#C3#delta', 'Spectral#Entropy#C3#theta', 'Spectral#Flatness#C3#alpha', 'Spectral#EdgeFrequency#C3#alpha', 'Spectral#PeakFrequency#C3#alpha', 'Spectral#Diff#C3#alpha', 'Spectral#Entropy#C3#beta', 'Spectral#Diff#C3#beta', 'Spectral#Entropy#C3#gamma', 'Spectral#Flatness#C3#gamma', 'Spectral#EdgeFrequency#C4#delta', 'Spectral#PeakFrequency#C4#delta', 'Spectral#Diff#C4#delta', 'Spectral#RelativePower#C4#theta', 'Spectral#Flatness#C4#theta', 'Spectral#Flatness#C4#alpha', 'Spectral#EdgeFrequency#C4#alpha', 'Spectral#PeakFrequency#C4#alpha', 'Spectral#RelativePower#C4#beta', 'Spectral#Entropy#C4#beta', 'Spectral#RelativePower#C4#gamma', 'Spectral#Flatness#C4#gamma', 'Spectral#PeakFrequency#C4#gamma', 'Spectral#Diff#C4#gamma', 'Spectral#RelativePower#Cz#delta', 'Spectral#Flatness#Cz#delta', 'Spectral#Diff#Cz#delta', 'Spectral#RelativePower#Cz#theta', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#Entropy#Cz#alpha', 'Spectral#EdgeFrequency#Cz#alpha', 'Spectral#RelativePower#Cz#beta', 'Spectral#EdgeFrequency#Cz#beta', 'Spectral#Flatness#Cz#gamma', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#RelativePower#F3#delta', 'Spectral#Flatness#F3#delta', 'Spectral#RelativePower#F3#theta', 'Spectral#Entropy#F3#theta', 'Spectral#EdgeFrequency#F3#theta', 'Spectral#PeakFrequency#F3#theta', 'Spectral#Diff#F3#theta', 'Spectral#RelativePower#F3#beta', 'Spectral#EdgeFrequency#F3#beta', 'Spectral#PeakFrequency#F3#beta', 'Spectral#EdgeFrequency#F3#gamma', 'Spectral#Diff#F3#gamma', 'Spectral#RelativePower#F4#delta', 'Spectral#Diff#F4#theta', 'Spectral#PeakFrequency#F4#alpha', 'Spectral#RelativePower#F4#gamma', 'Spectral#Entropy#F4#gamma', 'Spectral#PeakFrequency#F4#gamma', 'Spectral#RelativePower#F7#delta', 'Spectral#Entropy#F7#delta', 'Spectral#Flatness#F7#delta', 'Spectral#EdgeFrequency#F7#delta', 'Spectral#Entropy#F7#theta', 'Spectral#EdgeFrequency#F7#theta', 'Spectral#Diff#F7#theta', 'Spectral#Entropy#F7#alpha', 'Spectral#Entropy#F7#beta', 'Spectral#EdgeFrequency#F7#beta', 'Spectral#PeakFrequency#F7#beta', 'Spectral#Entropy#F7#gamma', 'Spectral#EdgeFrequency#F7#gamma', 'Spectral#RelativePower#F8#delta', 'Spectral#Flatness#F8#delta', 'Spectral#EdgeFrequency#F8#delta', 'Spectral#Entropy#F8#theta', 'Spectral#EdgeFrequency#F8#theta', 'Spectral#PeakFrequency#F8#theta', 'Spectral#Diff#F8#theta', 'Spectral#RelativePower#F8#alpha', 'Spectral#Flatness#F8#alpha', 'Spectral#EdgeFrequency#F8#alpha', 'Spectral#PeakFrequency#F8#alpha', 'Spectral#RelativePower#F8#beta', 'Spectral#Entropy#F8#beta']
+features = features[FEATURES_SELECTED]
 features = features.dropna(axis=0)
 
 # 2) Get targets
@@ -121,6 +128,7 @@ features = features.loc[targets.index]
 features = feature_wise_normalisation(features, method='min-max')
 features = features.dropna(axis=1)
 
+"""
 ######################
 # 3) Data Augmentation in the underrepresented MMSE scores
 print("DATA AUGMENTATION")
@@ -167,6 +175,74 @@ print("MMSE distribution after augmentation:")
 for i, mmse in enumerate(mmse_scores):
     print(f"MMSE {mmse}: {mmse_distribution_after[i]} examples")
 ######################
+"""
+######################
+# SMOTE-C
+
+from imblearn.over_sampling import SMOTE
+# let's make targe 15->12
+#targets = targets.replace(15, 12)
+smote = SMOTE(random_state=42, k_neighbors=5, sampling_strategy='auto')
+
+# Histogram before
+plt.hist(targets, bins=30)
+plt.title("Before")
+plt.ylim((0, 230))
+plt.show()
+
+features, targets = smote.fit_resample(features, targets)
+
+# Histogram after
+plt.hist(targets, bins=30)
+plt.title("After")
+plt.ylim((0, 230))
+plt.show()
+
+######################
+
+######################
+# SMOTE-R
+"""
+import smogn
+
+# Histogram before
+plt.hist(targets, bins=30)
+plt.title("Before")
+plt.ylim((0, 230))
+plt.show()
+
+# Append column targets
+features['target'] = targets
+# make index sequential
+features = features.reset_index(drop=True)
+features = features.dropna()
+# Apply SMOGN to balance the datas
+features = smogn.smoter(
+    data = features,
+    k=1,
+    samp_method = "extreme",
+    y = 'target'
+)
+
+# Drop nans
+features = features.dropna(axis=0)
+
+# Drop column targets
+targets = features['target']
+features = features.drop(columns=['target'])
+
+# Drop index
+features = features.reset_index(drop=True)
+targets = targets.reset_index(drop=True)
+
+# Histogram after
+plt.hist(targets, bins=30)
+plt.title("After")
+plt.ylim((0, 230))
+plt.show()
+"""
+######################
+
 
 # Normalise feature vectors AFTER
 features = feature_wise_normalisation(features, method='min-max')
@@ -179,7 +255,7 @@ features = features.dropna(axis=1)
 # e.g. [..., features_C9, features_C10, ...]
 feature_names = features.columns.to_numpy()
 sessions = features.index.to_numpy()
-features = [features.loc[code].to_numpy() for code in sessions]
+features = features.to_numpy(copy=True)
 dataset = []
 for i, session in enumerate(sessions):
     dataset.append((features[i], targets[session]))
@@ -198,7 +274,7 @@ mmse30_stochastics.to_csv('elderly_mmse30_stochastic_pattern.csv')
 """
 
 # 3) Define model
-model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0, loss='absolute_error',
+model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
                                   learning_rate=0.04,)
 
 # 4) Train a model and save

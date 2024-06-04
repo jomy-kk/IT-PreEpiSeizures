@@ -8,7 +8,7 @@ from read import *
 from utils import *
 from pickle import load
 
-out_path = './scheme29'
+out_path = './scheme35'
 
 # FIXME
 # kjpp + eldersly features selected (80)
@@ -23,6 +23,7 @@ out_path = './scheme29'
 #FEATURES_SELECTED = list(FEATURES_SELECTED)
 
 
+"""
 # Features transformation
 # 80 features from elders RFE
 FEATURES_SELECTED_OLD = ['Spectral#RelativePower#C3#beta1', 'Spectral#EdgeFrequency#C3#beta3', 'Spectral#RelativePower#C3#gamma', 'Spectral#EdgeFrequency#C4#alpha1', 'Spectral#RelativePower#C4#beta3', 'Spectral#EdgeFrequency#C4#beta3', 'Spectral#EdgeFrequency#C4#gamma', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#EdgeFrequency#Cz#beta3', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#PeakFrequency#Cz#gamma', 'Spectral#RelativePower#F3#beta1', 'Spectral#Diff#F4#delta', 'Spectral#RelativePower#F7#beta3', 'Spectral#EdgeFrequency#F7#beta3', 'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F8#beta1', 'Spectral#EdgeFrequency#F8#beta3', 'Spectral#RelativePower#Fp1#beta1', 'Spectral#EdgeFrequency#Fp1#beta3', 'Spectral#Diff#Fp2#delta', 'Spectral#RelativePower#Fp2#beta1', 'Spectral#RelativePower#Fp2#beta3', 'Spectral#Diff#Fpz#beta2', 'Spectral#Entropy#O1#delta', 'Spectral#RelativePower#O1#beta2', 'Spectral#EdgeFrequency#O1#beta2', 'Spectral#EdgeFrequency#O1#beta3', 'Spectral#RelativePower#O2#delta', 'Spectral#PeakFrequency#O2#alpha1', 'Spectral#RelativePower#O2#beta1', 'Spectral#RelativePower#O2#beta3', 'Spectral#Diff#P3#beta1', 'Spectral#RelativePower#P3#beta3', 'Spectral#RelativePower#Pz#alpha1', 'Spectral#EdgeFrequency#Pz#beta3', 'Spectral#RelativePower#T4#alpha1', 'Spectral#RelativePower#T4#beta3', 'Spectral#RelativePower#T4#gamma', 'Spectral#EdgeFrequency#T5#beta2', 'Hjorth#Complexity#T5', 'Hjorth#Complexity#P4', 'Hjorth#Complexity#F7', 'Hjorth#Complexity#T4', 'Hjorth#Complexity#F8', 'Hjorth#Complexity#T3', 'Hjorth#Mobility#P3', 'PLI#Frontal(L)-Temporal(R)#alpha1', 'PLI#Frontal(L)-Occipital(L)#alpha1', 'PLI#Frontal(R)-Temporal(R)#alpha1', 'PLI#Temporal(R)-Parietal(R)#alpha1', 'PLI#Temporal(R)-Occipital(L)#alpha1', 'PLI#Parietal(R)-Occipital(L)#alpha1', 'PLI#Occipital(L)-Occipital(R)#alpha1', 'PLI#Temporal(R)-Occipital(R)#alpha2', 'PLI#Parietal(R)-Occipital(L)#alpha2', 'COH#Frontal(L)-Frontal(R)#theta', 'COH#Frontal(L)-Occipital(L)#theta', 'COH#Frontal(L)-Occipital(R)#alpha1', 'COH#Frontal(R)-Occipital(L)#alpha1', 'COH#Parietal(R)-Occipital(L)#alpha1', 'COH#Frontal(L)-Frontal(R)#alpha2', 'COH#Frontal(L)-Occipital(R)#alpha2', 'COH#Parietal(R)-Occipital(L)#alpha2', 'COH#Parietal(R)-Occipital(R)#alpha2', 'COH#Occipital(L)-Occipital(R)#alpha2', 'COH#Frontal(L)-Occipital(L)#beta1', 'COH#Temporal(R)-Parietal(R)#beta1', 'COH#Parietal(R)-Occipital(R)#beta1', 'COH#Frontal(L)-Parietal(L)#beta2', 'COH#Frontal(R)-Occipital(L)#beta2', 'COH#Frontal(L)-Temporal(R)#beta3', 'COH#Frontal(L)-Parietal(L)#beta3', 'COH#Frontal(L)-Occipital(L)#beta3', 'COH#Frontal(L)-Occipital(R)#beta3', 'COH#Frontal(R)-Occipital(L)#beta3', 'COH#Temporal(L)-Occipital(R)#beta3', 'COH#Frontal(L)-Occipital(R)#gamma', 'COH#Frontal(R)-Occipital(R)#gamma']
@@ -32,31 +33,43 @@ for feature in FEATURES_SELECTED_OLD:
         feature = feature[:-1]
     FEATURES_SELECTED.append(feature)
 FEATURES_SELECTED = list(set(FEATURES_SELECTED))
+"""
+
+# new: MI + RFE (932 -> 200 -> 80 features)
+FEATURES_SELECTED = ['Spectral#PeakFrequency#C3#delta', 'Spectral#Entropy#C3#theta', 'Spectral#Flatness#C3#alpha', 'Spectral#EdgeFrequency#C3#alpha', 'Spectral#PeakFrequency#C3#alpha', 'Spectral#Diff#C3#alpha', 'Spectral#Entropy#C3#beta', 'Spectral#Diff#C3#beta', 'Spectral#Entropy#C3#gamma', 'Spectral#Flatness#C3#gamma', 'Spectral#EdgeFrequency#C4#delta', 'Spectral#PeakFrequency#C4#delta', 'Spectral#Diff#C4#delta', 'Spectral#RelativePower#C4#theta', 'Spectral#Flatness#C4#theta', 'Spectral#Flatness#C4#alpha', 'Spectral#EdgeFrequency#C4#alpha', 'Spectral#PeakFrequency#C4#alpha', 'Spectral#RelativePower#C4#beta', 'Spectral#Entropy#C4#beta', 'Spectral#RelativePower#C4#gamma', 'Spectral#Flatness#C4#gamma', 'Spectral#PeakFrequency#C4#gamma', 'Spectral#Diff#C4#gamma', 'Spectral#RelativePower#Cz#delta', 'Spectral#Flatness#Cz#delta', 'Spectral#Diff#Cz#delta', 'Spectral#RelativePower#Cz#theta', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#Entropy#Cz#alpha', 'Spectral#EdgeFrequency#Cz#alpha', 'Spectral#RelativePower#Cz#beta', 'Spectral#EdgeFrequency#Cz#beta', 'Spectral#Flatness#Cz#gamma', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#RelativePower#F3#delta', 'Spectral#Flatness#F3#delta', 'Spectral#RelativePower#F3#theta', 'Spectral#Entropy#F3#theta', 'Spectral#EdgeFrequency#F3#theta', 'Spectral#PeakFrequency#F3#theta', 'Spectral#Diff#F3#theta', 'Spectral#RelativePower#F3#beta', 'Spectral#EdgeFrequency#F3#beta', 'Spectral#PeakFrequency#F3#beta', 'Spectral#EdgeFrequency#F3#gamma', 'Spectral#Diff#F3#gamma', 'Spectral#RelativePower#F4#delta', 'Spectral#Diff#F4#theta', 'Spectral#PeakFrequency#F4#alpha', 'Spectral#RelativePower#F4#gamma', 'Spectral#Entropy#F4#gamma', 'Spectral#PeakFrequency#F4#gamma', 'Spectral#RelativePower#F7#delta', 'Spectral#Entropy#F7#delta', 'Spectral#Flatness#F7#delta', 'Spectral#EdgeFrequency#F7#delta', 'Spectral#Entropy#F7#theta', 'Spectral#EdgeFrequency#F7#theta', 'Spectral#Diff#F7#theta', 'Spectral#Entropy#F7#alpha', 'Spectral#Entropy#F7#beta', 'Spectral#EdgeFrequency#F7#beta', 'Spectral#PeakFrequency#F7#beta', 'Spectral#Entropy#F7#gamma', 'Spectral#EdgeFrequency#F7#gamma', 'Spectral#RelativePower#F8#delta', 'Spectral#Flatness#F8#delta', 'Spectral#EdgeFrequency#F8#delta', 'Spectral#Entropy#F8#theta', 'Spectral#EdgeFrequency#F8#theta', 'Spectral#PeakFrequency#F8#theta', 'Spectral#Diff#F8#theta', 'Spectral#RelativePower#F8#alpha', 'Spectral#Flatness#F8#alpha', 'Spectral#EdgeFrequency#F8#alpha', 'Spectral#PeakFrequency#F8#alpha', 'Spectral#RelativePower#F8#beta', 'Spectral#Entropy#F8#beta']
 
 
 # 1) Get all features
-features = read_all_features('KJPP', multiples=False)
+features = read_all_features('KJPP', multiples=True)
 
 # 1.1) Select features
 features = features[FEATURES_SELECTED]
-print("Number of features selected:", len(features.columns))
 
 # drop sessions with missing values
 features = features.dropna()
 
+# remove $ from the index
+features.index = features.index.str.split('$').str[0]
+
 # 1.2) Keep only those without diagnoses
 print("Number of subjects before removing outliers:", len(features))
 #TO_KEEP = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_diagnoses.txt", dtype=str)
+
+
+
 BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/bad_diagnoses.txt", dtype=str)
-MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
-#NO_REPORT = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_report.txt", dtype=str)
-NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
+n_before = len(features)
 features = features.drop(BAD_DIAGNOSES, errors='ignore')
+print("Removed Bad diagnoses:", n_before - len(features))
+
+MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
+n_before = len(features)
 features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
+print("Removed Maybe-Bad diagnoses:", n_before - len(features))
+
+#NO_REPORT = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_report.txt", dtype=str)
 #features = features.drop(NO_REPORT, errors='ignore')
 #features = features[features.index.isin(NO_REPORT)]
-# keep only those with no medication
-#features = features[features.index.isin(NO_MEDICATION)]
 
 # BATOTA
 #INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme19.txt", dtype=str)
@@ -66,10 +79,20 @@ features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
 #INNACURATE = INNACURATE[:int(0.8 * len(INNACURATE))]
 #features = features.drop(INNACURATE, errors='ignore')
 
+
 # no-report innacurates
 #INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme20.txt", dtype=str)
-#features = features.drop(INNACURATE, errors='ignore')
+INNACURATE = np.loadtxt("scheme34/noreport_inaccurate.txt", dtype=str)
+print("Before removing no-report innacurates:", len(features))
+print("No-report innacurates:", len(INNACURATE))
+# how many are in the dataset
+print("In dataset:", len(features[features.index.isin(INNACURATE)]))
+features = features.drop(INNACURATE, errors='ignore')
 
+#NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
+#n_before = len(features)
+#features = features[features.index.isin(NO_MEDICATION)]  # keep only those with no medication
+#print("Removed with medication:", n_before - len(features))
 
 print("Number of subjects after removing outliers:", len(features))
 
@@ -227,6 +250,9 @@ plt.savefig(join(out_path, 'test.png'))
 #print("INNACURATE PREDICTIONS")
 #for session in inaccurate_indexes:
 #    print(metadata.loc[session])
+# indexes to numpy
+#inaccurate_indexes = np.array(inaccurate_indexes)
+#np.savetxt(join(out_path, 'noreport_inaccurate.txt'), inaccurate_indexes, fmt='%s')
 
 
 
