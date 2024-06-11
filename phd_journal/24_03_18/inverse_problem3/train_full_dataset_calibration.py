@@ -41,16 +41,19 @@ def train_full_dataset(model, dataset):
 
     # 8. Plot regression between ground truth and predictions with seaborn and draw regression curve
     import seaborn as sns
-    plt.figure(figsize=((5.2,5)))
-    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3})
-    #plt.title(str(model))
-    plt.xlabel('True MMSE (units)')
-    plt.ylabel('Predicted MMSE (units)')
+    plt.figure()
+    plt.ylabel('MMSE Estimate', fontsize=12)
+    plt.xlabel('True MMSE (units)', fontsize=12)
     plt.xlim(0, 30)
     plt.ylim(0, 30)
+    plt.grid(linestyle='--', alpha=0.4)
+    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'}, line_kws={'color': '#C60E4F'})
+    plt.xticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=12)
+    plt.yticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=12)
     plt.tight_layout()
+    plt.box(False)
     #plt.show()
-    plt.savefig(join(out_path, 'train.png'))
+    plt.savefig(join(out_path, 'train.pdf'))
 
     # 9. Serialize model
     with open(join(out_path, 'model.pkl'), 'wb') as f:
@@ -112,6 +115,13 @@ features = feature_wise_normalisation(features, method='min-max')
 features = features.dropna(axis=1)
 
 
+mmse_scores = sorted(list(set(targets)))
+mmse_distribution = [len(targets[targets == mmse]) for mmse in mmse_scores]
+print("MMSE distribution before augmentation:")
+for i, mmse in enumerate(mmse_scores):
+    print(f"MMSE {mmse}: {mmse_distribution[i]} examples")
+
+"""
 ######################
 # SMOTE DATA AUGMENTATION
 
@@ -124,7 +134,7 @@ targets = targets.replace(15, 16)
 smote = SMOTE(random_state=42, k_neighbors=1, sampling_strategy='auto')
 features, targets = smote.fit_resample(features, targets)
 ######################
-
+"""
 
 # Normalise feature vectors AFTER
 features = feature_wise_normalisation(features, method='min-max')

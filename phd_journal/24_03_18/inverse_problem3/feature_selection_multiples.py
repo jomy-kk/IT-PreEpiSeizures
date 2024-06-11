@@ -294,15 +294,15 @@ dataset, dataset_feature_selection = train_test_split(dataset, test_size=0.7, ra
 print("Size of the dataset for feature selection:", len(dataset_feature_selection))
 
 # 5.2) Define model
-model = GradientBoostingRegressor(n_estimators=200, max_depth=10, random_state=0, loss='absolute_error',
+model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
                                   learning_rate=0.04,)
 
-# 6.1. Feature Selection 1 (Mutual Information)
+# 6.1. Feature Selection 1 (Pearson Correlation)
 print("Number of features before:", len(dataset_feature_selection[0][0]))
 objects = np.array([x[0] for x in dataset_feature_selection])
 targets = np.array([x[1] for x in dataset_feature_selection])
-transformed_features, indices = mutual_information_selection(objects, targets, features_to_select=200, feature_names=feature_names)
-print("Number of features after MI exclusion:", transformed_features.shape[1])
+transformed_features, indices = person_correlation_selection(objects, targets, features_to_select=200, feature_names=feature_names)
+print("Number of features after Pearson exclusion:", transformed_features.shape[1])
 # update dataset for further feature selection
 dataset_feature_selection = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset_feature_selection]
 # update dataset for training and testing

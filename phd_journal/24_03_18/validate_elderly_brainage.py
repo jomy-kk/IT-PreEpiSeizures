@@ -9,51 +9,35 @@ FEATURES_SELECTED = ['Spectral#Diff#C3#theta', 'Spectral#RelativePower#C3#gamma'
 # 1) Get all features
 insight = read_all_features('INSIGHT')
 insight = insight[FEATURES_SELECTED]
-#brainlat = read_all_features('BrainLat')
-#brainlat = brainlat[FEATURES_SELECTED]
-#miltiadous = read_all_features('Miltiadous Dataset')
-#miltiadous = miltiadous[FEATURES_SELECTED]
-#elderly = pd.concat([insight, brainlat, miltiadous], axis=0)
-elderly = insight.copy()
+sapienza = read_all_features('Sapienza')
+sapienza = sapienza[FEATURES_SELECTED]
+elderly = pd.concat([insight, sapienza], axis=0)
 
 # Drop subject_sessions with nans
 elderly = elderly.dropna()
-
 
 # 2) Normalise features
 
 # 2.1) With mean-std of KJPP
 elderly = feature_wise_normalisation_with_coeffs(elderly, 'mean-std', 'kjpp_stochastic_pattern.csv')
 
-
 # 3) Get all targets
-#insight_targets = read_mmse('INSIGHT')
 insight_brainages = read_brainage('INSIGHT')
 insight_ages = read_ages('INSIGHT')
-#brainlat_targets = read_mmse('BrainLat')
-#miltiadous_targets = read_mmse('Miltiadous Dataset')
-"""
-elderly['targets'] = None
-for index in elderly.index:
-    if '_' in str(index):  # insight
-        key = int(index.split('_')[0])
-        if key in insight_targets:
-            elderly.loc[index, 'targets'] = insight_targets[key]
-    elif '-' in str(index):  # brainlat
-        if index in brainlat_targets:
-            elderly.loc[index, 'targets'] = brainlat_targets[index]
-    else:  # miltiadous
-        # parse e.g. 24 -> 'sub-024'; 1 -> 'sub-001'
-        key = 'sub-' + str(index).zfill(3)
-        if key:
-            elderly.loc[index, 'targets'] = miltiadous_targets[key]
-"""
+sapienza_brainages = read_brainage('Sapienza')
+sapienza_ages = read_ages('Sapienza')
 # Assign targets to elderly
 targets = Series()
 for index in elderly.index:
-    key = int(index.split('_')[0])
-    if key in insight_brainages:
-        targets.loc[index] = insight_brainages[key] - insight_ages[key]
+    if '_' in index:
+        key = int(index.split('_')[0])
+        if key in insight_brainages:
+            targets.loc[index] = insight_brainages[key] - insight_ages[key]
+    elif index in sapienza_brainages:
+        key = index
+        targets.loc[index] = sapienza_brainages[key] - sapienza_ages[key]
+    else:
+        print('No target for', index)
 
 """
 # 2.2) Calibrate features with target > 1 making them have the same mean and std of KJPP adults

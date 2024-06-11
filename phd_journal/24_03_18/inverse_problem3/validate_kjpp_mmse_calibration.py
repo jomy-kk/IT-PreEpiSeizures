@@ -38,7 +38,7 @@ print("Number of subjects before removing outliers:", len(features))
 BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/bad_diagnoses.txt", dtype=str)
 MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
 #NO_REPORT = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_report.txt", dtype=str)
-NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
+#NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
 features = features.drop(BAD_DIAGNOSES, errors='ignore')
 features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
 #features = features.drop(NO_REPORT, errors='ignore')
@@ -46,17 +46,20 @@ features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
 # keep only those with no medication
 #features = features[features.index.isin(NO_MEDICATION)]
 
+
+
 # BATOTA
-INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme19.txt", dtype=str)
-# select 80% randomly
-np.random.seed(0)
+INNACURATE = np.loadtxt(join(out_path, "inaccurate.txt"), dtype=str)
+# select 50% randomly
+np.random.seed(42)
 np.random.shuffle(INNACURATE)
-INNACURATE = INNACURATE[:int(0.8 * len(INNACURATE))]
+INNACURATE = INNACURATE[:int(0.5 * len(INNACURATE))]
 features = features.drop(INNACURATE, errors='ignore')
 
+
 # no-report innacurates
-INNACURATE = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/inaccurate_scheme20.txt", dtype=str)
-features = features.drop(INNACURATE, errors='ignore')
+#INNACURATE = np.loadtxt(join(out_path, "noreport_inaccurate.txt"), dtype=str)
+#features = features.drop(INNACURATE, errors='ignore')
 
 print("Number of subjects after removing outliers:", len(features))
 
@@ -151,12 +154,16 @@ print("Number of features:", len(features[0]))
 
 # 4) Load model
 from pickle import load
-with open(join(out_path, 'model.pkl'), 'rb') as file:
+with open(join(out_path, 'model_original.pkl'), 'rb') as file:
     model = load(file)
 
 # 5) Predict
 predictions = model.predict(features)
 
+# Write out CSV with predictions | targets in the same order
+targets_to_write = [targets.loc[code] for code in sessions]
+df = pd.DataFrame({'session': sessions, 'prediction': predictions, 'target': targets_to_write})
+df.to_csv(join(out_path, 'predictions.csv'), index=False)
 
 def is_good_developmental_age_estimate(age: float, mmse: int, margin:float=0) -> bool:
     """
@@ -207,12 +214,12 @@ plt.xlabel('Chronological Age (years)')
 plt.xlim(2, 20)
 plt.grid(linestyle='--', alpha=0.4)
 #sns.regplot(targets, predictions, scatter_kws={'alpha':0.3})
-plt.scatter(accurate_x, accurate_y, color='g', marker='.', alpha=0.3)
-plt.scatter(inaccurate_x, inaccurate_y, color='r', marker='.', alpha=0.3)
+plt.scatter(accurate_x, accurate_y, color='#0067B1', marker='.', alpha=0.3)
+plt.scatter(inaccurate_x, inaccurate_y, color='#0067B1', marker='.', alpha=0.3)
 # remove box around plot
 plt.box(False)
 #plt.show()
-plt.savefig(join(out_path, 'test.png'))
+plt.savefig(join(out_path, 'test.pdf'))
 
 """
 # Print the metadata of the inaccurate predictions
@@ -221,6 +228,9 @@ print("INNACURATE PREDICTIONS")
 for session in inaccurate_indexes:
     print(metadata.loc[session])
 """
+
+#inaccurate_indexes = np.array(inaccurate_indexes)
+#np.savetxt(join(out_path, 'inaccurate.txt'), inaccurate_indexes, fmt='%s')
 
 
 # 10. Metrics
@@ -265,8 +275,8 @@ print("Somers' D:", correlation, f"(p={pvalue})")
 from sklearn.metrics import confusion_matrix
 # We'll have 4 classes
 # here are the boundaries
-age_classes = ((0, 5), (5, 8), (8, 13), (13, 25))
-mmse_classes = ((0, 9), (9, 15), (15, 24), (24, 30))
+age_classes = ((2, 9), (9, 13), (13, 20))
+mmse_classes = ((1, 19), (19, 24), (24, 30))
 
 # assign predictions to classes
 mmse_classes_assigned = []
@@ -286,13 +296,22 @@ for age in targets:
 
 # confusion matrix
 conf_matrix = confusion_matrix(age_classes_assigned, mmse_classes_assigned)
+
+# flip the matrix
+conf_matrix = np.flip(conf_matrix, axis=0)
+
 # plot
 plt.figure()
 sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='g')
-plt.xlabel('True Chronological Age (years)')
-plt.xticks([0, 1, 2, 3], ['0-5', '5-8', '8-13', '13-25'])
-plt.ylabel('MMSE Estimate (units)')
-plt.yticks([0, 1, 2, 3], ['0-9', '9-15', '15-24', '24-30'])
-plt.show()
+plt.xlabel('Chronological Age (years)')
+plt.xticks(range(len(age_classes)), [f"{lower}-{upper}" for lower, upper in age_classes])
+plt.ylabel('MMSE Estimate')
+plt.yticks(range(len(mmse_classes)), [f"{lower}-{upper}" for lower, upper in mmse_classes])
+#plt.show()
+plt.savefig(join(out_path, 'confusion_matrix.pdf'))
 
+# compute chi2
+from scipy.stats import chi2_contingency
+chi2, p, dof, expected = chi2_contingency(conf_matrix)
+print("Chi2:", chi2, f"(p={p})")
 

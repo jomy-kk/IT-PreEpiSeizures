@@ -29,9 +29,9 @@ def read_pli_features(dataset: str, regions=True) -> DataFrame:
     if dataset == 'INSIGHT':
         dataset = 'DZNE/INSIGHT/EEG'
     if regions:
-        path = join(common_datasets_path, dataset, features_dir, 'Cohort#PLI#Regions.csv')
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Regions.csv')
     else:
-        path = join(common_datasets_path, dataset, features_dir, 'Cohort#PLI#Channels.csv')
+        path = join(common_datasets_path, dataset, features_dir, 'Cohort#Connectivity#Channels.csv')
     return pd.read_csv(path, index_col=0)
 
 def read_all_features(dataset) -> DataFrame:
@@ -47,6 +47,9 @@ def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'INSIGHT':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/SocioDemog.csv', sep=',')
         return {int(row['CODE']): row['AGE'] for _, row in df.iterrows()}
+    if dataset == 'Sapienza':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Sapienza/metadata.csv', sep=',')
+        return {row['ID']: row['AGE'] for _, row in df.iterrows()}
 
 
 def read_mmse(dataset: str) -> dict[str, float|int]:
@@ -65,6 +68,9 @@ def read_brainage(dataset: str) -> dict[int, float]:
     if dataset == 'INSIGHT':
         df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/brainage_scores.csv', sep=',')
         return {int(row['CODE']): row['BRAIN AGE'] for _, row in df.iterrows()}
+    if dataset == 'Sapienza':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Sapienza/brainages_all.csv', sep=',')
+        return {row['CODE']: row['BRAIN AGE'] for _, row in df.iterrows()}
 
 
 def read_all_eeg(dataset: str, N=None) -> Collection[EEG]:
