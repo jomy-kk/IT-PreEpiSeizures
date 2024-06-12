@@ -47,7 +47,7 @@ def train_full_dataset(model, dataset):
     plt.xlim(0, 30)
     plt.ylim(0, 30)
     plt.grid(linestyle='--', alpha=0.4)
-    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'}, line_kws={'color': '#C60E4F'})
+    sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#0067B1'}, line_kws={'color': '#0067B1'})
     plt.xticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=12)
     plt.yticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=12)
     plt.tight_layout()
