@@ -7,8 +7,9 @@ import seaborn as sns
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from imblearn.over_sampling import SMOTE
-import smogn
+import ImbalancedLearningRegression as iblr
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from pyloras import LORAS
 
 from read import *
 from read import read_all_features
@@ -81,6 +82,48 @@ def train_full_elders_dataset():
     plt.title("Before")
     plt.show()
 
+    # 4.0. Create more examples of missing targets, by interpolation of the existing ones
+    min_target = targets.min()
+    max_target = targets.max()
+    all_targets = targets.unique()
+    # betweeen min and max, locate the targets with count 0
+    missing_targets = [i for i in range(min_target, max_target + 1) if i not in all_targets]
+    print("Missing targets:", missing_targets)
+    for target in missing_targets:
+        # Find the closest targets
+        lower_target = max([t for t in targets if t < target])
+        upper_target = min([t for t in targets if t > target])
+        # Get the features of the closest targets
+        lower_features = features[targets == lower_target]
+        upper_features = features[targets == upper_target]
+        # make them the same size
+        n_lower = len(lower_features)
+        n_upper = len(upper_features)
+        if n_lower > n_upper:
+            lower_features = lower_features.sample(n_upper)
+        elif n_upper > n_lower:
+            upper_features = upper_features.sample(n_lower)
+        else:
+            continue
+        # Interpolate
+        new_features = (lower_features + upper_features) / 2
+        # has this nans?
+        if new_features.isnull().values.any():
+            print("Nans in the interpolated features")
+            continue
+        index_suffix = '_interpolated_'
+        new_features.index = [str(index) + index_suffix + str(i) for i, index in enumerate(new_features.index)]
+        # Append
+        features = pd.concat([features, new_features])
+        new_target = int((lower_target + upper_target) / 2)
+        targets = targets.append(Series([new_target] * len(new_features), index=new_features.index))
+        print(f"Interpolated {len(new_features)} examples for target {target}")
+
+    # Histogram before
+    plt.hist(targets, bins=30)
+    plt.title("After interpolation of missing targets")
+    plt.show()
+
     """
     # 4.1. Data Augmentation method = Every target (self-made method)
 
@@ -104,7 +147,8 @@ def train_full_elders_dataset():
             n_cycles = 1
             while n_samples_to_augment > 0:
                 # Augment
-                augmented = samples.iloc[i] + np.random.normal(0, S, len(samples.columns))
+                augmented = samples.iloc[i]
+                #augemnted = augmented + np.random.normal(0, S, len(samples.columns))
                 name = str(samples.index[i]) + '_augmented_' + str(n_cycles)
                 # Append
                 features.loc[name] = augmented
@@ -117,28 +161,40 @@ def train_full_elders_dataset():
                     n_cycles += 1
     """
 
+    #"""
     # 4.2. Data Augmentation method = SMOTE-C
     # targets = targets.replace(15, 12)  # let's make targe 15->12
     smote = SMOTE(random_state=42, k_neighbors=5, sampling_strategy='auto')
     features, targets = smote.fit_resample(features, targets)
-
-    # 4.3. Data Augmentation method = SMOTE-R
+    #"""
     """
+    # 4.3. Data Augmentation method = SMOTE-R
     features['target'] = targets  # Append column targets
     features = features.reset_index(drop=True)  # make index sequential
     features = features.dropna()
-    features = smogn.smoter(data = features, y = 'target', k=1, samp_method = "extreme")
+    features = iblr.enn( #.cnn(  #.ro(
+        data=features,
+        y='target',
+        k=5,
+    )
     features = features.dropna()
     targets = features['target'] # Drop column targets
     features = features.drop(columns=['target'])
     features = features.reset_index(drop=True)  # Drop index
     targets = targets.reset_index(drop=True)  # Drop index
     """
+    """
+    # 4.4. Data Augmentation method = LoRAS
+    lrs = LORAS(random_state=0, manifold_learner_params={'perplexity': 35, 'n_iter': 250})
+    features, targets = lrs.fit_resample(features, targets)
+    """
 
     # Histogram after
     plt.hist(targets, bins=30)
     plt.title("After")
     plt.show()
+
+    print("Features shape after DA:", features.shape)
 
     # 5) Normalisation after DA
     # 5.1. Normalisation method = min-max
@@ -373,7 +429,7 @@ def validate_kjpp():
 
     # 9) Make regression plot
     plt.figure(figsize=(6.5, 5))
-    sns.regplot(targets, predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'}, line_kws={'color': '#C60E4F'})
+    sns.regplot(targets, predictions, scatter_kws={'alpha': 0.3, 'color': '#0067B1'}, line_kws={'color': '#0067B1'})
     # plt.scatter(accurate_x, accurate_y, color='#0067B1', marker='.', alpha=0.3)
     # plt.scatter(inaccurate_x, inaccurate_y, color='#0067B1', marker='.', alpha=0.3)
     plt.xlabel('Age (years)')
@@ -455,6 +511,6 @@ def validate_kjpp():
     print("Chi2:", chi2, f"(p={p})")
 
 
-out_path = './scheme37'
-#train_full_elders_dataset()
+out_path = './scheme43'
+train_full_elders_dataset()
 validate_kjpp()
