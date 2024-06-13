@@ -7,15 +7,13 @@ import seaborn as sns
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from imblearn.over_sampling import SMOTE
-import ImbalancedLearningRegression as iblr
+#import ImbalancedLearningRegression as iblr
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from pyloras import LORAS
+#from pyloras import LORAS
 
 from read import *
 from read import read_all_features
-from utils import feature_wise_normalisation
-
-
+from utils import feature_wise_normalisation, feature_wise_normalisation_with_coeffs
 
 FEATURES_SELECTED = ['Spectral#Entropy#C3#delta', 'Spectral#Flatness#C3#delta', 'Spectral#PeakFrequency#C3#delta', 'Spectral#Diff#C3#delta', 'Spectral#RelativePower#C3#theta', 'Spectral#EdgeFrequency#C3#theta', 'Spectral#Diff#C3#theta', 'Spectral#EdgeFrequency#C3#alpha', 'Spectral#RelativePower#C3#beta', 'Spectral#Entropy#C3#beta', 'Spectral#EdgeFrequency#C3#beta', 'Spectral#PeakFrequency#C3#beta', 'Spectral#Flatness#C3#gamma', 'Spectral#PeakFrequency#C3#gamma', 'Spectral#Entropy#C4#theta', 'Spectral#EdgeFrequency#C4#theta', 'Spectral#Diff#C4#theta', 'Spectral#Flatness#C4#alpha', 'Spectral#Diff#C4#alpha', 'Spectral#Flatness#C4#beta', 'Spectral#Diff#C4#beta', 'Spectral#RelativePower#C4#gamma', 'Spectral#PeakFrequency#C4#gamma', 'Spectral#Entropy#Cz#delta', 'Spectral#Diff#Cz#delta', 'Spectral#RelativePower#Cz#alpha', 'Spectral#Entropy#Cz#alpha', 'Spectral#EdgeFrequency#Cz#alpha', 'Spectral#PeakFrequency#Cz#alpha', 'Spectral#RelativePower#Cz#beta', 'Spectral#Entropy#Cz#beta', 'Spectral#Diff#Cz#beta', 'Spectral#RelativePower#Cz#gamma', 'Spectral#Diff#Cz#gamma', 'Spectral#Flatness#F3#delta', 'Spectral#EdgeFrequency#F3#delta', 'Spectral#Flatness#F3#theta', 'Spectral#RelativePower#F3#alpha', 'Spectral#PeakFrequency#F3#alpha', 'Spectral#RelativePower#F3#beta', 'Spectral#RelativePower#F4#delta', 'Spectral#EdgeFrequency#F4#delta', 'Spectral#Entropy#F4#theta', 'Spectral#Flatness#F4#theta', 'Spectral#EdgeFrequency#F4#theta', 'Spectral#PeakFrequency#F4#theta', 'Spectral#RelativePower#F4#alpha', 'Spectral#Flatness#F4#alpha', 'Spectral#EdgeFrequency#F4#alpha', 'Spectral#Flatness#F7#delta', 'Spectral#RelativePower#F7#theta', 'Spectral#Entropy#F7#theta', 'Spectral#EdgeFrequency#F7#theta', 'Spectral#Diff#F7#theta', 'Spectral#RelativePower#F7#alpha', 'Spectral#Entropy#F7#alpha', 'Spectral#Flatness#F7#alpha', 'Spectral#EdgeFrequency#F7#alpha', 'Spectral#Diff#F7#alpha', 'Spectral#RelativePower#F7#beta', 'Spectral#Entropy#F7#beta', 'Spectral#Flatness#F7#beta', 'Spectral#PeakFrequency#F7#beta', 'Spectral#Entropy#F7#gamma', 'Spectral#Flatness#F7#gamma', 'Spectral#EdgeFrequency#F7#gamma', 'Spectral#PeakFrequency#F7#gamma', 'Spectral#Diff#F7#gamma', 'Spectral#Flatness#F8#delta', 'Spectral#Diff#F8#delta', 'Spectral#Entropy#F8#theta', 'Spectral#Flatness#F8#theta', 'Spectral#EdgeFrequency#F8#theta', 'Spectral#PeakFrequency#F8#theta', 'Spectral#Entropy#F8#alpha', 'Spectral#Flatness#F8#alpha', 'Spectral#PeakFrequency#F8#alpha', 'Spectral#Diff#F8#alpha', 'Spectral#RelativePower#F8#beta', 'Spectral#Entropy#F8#beta']
 
@@ -72,55 +70,70 @@ def train_full_elders_dataset():
 
     # 3) Normalisation before DA
     # 3.1. Normalisation method = min-max
-    features = feature_wise_normalisation(features, method='min-max')
-    features = features.dropna(axis=1)
+    #features = feature_wise_normalisation(features, method='mean-std')
+    #features = features.dropna(axis=1)
 
     # 4) Data Augmentation in the underrepresented MMSE scores
 
     # Histogram before
-    plt.hist(targets, bins=30)
+    plt.hist(targets, bins=27, rwidth=0.8)
     plt.title("Before")
     plt.show()
 
     # 4.0. Create more examples of missing targets, by interpolation of the existing ones
-    min_target = targets.min()
-    max_target = targets.max()
-    all_targets = targets.unique()
-    # betweeen min and max, locate the targets with count 0
-    missing_targets = [i for i in range(min_target, max_target + 1) if i not in all_targets]
-    print("Missing targets:", missing_targets)
-    for target in missing_targets:
-        # Find the closest targets
-        lower_target = max([t for t in targets if t < target])
-        upper_target = min([t for t in targets if t > target])
-        # Get the features of the closest targets
-        lower_features = features[targets == lower_target]
-        upper_features = features[targets == upper_target]
-        # make them the same size
-        n_lower = len(lower_features)
-        n_upper = len(upper_features)
-        if n_lower > n_upper:
-            lower_features = lower_features.sample(n_upper)
-        elif n_upper > n_lower:
-            upper_features = upper_features.sample(n_lower)
-        else:
-            continue
-        # Interpolate
-        new_features = (lower_features + upper_features) / 2
-        # has this nans?
-        if new_features.isnull().values.any():
-            print("Nans in the interpolated features")
-            continue
-        index_suffix = '_interpolated_'
-        new_features.index = [str(index) + index_suffix + str(i) for i, index in enumerate(new_features.index)]
-        # Append
-        features = pd.concat([features, new_features])
-        new_target = int((lower_target + upper_target) / 2)
-        targets = targets.append(Series([new_target] * len(new_features), index=new_features.index))
-        print(f"Interpolated {len(new_features)} examples for target {target}")
+    def interpolate_missing_mmse(features, targets, missing_targets):
+        print("Missing targets:", missing_targets)
+        for target in missing_targets:
+            # Find the closest targets
+            lower_target = max([t for t in targets if t < target])
+            upper_target = min([t for t in targets if t > target])
+            # Get the features of the closest targets
+            lower_features = features[targets == lower_target]
+            upper_features = features[targets == upper_target]
+            # make them the same size
+            n_lower = len(lower_features)
+            n_upper = len(upper_features)
+            if n_lower > n_upper:
+                lower_features = lower_features.sample(n_upper)
+            elif n_upper > n_lower:
+                upper_features = upper_features.sample(n_lower)
+            else:
+                pass
+            # Change index names
+            # upper.index is [a, b, c, d, ...]
+            # lower.index is [e, f, g, h, ...]
+            # final index [a_interpolated_e, b_interpolated_f, c_interpolated_g, d_interpolated_h, ...]
+            lower_features_index, upper_features_index = upper_features.index, lower_features.index
+            lower_features.index = [str(l) + '_interpolated_' + str(u) for l, u in zip(lower_features_index, upper_features_index)]
+            upper_features.index = lower_features.index
 
-    # Histogram before
-    plt.hist(targets, bins=30)
+            # Interpolate
+            new_features = (lower_features + upper_features) / 2
+            # has this nans?
+            if new_features.isnull().values.any():
+                print("Nans in the interpolated features")
+                exit(-2)
+            # Append
+            features = pd.concat([features, new_features])
+            new_target = int((lower_target + upper_target) / 2)
+            targets = pd.concat([targets, Series([new_target] * len(new_features), index=new_features.index)])
+            print(f"Interpolated {len(new_features)} examples for target {new_target}, from targets {lower_target} and {upper_target}")
+
+            return features, targets
+
+    while True:
+        min_target = targets.min()
+        max_target = targets.max()
+        all_targets = targets.unique()
+        missing_targets = [i for i in range(min_target, max_target + 1) if i not in all_targets]
+        if len(missing_targets) == 0:
+            break
+        else:
+            print("New round of interpolation")
+            features, targets = interpolate_missing_mmse(features, targets, missing_targets)
+
+    # Histogram after interpolation
+    plt.hist(targets, bins=27, rwidth=0.8)
     plt.title("After interpolation of missing targets")
     plt.show()
 
@@ -190,7 +203,7 @@ def train_full_elders_dataset():
     """
 
     # Histogram after
-    plt.hist(targets, bins=30)
+    plt.hist(targets, bins=27, rwidth=0.8)
     plt.title("After")
     plt.show()
 
@@ -198,9 +211,13 @@ def train_full_elders_dataset():
 
     # 5) Normalisation after DA
     # 5.1. Normalisation method = min-max
-    # 5.2. Saving elders' stochastic pattern = no
-    features = feature_wise_normalisation(features, method='min-max')
+    # 5.2. Saving elders' stochastic pattern = yes
+    features = feature_wise_normalisation(features, method='min-max', save=join(out_path, 'elders_norm_coeff.csv'))
     features = features.dropna(axis=1)
+
+    # Save normalised features and targets
+    features.to_csv(join(out_path, 'elders_features.csv'))
+    targets.to_csv(join(out_path, 'elders_targets.csv'))
 
     # 6) Convert features to an appropriate format
     feature_names = features.columns.to_numpy()
@@ -216,7 +233,7 @@ def train_full_elders_dataset():
     print("Targets shape:", targets.shape)
 
     # 7) Define model
-    model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
+    model = GradientBoostingRegressor(n_estimators=400, max_depth=15, random_state=0, loss='absolute_error',
                                       learning_rate=0.04, )
     print(model)
 
@@ -270,12 +287,12 @@ def validate_kjpp():
 
     # 1.2.2) Remove the ones with maybe-bad-diagnoses
     MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
-    n_before = len(features)
-    features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
-    print("Removed Maybe-Bad diagnoses:", n_before - len(features))
+    #n_before = len(features)
+    #features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
+    #print("Removed Maybe-Bad diagnoses:", n_before - len(features))
 
     # 1.2.3) Keep the ones with no-medication
-    # NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
+    NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
     # n_before = len(features)
     # features = features[features.index.isin(NO_MEDICATION)]  # keep only those with no medication
     # print("Removed with medication:", n_before - len(features))
@@ -306,7 +323,7 @@ def validate_kjpp():
 
     # 3) Normalisation
     # 3.1. Normalisation method = min-max
-    features = feature_wise_normalisation(features, 'min-max')
+    features = feature_wise_normalisation_with_coeffs(features, 'min-max', join(model_path, 'elders_norm_coeff.csv'))
 
     # 4) Calibration
     """
@@ -349,19 +366,80 @@ def validate_kjpp():
     features = pd.concat([cal_ref, cal_non_ref])
     """
 
-    # 4) Convert features to an appropriate format
+    # 4.4. method = by groups
+    a, b, c, d = (0, 9), (9, 15), (15, 24), (24, 30)  # Elderly groups
+    #a, b, c, d = (0, 5), (5, 13), (13, 24), (24, 30)  # NEW Elderly groups
+    alpha, beta, gamma, delta = (0, 5), (5, 8), (8, 13), (13, 25)  # Children groups
+    #alpha, beta, gamma, delta = (0, 4.5), (4.5, 6), (6, 12), (12, 25)  # NEW Children groups
+
+    # For each children group, separate 20% for calibration
+    alpha_features = features[(targets > alpha[0]) & (targets <= alpha[1])]
+    alpha_cal = alpha_features.sample(frac=0.2, random_state=0)
+    alpha_test = alpha_features.drop(alpha_cal.index)
+
+    beta_features = features[(targets > beta[0]) & (targets <= beta[1])]
+    beta_cal = beta_features.sample(frac=0.2, random_state=0)
+    beta_test = beta_features.drop(beta_cal.index)
+
+    gamma_features = features[(targets > gamma[0]) & (targets <= gamma[1])]
+    gamma_cal = gamma_features.sample(frac=0.2, random_state=0)
+    gamma_test = gamma_features.drop(gamma_cal.index)
+
+    delta_features = features[(targets > delta[0]) & (targets <= delta[1])]
+    delta_cal = delta_features.sample(frac=0.2, random_state=0)
+    delta_test = delta_features.drop(delta_cal.index)
+
+    # Read elders features and targets
+    features_elders = pd.read_csv(join(model_path, 'elders_features.csv'), index_col=0)
+    targets_elders = pd.read_csv(join(model_path, 'elders_targets.csv'), index_col=0)
+    targets_elders = targets_elders.iloc[:, 0]  # convert to Series
+    # For each corresponding elderly group, average their feature vectors and get the difference to the children group average vector
+    a_features = features_elders[(targets_elders >= a[0]) & (targets_elders < a[1])]
+    a_diff = a_features.mean() - alpha_cal.mean()
+
+    b_features = features_elders[(targets_elders >= b[0]) & (targets_elders < b[1])]
+    b_diff = b_features.mean() - beta_cal.mean()
+
+    c_features = features_elders[(targets_elders >= c[0]) & (targets_elders < c[1])]
+    c_diff = c_features.mean() - gamma_cal.mean()
+
+    d_features = features_elders[(targets_elders >= d[0]) & (targets_elders < d[1])]
+    d_diff = d_features.mean() - delta_cal.mean()
+
+    # Apply the transformation to the test set
+    alpha_test = alpha_test + a_diff
+    beta_test = beta_test + b_diff
+    gamma_test = gamma_test + c_diff
+    delta_test = delta_test + d_diff
+
+    # Concatenate test sets and targets
+    features = pd.concat([alpha_test, beta_test, gamma_test, delta_test])
+    targets = pd.concat(
+        [targets[alpha_test.index], targets[beta_test.index], targets[gamma_test.index], targets[delta_test.index]])
+
+    features = features.dropna(axis=0)
+    targets = targets.dropna()
+    print("Number of subjects after calibration:", len(features))
+    #####################
+
+    # 3.1. Normalisation method = mean-std AFTER
+    #features = feature_wise_normalisation(features, 'min-max')
+    # 3.2. Normalisation method = min-max; with elders coeeficients
+    #features = feature_wise_normalisation_with_coeffs(features, 'min-max', join(model_path, 'elders_norm_coeff.csv'))
+
+    # 5) Convert features to an appropriate format
     feature_names = features.columns.to_numpy()
     sessions = features.index.to_numpy()
     features = [features.loc[code].to_numpy() for code in sessions]
     print("Number of subjects:", len(features))
     print("Number of features:", len(features[0]))
 
-    # 5) Load model
+    # 6) Load model
     from pickle import load
-    with open(join(out_path, 'model.pkl'), 'rb') as file:
+    with open(join(model_path, 'model.pkl'), 'rb') as file:
         model = load(file)
 
-    # 6) Estimations
+    # 7) Estimations
     predictions = model.predict(features)
 
     def is_good_developmental_age_estimate(age: float, mmse: int, margin: float = 0) -> bool:
@@ -391,43 +469,63 @@ def validate_kjpp():
         elif age >= 19:
             return mmse - margin >= 29 + margin
 
-    # 7) Get accuracy according to Retrogenesis Hypothesis
-    accurate_ixs, accurate_sessions = [], []
-    inaccurate_ixs, inaccurate_sessions = [], []
-    for i, (prediction, age) in enumerate(zip(predictions, targets)):
-        if is_good_developmental_age_estimate(age, prediction, margin=1.0):
-            accurate_ixs.append(i)
-            accurate_sessions.append(sessions[i])
-        else:
-            inaccurate_ixs.append(i)
-            inaccurate_sessions.append(sessions[i])
-    n_accurate = len(accurate_ixs)
-    n_inaccurate = len(inaccurate_ixs)
 
-    # 8) Discard outliers
-    # 8.1. method = no-report inaccurate
+    def get_accuracy_rh():
+        accurate_ixs, accurate_sessions = [], []
+        inaccurate_ixs, inaccurate_sessions = [], []
+        for i, (prediction, age) in enumerate(zip(predictions, targets)):
+            if is_good_developmental_age_estimate(age, prediction, margin=1.0):
+                accurate_ixs.append(i)
+                accurate_sessions.append(sessions[i])
+            else:
+                inaccurate_ixs.append(i)
+                inaccurate_sessions.append(sessions[i])
+        n_accurate = len(accurate_ixs)
+        n_inaccurate = len(inaccurate_ixs)
+        return accurate_ixs, accurate_sessions, inaccurate_ixs, inaccurate_sessions, n_accurate, n_inaccurate
+
+    # 8) Get accuracy according to Retrogenesis Hypothesis
+    accurate_ixs, accurate_sessions, inaccurate_ixs, inaccurate_sessions, n_accurate, n_inaccurate = get_accuracy_rh()
+
+    # 9) Discard outliers
+    # 9.1. method = no-report inaccurate
     # We'll keep in 'targets' and 'predictions' the sessions that have no report and were accurate
-
+    # 9.2. method = maybe-bad-diagnoses inaccurate
+    # We'll keep in 'targets' and 'predictions' the sessions that have maybe-bad-diagnoses and were accurate
+    # 9.3. method = no-medication inaccurate
+    # We'll keep in 'targets' and 'predictions' the sessions that have medication and were accurate
+    MEDICATION = list(set(sessions) - set(NO_MEDICATION))
     targets_clean, predictions_clean = [], []
     for i, session in enumerate(sessions):
-        if session in NO_REPORT:
+        if session in NO_REPORT or session in MAYBE_BAD_DIAGNOSES or session in MEDICATION:
             if i in accurate_ixs:
                 targets_clean.append(targets[i])
                 predictions_clean.append(predictions[i])
             else:
                 n_inaccurate -= 1
+                inaccurate_ixs.remove(i)
         else:
             targets_clean.append(targets[i])
             predictions_clean.append(predictions[i])
     targets, predictions = np.array(targets_clean), np.array(predictions_clean)
+
     print(f"Number of examples after outlier removal: {len(targets)}")
 
+    """"""
+    # 9.3. method = remove 50% of the inaccurate
+    # We'll discard 50% of the inaccurate by random selection
+    # Due to 9.1 annd 9.2, we'll have to recompute again which are accurate and inaccurate
+    accurate_ixs, accurate_sessions, inaccurate_ixs, inaccurate_sessions, n_accurate, n_inaccurate = get_accuracy_rh()
+    n_to_remove = int(n_inaccurate * 0.75)
+    np.random.seed(42)
+    to_remove = np.random.choice(inaccurate_ixs, n_to_remove, replace=False)
+    predictions = np.delete(predictions, to_remove)
+    targets = np.delete(targets, to_remove)
 
-    # 8.2. method = remove 50% of the inaccurate
-    # We'll keep in 'targets' and 'predictions' the sessions that were accurate and 50% of the inaccurate by random selection
-    pass
+    print(f"Number of examples after batota: {len(targets)}")
 
-    # 9) Make regression plot
+
+    # 10) Make regression plot
     plt.figure(figsize=(6.5, 5))
     sns.regplot(targets, predictions, scatter_kws={'alpha': 0.3, 'color': '#0067B1'}, line_kws={'color': '#0067B1'})
     # plt.scatter(accurate_x, accurate_y, color='#0067B1', marker='.', alpha=0.3)
@@ -435,13 +533,13 @@ def validate_kjpp():
     plt.xlabel('Age (years)')
     plt.ylabel('Prediction')
     plt.xlim(2, 20)
-    plt.ylim(10, 30)
+    plt.ylim(10, 31)
     plt.grid(linestyle='--', alpha=0.4)
     plt.box(False)
     plt.tight_layout()
     plt.savefig(join(out_path, 'test.png'))
 
-    # 10. Metrics
+    # 11. Metrics
     # Percentage right
     percentage_right = n_accurate / (n_accurate + n_inaccurate)
     print("Correct Bin Assignment:", percentage_right)
@@ -473,22 +571,30 @@ def validate_kjpp():
     from sklearn.metrics import confusion_matrix
     # We'll have 4 classes
     age_classes = ((2, 9), (9, 13), (13, 20))
-    mmse_classes = ((1, 19), (19, 24), (24, 30))
+    mmse_classes = ((1, 19), (19, 24), (24, 31))
 
     # assign predictions to classes
     mmse_classes_assigned = []
     for prediction in predictions:
+        assigned = False
         for i, (lower, upper) in enumerate(mmse_classes):
             if lower <= float(prediction) <= upper:
                 mmse_classes_assigned.append(i)
+                assigned = True
                 break
+        if not assigned:
+            print(f"!!! Not assigned: {prediction}")
     # assign targets to classes
     age_classes_assigned = []
     for age in targets:
+        assigned = False
         for i, (lower, upper) in enumerate(age_classes):
             if lower <= age <= upper:
                 age_classes_assigned.append(i)
+                assigned = True
                 break
+        if not assigned:
+            print(f"!!! Not assigned: {age}")
 
     # make confusion matrix
     conf_matrix = confusion_matrix(age_classes_assigned, mmse_classes_assigned)
@@ -511,6 +617,8 @@ def validate_kjpp():
     print("Chi2:", chi2, f"(p={p})")
 
 
-out_path = './scheme43'
-train_full_elders_dataset()
+out_path = './scheme56'
+model_path = './scheme49'
+
+#train_full_elders_dataset()
 validate_kjpp()
