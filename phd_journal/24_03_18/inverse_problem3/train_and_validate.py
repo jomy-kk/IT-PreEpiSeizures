@@ -7,19 +7,60 @@ import seaborn as sns
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from imblearn.over_sampling import SMOTE
-#import ImbalancedLearningRegression as iblr
+# import ImbalancedLearningRegression as iblr
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-#from pyloras import LORAS
+# from pyloras import LORAS
 
 from read import *
 from read import read_all_features
 from utils import feature_wise_normalisation, feature_wise_normalisation_with_coeffs
 
-FEATURES_SELECTED = ['Spectral#Entropy#C3#delta', 'Spectral#Flatness#C3#delta', 'Spectral#PeakFrequency#C3#delta', 'Spectral#Diff#C3#delta', 'Spectral#RelativePower#C3#theta', 'Spectral#EdgeFrequency#C3#theta', 'Spectral#Diff#C3#theta', 'Spectral#EdgeFrequency#C3#alpha', 'Spectral#RelativePower#C3#beta', 'Spectral#Entropy#C3#beta', 'Spectral#EdgeFrequency#C3#beta', 'Spectral#PeakFrequency#C3#beta', 'Spectral#Flatness#C3#gamma', 'Spectral#PeakFrequency#C3#gamma', 'Spectral#Entropy#C4#theta', 'Spectral#EdgeFrequency#C4#theta', 'Spectral#Diff#C4#theta', 'Spectral#Flatness#C4#alpha', 'Spectral#Diff#C4#alpha', 'Spectral#Flatness#C4#beta', 'Spectral#Diff#C4#beta', 'Spectral#RelativePower#C4#gamma', 'Spectral#PeakFrequency#C4#gamma', 'Spectral#Entropy#Cz#delta', 'Spectral#Diff#Cz#delta', 'Spectral#RelativePower#Cz#alpha', 'Spectral#Entropy#Cz#alpha', 'Spectral#EdgeFrequency#Cz#alpha', 'Spectral#PeakFrequency#Cz#alpha', 'Spectral#RelativePower#Cz#beta', 'Spectral#Entropy#Cz#beta', 'Spectral#Diff#Cz#beta', 'Spectral#RelativePower#Cz#gamma', 'Spectral#Diff#Cz#gamma', 'Spectral#Flatness#F3#delta', 'Spectral#EdgeFrequency#F3#delta', 'Spectral#Flatness#F3#theta', 'Spectral#RelativePower#F3#alpha', 'Spectral#PeakFrequency#F3#alpha', 'Spectral#RelativePower#F3#beta', 'Spectral#RelativePower#F4#delta', 'Spectral#EdgeFrequency#F4#delta', 'Spectral#Entropy#F4#theta', 'Spectral#Flatness#F4#theta', 'Spectral#EdgeFrequency#F4#theta', 'Spectral#PeakFrequency#F4#theta', 'Spectral#RelativePower#F4#alpha', 'Spectral#Flatness#F4#alpha', 'Spectral#EdgeFrequency#F4#alpha', 'Spectral#Flatness#F7#delta', 'Spectral#RelativePower#F7#theta', 'Spectral#Entropy#F7#theta', 'Spectral#EdgeFrequency#F7#theta', 'Spectral#Diff#F7#theta', 'Spectral#RelativePower#F7#alpha', 'Spectral#Entropy#F7#alpha', 'Spectral#Flatness#F7#alpha', 'Spectral#EdgeFrequency#F7#alpha', 'Spectral#Diff#F7#alpha', 'Spectral#RelativePower#F7#beta', 'Spectral#Entropy#F7#beta', 'Spectral#Flatness#F7#beta', 'Spectral#PeakFrequency#F7#beta', 'Spectral#Entropy#F7#gamma', 'Spectral#Flatness#F7#gamma', 'Spectral#EdgeFrequency#F7#gamma', 'Spectral#PeakFrequency#F7#gamma', 'Spectral#Diff#F7#gamma', 'Spectral#Flatness#F8#delta', 'Spectral#Diff#F8#delta', 'Spectral#Entropy#F8#theta', 'Spectral#Flatness#F8#theta', 'Spectral#EdgeFrequency#F8#theta', 'Spectral#PeakFrequency#F8#theta', 'Spectral#Entropy#F8#alpha', 'Spectral#Flatness#F8#alpha', 'Spectral#PeakFrequency#F8#alpha', 'Spectral#Diff#F8#alpha', 'Spectral#RelativePower#F8#beta', 'Spectral#Entropy#F8#beta']
+# FEATURES_SELECTED = ['Spectral#Entropy#C3#delta', 'Spectral#Flatness#C3#delta', 'Spectral#PeakFrequency#C3#delta', 'Spectral#Diff#C3#delta', 'Spectral#RelativePower#C3#theta', 'Spectral#EdgeFrequency#C3#theta', 'Spectral#Diff#C3#theta', 'Spectral#EdgeFrequency#C3#alpha', 'Spectral#RelativePower#C3#beta', 'Spectral#Entropy#C3#beta', 'Spectral#EdgeFrequency#C3#beta', 'Spectral#PeakFrequency#C3#beta', 'Spectral#Flatness#C3#gamma', 'Spectral#PeakFrequency#C3#gamma', 'Spectral#Entropy#C4#theta', 'Spectral#EdgeFrequency#C4#theta', 'Spectral#Diff#C4#theta', 'Spectral#Flatness#C4#alpha', 'Spectral#Diff#C4#alpha', 'Spectral#Flatness#C4#beta', 'Spectral#Diff#C4#beta', 'Spectral#RelativePower#C4#gamma', 'Spectral#PeakFrequency#C4#gamma', 'Spectral#Entropy#Cz#delta', 'Spectral#Diff#Cz#delta', 'Spectral#RelativePower#Cz#alpha', 'Spectral#Entropy#Cz#alpha', 'Spectral#EdgeFrequency#Cz#alpha', 'Spectral#PeakFrequency#Cz#alpha', 'Spectral#RelativePower#Cz#beta', 'Spectral#Entropy#Cz#beta', 'Spectral#Diff#Cz#beta', 'Spectral#RelativePower#Cz#gamma', 'Spectral#Diff#Cz#gamma', 'Spectral#Flatness#F3#delta', 'Spectral#EdgeFrequency#F3#delta', 'Spectral#Flatness#F3#theta', 'Spectral#RelativePower#F3#alpha', 'Spectral#PeakFrequency#F3#alpha', 'Spectral#RelativePower#F3#beta', 'Spectral#RelativePower#F4#delta', 'Spectral#EdgeFrequency#F4#delta', 'Spectral#Entropy#F4#theta', 'Spectral#Flatness#F4#theta', 'Spectral#EdgeFrequency#F4#theta', 'Spectral#PeakFrequency#F4#theta', 'Spectral#RelativePower#F4#alpha', 'Spectral#Flatness#F4#alpha', 'Spectral#EdgeFrequency#F4#alpha', 'Spectral#Flatness#F7#delta', 'Spectral#RelativePower#F7#theta', 'Spectral#Entropy#F7#theta', 'Spectral#EdgeFrequency#F7#theta', 'Spectral#Diff#F7#theta', 'Spectral#RelativePower#F7#alpha', 'Spectral#Entropy#F7#alpha', 'Spectral#Flatness#F7#alpha', 'Spectral#EdgeFrequency#F7#alpha', 'Spectral#Diff#F7#alpha', 'Spectral#RelativePower#F7#beta', 'Spectral#Entropy#F7#beta', 'Spectral#Flatness#F7#beta', 'Spectral#PeakFrequency#F7#beta', 'Spectral#Entropy#F7#gamma', 'Spectral#Flatness#F7#gamma', 'Spectral#EdgeFrequency#F7#gamma', 'Spectral#PeakFrequency#F7#gamma', 'Spectral#Diff#F7#gamma', 'Spectral#Flatness#F8#delta', 'Spectral#Diff#F8#delta', 'Spectral#Entropy#F8#theta', 'Spectral#Flatness#F8#theta', 'Spectral#EdgeFrequency#F8#theta', 'Spectral#PeakFrequency#F8#theta', 'Spectral#Entropy#F8#alpha', 'Spectral#Flatness#F8#alpha', 'Spectral#PeakFrequency#F8#alpha', 'Spectral#Diff#F8#alpha', 'Spectral#RelativePower#F8#beta', 'Spectral#Entropy#F8#beta']
+FEATURES_SELECTED = ['Hjorth#Complexity#T5', 'Hjorth#Complexity#F4',
+                     'COH#Frontal(R)-Parietal(L)#delta', 'Hjorth#Complexity#T3',
+                     'Spectral#RelativePower#F7#theta', 'COH#Frontal(R)-Temporal(L)#theta',
+                     'Spectral#EdgeFrequency#O2#beta', 'COH#Frontal(L)-Temporal(R)#beta',
+                     'COH#Temporal(L)-Parietal(L)#gamma', 'Spectral#EdgeFrequency#O1#beta',
+                     'COH#Frontal(R)-Parietal(L)#theta', 'COH#Temporal(L)-Temporal(R)#alpha',
+                     'COH#Frontal(R)-Temporal(L)#gamma', 'COH#Temporal(R)-Parietal(L)#beta',
+                     'COH#Frontal(R)-Occipital(L)#theta', 'COH#Temporal(L)-Parietal(L)#beta',
+                     'Hjorth#Activity#F7', 'COH#Occipital(L)-Occipital(R)#gamma',
+                     'Spectral#Flatness#P3#beta', 'COH#Temporal(R)-Parietal(R)#alpha',
+                     'Spectral#Entropy#P3#alpha', 'COH#Frontal(R)-Parietal(R)#theta',
+                     'COH#Frontal(R)-Temporal(L)#delta', 'Spectral#Entropy#O2#alpha',
+                     'Spectral#Entropy#T4#theta', 'Spectral#RelativePower#Cz#beta',
+                     'Spectral#Diff#Pz#delta', 'COH#Parietal(R)-Occipital(L)#beta',
+                     'Spectral#EdgeFrequency#Fz#beta', 'Spectral#Diff#Cz#gamma',
+                     'Spectral#RelativePower#Fp1#gamma', 'COH#Frontal(R)-Parietal(L)#gamma',
+                     'PLI#Frontal(R)-Parietal(L)#alpha', 'Spectral#Diff#F7#beta',
+                     'Hjorth#Mobility#O1', 'Spectral#Flatness#T4#gamma',
+                     'PLI#Parietal(L)-Occipital(L)#gamma', 'Spectral#Flatness#T6#delta',
+                     'COH#Parietal(R)-Occipital(L)#alpha',
+                     'COH#Parietal(R)-Occipital(R)#beta', 'Spectral#Diff#T4#delta',
+                     'Spectral#Diff#F8#alpha', 'COH#Temporal(R)-Occipital(L)#beta',
+                     'COH#Parietal(R)-Occipital(L)#gamma', 'Hjorth#Mobility#P4',
+                     'COH#Frontal(L)-Temporal(L)#beta',
+                     'COH#Occipital(L)-Occipital(R)#alpha', 'Spectral#Entropy#T3#theta',
+                     'COH#Frontal(R)-Occipital(R)#alpha', 'Hjorth#Complexity#P3',
+                     'COH#Frontal(L)-Occipital(L)#beta', 'Hjorth#Activity#C3',
+                     'COH#Temporal(L)-Occipital(R)#theta', 'Spectral#Diff#F4#beta',
+                     'COH#Frontal(L)-Frontal(R)#gamma', 'Spectral#Diff#C3#gamma',
+                     'COH#Frontal(L)-Frontal(R)#theta', 'COH#Parietal(L)-Occipital(R)#theta',
+                     'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F3#beta',
+                     'PLI#Temporal(R)-Parietal(R)#beta', 'Spectral#Flatness#F7#beta',
+                     'Hjorth#Complexity#O2', 'Spectral#Entropy#Cz#theta',
+                     'PLI#Frontal(R)-Occipital(R)#beta', 'COH#Temporal(L)-Parietal(R)#beta',
+                     'COH#Frontal(L)-Occipital(L)#delta', 'Spectral#Flatness#F8#delta',
+                     'Spectral#Entropy#F4#delta', 'PLI#Temporal(R)-Parietal(R)#gamma',
+                     'COH#Occipital(L)-Occipital(R)#delta',
+                     'COH#Temporal(L)-Parietal(R)#delta', 'PLI#Frontal(L)-Temporal(R)#delta',
+                     'Spectral#Flatness#P3#theta', 'Spectral#Entropy#F7#alpha',
+                     'COH#Frontal(R)-Temporal(R)#delta', 'COH#Frontal(L)-Occipital(R)#gamma',
+                     'COH#Frontal(L)-Frontal(R)#beta', 'Hjorth#Complexity#Cz',
+                     'COH#Frontal(L)-Occipital(R)#beta']
 
 
 def train_full_elders_dataset():
-
     # 1) Read features
     # 1.1. Multiples = yes
     # 1.2. Which multiples = all
@@ -70,8 +111,8 @@ def train_full_elders_dataset():
 
     # 3) Normalisation before DA
     # 3.1. Normalisation method = min-max
-    #features = feature_wise_normalisation(features, method='mean-std')
-    #features = features.dropna(axis=1)
+    # features = feature_wise_normalisation(features, method='mean-std')
+    # features = features.dropna(axis=1)
 
     # 4) Data Augmentation in the underrepresented MMSE scores
 
@@ -104,7 +145,8 @@ def train_full_elders_dataset():
             # lower.index is [e, f, g, h, ...]
             # final index [a_interpolated_e, b_interpolated_f, c_interpolated_g, d_interpolated_h, ...]
             lower_features_index, upper_features_index = upper_features.index, lower_features.index
-            lower_features.index = [str(l) + '_interpolated_' + str(u) for l, u in zip(lower_features_index, upper_features_index)]
+            lower_features.index = [str(l) + '_interpolated_' + str(u) for l, u in
+                                    zip(lower_features_index, upper_features_index)]
             upper_features.index = lower_features.index
 
             # Interpolate
@@ -117,7 +159,8 @@ def train_full_elders_dataset():
             features = pd.concat([features, new_features])
             new_target = int((lower_target + upper_target) / 2)
             targets = pd.concat([targets, Series([new_target] * len(new_features), index=new_features.index)])
-            print(f"Interpolated {len(new_features)} examples for target {new_target}, from targets {lower_target} and {upper_target}")
+            print(
+                f"Interpolated {len(new_features)} examples for target {new_target}, from targets {lower_target} and {upper_target}")
 
             return features, targets
 
@@ -174,12 +217,12 @@ def train_full_elders_dataset():
                     n_cycles += 1
     """
 
-    #"""
+    # """
     # 4.2. Data Augmentation method = SMOTE-C
     # targets = targets.replace(15, 12)  # let's make targe 15->12
     smote = SMOTE(random_state=42, k_neighbors=5, sampling_strategy='auto')
     features, targets = smote.fit_resample(features, targets)
-    #"""
+    # """
     """
     # 4.3. Data Augmentation method = SMOTE-R
     features['target'] = targets  # Append column targets
@@ -286,10 +329,11 @@ def validate_kjpp():
     print("Removed Bad diagnoses:", n_before - len(features))
 
     # 1.2.2) Remove the ones with maybe-bad-diagnoses
-    MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt", dtype=str)
-    #n_before = len(features)
-    #features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
-    #print("Removed Maybe-Bad diagnoses:", n_before - len(features))
+    MAYBE_BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/maybe_bad_diagnoses.txt",
+                                     dtype=str)
+    # n_before = len(features)
+    # features = features.drop(MAYBE_BAD_DIAGNOSES, errors='ignore')
+    # print("Removed Maybe-Bad diagnoses:", n_before - len(features))
 
     # 1.2.3) Keep the ones with no-medication
     NO_MEDICATION = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/no_medication.txt", dtype=str)
@@ -368,9 +412,9 @@ def validate_kjpp():
 
     # 4.4. method = by groups
     a, b, c, d = (0, 9), (9, 15), (15, 24), (24, 30)  # Elderly groups
-    #a, b, c, d = (0, 5), (5, 13), (13, 24), (24, 30)  # NEW Elderly groups
+    # a, b, c, d = (0, 5), (5, 13), (13, 24), (24, 30)  # NEW Elderly groups
     alpha, beta, gamma, delta = (0, 5), (5, 8), (8, 13), (13, 25)  # Children groups
-    #alpha, beta, gamma, delta = (0, 4.5), (4.5, 6), (6, 12), (12, 25)  # NEW Children groups
+    # alpha, beta, gamma, delta = (0, 4.5), (4.5, 6), (6, 12), (12, 25)  # NEW Children groups
 
     # For each children group, separate 20% for calibration
     alpha_features = features[(targets > alpha[0]) & (targets <= alpha[1])]
@@ -423,9 +467,9 @@ def validate_kjpp():
     #####################
 
     # 3.1. Normalisation method = mean-std AFTER
-    #features = feature_wise_normalisation(features, 'min-max')
+    # features = feature_wise_normalisation(features, 'min-max')
     # 3.2. Normalisation method = min-max; with elders coeeficients
-    #features = feature_wise_normalisation_with_coeffs(features, 'min-max', join(model_path, 'elders_norm_coeff.csv'))
+    # features = feature_wise_normalisation_with_coeffs(features, 'min-max', join(model_path, 'elders_norm_coeff.csv'))
 
     # 5) Convert features to an appropriate format
     feature_names = features.columns.to_numpy()
@@ -468,7 +512,6 @@ def validate_kjpp():
             return (4 * age / 7) + (92 / 7) - margin <= mmse <= 30 + margin
         elif age >= 19:
             return mmse - margin >= 29 + margin
-
 
     def get_accuracy_rh():
         accurate_ixs, accurate_sessions = [], []
@@ -524,6 +567,9 @@ def validate_kjpp():
 
     print(f"Number of examples after batota: {len(targets)}")
 
+    # save dataframe predictions | targets
+    df = pd.DataFrame({'predictions': predictions, 'targets': targets})
+    df.to_csv(join(out_path, 'predictions_targets.csv'))
 
     # 10) Make regression plot
     plt.figure(figsize=(6.5, 5))
@@ -533,7 +579,9 @@ def validate_kjpp():
     plt.xlabel('Age (years)')
     plt.ylabel('Prediction')
     plt.xlim(2, 20)
+    plt.xticks((2, 9, 13, 20))
     plt.ylim(10, 31)
+    plt.yticks((10, 19, 24, 31))
     plt.grid(linestyle='--', alpha=0.4)
     plt.box(False)
     plt.tight_layout()
@@ -552,6 +600,13 @@ def validate_kjpp():
     r2 = r2_score(targets_norm, predictions_norm)
     print("R2 Score:", r2)
 
+    # Report on F-statistic, p-value, and degrees of freedom, with OLS
+    import statsmodels.api as sm
+    X = sm.add_constant(targets)
+    ols = sm.OLS(predictions, X)
+    ols_results = ols.fit()
+    print(ols_results.summary())
+
     # pearson rank correlation
     from scipy.stats import pearsonr
     pearson, pvalue = pearsonr(targets, predictions)
@@ -569,45 +624,39 @@ def validate_kjpp():
 
     # Confusion Matrix
     from sklearn.metrics import confusion_matrix
-    # We'll have 4 classes
+    # We'll have 3 classes
     age_classes = ((2, 9), (9, 13), (13, 20))
     mmse_classes = ((1, 19), (19, 24), (24, 31))
 
-    # assign predictions to classes
-    mmse_classes_assigned = []
-    for prediction in predictions:
-        assigned = False
-        for i, (lower, upper) in enumerate(mmse_classes):
-            if lower <= float(prediction) <= upper:
-                mmse_classes_assigned.append(i)
-                assigned = True
-                break
-        if not assigned:
-            print(f"!!! Not assigned: {prediction}")
-    # assign targets to classes
-    age_classes_assigned = []
-    for age in targets:
-        assigned = False
+    # Assign targets to classes
+    target_classes = []
+    for target in targets:
         for i, (lower, upper) in enumerate(age_classes):
-            if lower <= age <= upper:
-                age_classes_assigned.append(i)
-                assigned = True
+            if lower <= target <= upper:
+                target_classes.append(i)
                 break
-        if not assigned:
-            print(f"!!! Not assigned: {age}")
+
+    # Assign predictions to classes
+    prediction_classes = []
+    for prediction in predictions:
+        for i, (lower, upper) in enumerate(mmse_classes):
+            if lower <= prediction <= upper:
+                prediction_classes.append(i)
+                break
 
     # make confusion matrix
-    conf_matrix = confusion_matrix(age_classes_assigned, mmse_classes_assigned)
-    # flip the matrix
-    conf_matrix = np.flip(conf_matrix, axis=0)
+    conf_matrix = confusion_matrix(target_classes, prediction_classes)
+
+    # rotate -90º
+    conf_matrix = np.rot90(conf_matrix, k=1)
 
     # plot
     plt.figure()
     sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='g')
-    plt.xlabel('Chronological Age (years)')
-    plt.xticks(range(len(age_classes)), [f"{lower}-{upper}" for lower, upper in age_classes])
-    plt.ylabel('MMSE Estimate')
-    plt.yticks(range(len(mmse_classes)), [f"{lower}-{upper}" for lower, upper in mmse_classes])
+    plt.xlabel('Age Groups')
+    # plt.xticks(range(len(age_classes)), [f"{lower}-{upper}" for lower, upper in age_classes])
+    plt.ylabel('MMSE Groups')
+    # plt.yticks(range(len(mmse_classes)), [f"{lower}-{upper}" for lower, upper in mmse_classes])
     # plt.show()
     plt.savefig(join(out_path, 'confusion_matrix.png'))
 
@@ -617,8 +666,8 @@ def validate_kjpp():
     print("Chi2:", chi2, f"(p={p})")
 
 
-out_path = './scheme56'
-model_path = './scheme49'
+out_path = './scheme57'
+model_path = './scheme57'
 
-#train_full_elders_dataset()
+train_full_elders_dataset()
 validate_kjpp()

@@ -89,7 +89,7 @@ def read_all_features(dataset, multiples=False) -> DataFrame:
     if not multiples or dataset == 'INSIGHT' or dataset == 'KJPP':
         return res
     else:
-        return res#select_safe(res, dataset)
+        return res # select_safe(res, dataset)
 
 def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
