@@ -293,13 +293,14 @@ def train_full_elders_dataset():
     print(f'Train R2: {r2}')
     # Make regression plot
     plt.figure(figsize=(6.5, 5))
+    plt.rcParams['font.family'] = 'Arial'
     sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'}, line_kws={'color': '#C60E4F'})
-    plt.xlabel('True MMSE (units)')
-    plt.ylabel('Predicted MMSE (units)')
+    plt.xlabel('True MMSE (units)', fontsize=12)
+    plt.ylabel('Predicted MMSE (units)', fontsize=12)
     plt.xlim(0, 34)
     plt.ylim(0, 34)
-    plt.xticks([4, 6, 9, 12, 15, 20, 25, 30])
-    plt.yticks([4, 6, 9, 12, 15, 20, 25, 30])
+    plt.xticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=10)
+    plt.yticks([4, 6, 9, 12, 15, 20, 25, 30], fontsize=10)
     plt.grid(linestyle='--', alpha=0.4)
     plt.box(False)
     plt.tight_layout()
