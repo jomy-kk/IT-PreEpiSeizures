@@ -4,15 +4,52 @@ from os.path import join
 import pandas as pd
 import networkx as nx
 from sklearn.cluster import KMeans
+from scipy.stats import mannwhitneyu
+from scipy.stats import ks_2samp
 
 # FEATURES
-FEATURES_SELECTED_OLD = ['Spectral#RelativePower#C3#beta1', 'Spectral#EdgeFrequency#C3#beta3', 'Spectral#RelativePower#C3#gamma', 'Spectral#EdgeFrequency#C4#alpha1', 'Spectral#RelativePower#C4#beta3', 'Spectral#EdgeFrequency#C4#beta3', 'Spectral#EdgeFrequency#C4#gamma', 'Spectral#Flatness#Cz#theta', 'Spectral#PeakFrequency#Cz#theta', 'Spectral#EdgeFrequency#Cz#beta3', 'Spectral#EdgeFrequency#Cz#gamma', 'Spectral#PeakFrequency#Cz#gamma', 'Spectral#RelativePower#F3#beta1', 'Spectral#Diff#F4#delta', 'Spectral#RelativePower#F7#beta3', 'Spectral#EdgeFrequency#F7#beta3', 'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F8#beta1', 'Spectral#EdgeFrequency#F8#beta3', 'Spectral#RelativePower#Fp1#beta1', 'Spectral#EdgeFrequency#Fp1#beta3', 'Spectral#Diff#Fp2#delta', 'Spectral#RelativePower#Fp2#beta1', 'Spectral#RelativePower#Fp2#beta3', 'Spectral#Diff#Fpz#beta2', 'Spectral#Entropy#O1#delta', 'Spectral#RelativePower#O1#beta2', 'Spectral#EdgeFrequency#O1#beta2', 'Spectral#EdgeFrequency#O1#beta3', 'Spectral#RelativePower#O2#delta', 'Spectral#PeakFrequency#O2#alpha1', 'Spectral#RelativePower#O2#beta1', 'Spectral#RelativePower#O2#beta3', 'Spectral#Diff#P3#beta1', 'Spectral#RelativePower#P3#beta3', 'Spectral#RelativePower#Pz#alpha1', 'Spectral#EdgeFrequency#Pz#beta3', 'Spectral#RelativePower#T4#alpha1', 'Spectral#RelativePower#T4#beta3', 'Spectral#RelativePower#T4#gamma', 'Spectral#EdgeFrequency#T5#beta2', 'Hjorth#Complexity#T5', 'Hjorth#Complexity#P4', 'Hjorth#Complexity#F7', 'Hjorth#Complexity#T4', 'Hjorth#Complexity#F8', 'Hjorth#Complexity#T3', 'Hjorth#Mobility#P3', 'PLI#Frontal(L)-Temporal(R)#alpha1', 'PLI#Frontal(L)-Occipital(L)#alpha1', 'PLI#Frontal(R)-Temporal(R)#alpha1', 'PLI#Temporal(R)-Parietal(R)#alpha1', 'PLI#Temporal(R)-Occipital(L)#alpha1', 'PLI#Parietal(R)-Occipital(L)#alpha1', 'PLI#Occipital(L)-Occipital(R)#alpha1', 'PLI#Temporal(R)-Occipital(R)#alpha2', 'PLI#Parietal(R)-Occipital(L)#alpha2', 'COH#Frontal(L)-Frontal(R)#theta', 'COH#Frontal(L)-Occipital(L)#theta', 'COH#Frontal(L)-Occipital(R)#alpha1', 'COH#Frontal(R)-Occipital(L)#alpha1', 'COH#Parietal(R)-Occipital(L)#alpha1', 'COH#Frontal(L)-Frontal(R)#alpha2', 'COH#Frontal(L)-Occipital(R)#alpha2', 'COH#Parietal(R)-Occipital(L)#alpha2', 'COH#Parietal(R)-Occipital(R)#alpha2', 'COH#Occipital(L)-Occipital(R)#alpha2', 'COH#Frontal(L)-Occipital(L)#beta1', 'COH#Temporal(R)-Parietal(R)#beta1', 'COH#Parietal(R)-Occipital(R)#beta1', 'COH#Frontal(L)-Parietal(L)#beta2', 'COH#Frontal(R)-Occipital(L)#beta2', 'COH#Frontal(L)-Temporal(R)#beta3', 'COH#Frontal(L)-Parietal(L)#beta3', 'COH#Frontal(L)-Occipital(L)#beta3', 'COH#Frontal(L)-Occipital(R)#beta3', 'COH#Frontal(R)-Occipital(L)#beta3', 'COH#Temporal(L)-Occipital(R)#beta3', 'COH#Frontal(L)-Occipital(R)#gamma', 'COH#Frontal(R)-Occipital(R)#gamma']
-FEATURES_SELECTED = []
-for feature in FEATURES_SELECTED_OLD:
-    if 'alpha1' in feature or 'alpha2' in feature or 'beta1' in feature or 'beta2' in feature or 'beta3' in feature:
-        feature = feature[:-1]
-    FEATURES_SELECTED.append(feature)
-FEATURES_SELECTED = list(set(FEATURES_SELECTED))
+FEATURES_SELECTED = ['Hjorth#Complexity#T5', 'Hjorth#Complexity#F4',
+                     'COH#Frontal(R)-Parietal(L)#delta', 'Hjorth#Complexity#T3',
+                     'Spectral#RelativePower#F7#theta', 'COH#Frontal(R)-Temporal(L)#theta',
+                     'Spectral#EdgeFrequency#O2#beta', 'COH#Frontal(L)-Temporal(R)#beta',
+                     'COH#Temporal(L)-Parietal(L)#gamma', 'Spectral#EdgeFrequency#O1#beta',
+                     'COH#Frontal(R)-Parietal(L)#theta', 'COH#Temporal(L)-Temporal(R)#alpha',
+                     'COH#Frontal(R)-Temporal(L)#gamma', 'COH#Temporal(R)-Parietal(L)#beta',
+                     'COH#Frontal(R)-Occipital(L)#theta', 'COH#Temporal(L)-Parietal(L)#beta',
+                     'Hjorth#Activity#F7', 'COH#Occipital(L)-Occipital(R)#gamma',
+                     'Spectral#Flatness#P3#beta', 'COH#Temporal(R)-Parietal(R)#alpha',
+                     'Spectral#Entropy#P3#alpha', 'COH#Frontal(R)-Parietal(R)#theta',
+                     'COH#Frontal(R)-Temporal(L)#delta', 'Spectral#Entropy#O2#alpha',
+                     'Spectral#Entropy#T4#theta', 'Spectral#RelativePower#Cz#beta',
+                     'Spectral#Diff#Pz#delta', 'COH#Parietal(R)-Occipital(L)#beta',
+                     'Spectral#EdgeFrequency#Fz#beta', 'Spectral#Diff#Cz#gamma',
+                     'Spectral#RelativePower#Fp1#gamma', 'COH#Frontal(R)-Parietal(L)#gamma',
+                     'PLI#Frontal(R)-Parietal(L)#alpha', 'Spectral#Diff#F7#beta',
+                     'Hjorth#Mobility#O1', 'Spectral#Flatness#T4#gamma',
+                     'PLI#Parietal(L)-Occipital(L)#gamma', 'Spectral#Flatness#T6#delta',
+                     'COH#Parietal(R)-Occipital(L)#alpha',
+                     'COH#Parietal(R)-Occipital(R)#beta', 'Spectral#Diff#T4#delta',
+                     'Spectral#Diff#F8#alpha', 'COH#Temporal(R)-Occipital(L)#beta',
+                     'COH#Parietal(R)-Occipital(L)#gamma', 'Hjorth#Mobility#P4',
+                     'COH#Frontal(L)-Temporal(L)#beta',
+                     'COH#Occipital(L)-Occipital(R)#alpha', 'Spectral#Entropy#T3#theta',
+                     'COH#Frontal(R)-Occipital(R)#alpha', 'Hjorth#Complexity#P3',
+                     'COH#Frontal(L)-Occipital(L)#beta', 'Hjorth#Activity#C3',
+                     'COH#Temporal(L)-Occipital(R)#theta', 'Spectral#Diff#F4#beta',
+                     'COH#Frontal(L)-Frontal(R)#gamma', 'Spectral#Diff#C3#gamma',
+                     'COH#Frontal(L)-Frontal(R)#theta', 'COH#Parietal(L)-Occipital(R)#theta',
+                     'Spectral#RelativePower#F7#gamma', 'Spectral#RelativePower#F3#beta',
+                     'PLI#Temporal(R)-Parietal(R)#beta', 'Spectral#Flatness#F7#beta',
+                     'Hjorth#Complexity#O2', 'Spectral#Entropy#Cz#theta',
+                     'PLI#Frontal(R)-Occipital(R)#beta', 'COH#Temporal(L)-Parietal(R)#beta',
+                     'COH#Frontal(L)-Occipital(L)#delta', 'Spectral#Flatness#F8#delta',
+                     'Spectral#Entropy#F4#delta', 'PLI#Temporal(R)-Parietal(R)#gamma',
+                     'COH#Occipital(L)-Occipital(R)#delta',
+                     'COH#Temporal(L)-Parietal(R)#delta', 'PLI#Frontal(L)-Temporal(R)#delta',
+                     'Spectral#Flatness#P3#theta', 'Spectral#Entropy#F7#alpha',
+                     'COH#Frontal(R)-Temporal(R)#delta', 'COH#Frontal(L)-Occipital(R)#gamma',
+                     'COH#Frontal(L)-Frontal(R)#beta', 'Hjorth#Complexity#Cz',
+                     'COH#Frontal(L)-Occipital(R)#beta']
 
 dataset_path = '/Volumes/MMIS-Saraiv/Datasets/BrainLat/features'
 #dataset_path = '/Volumes/MMIS-Saraiv/Datasets/Sapienza/features'
@@ -49,11 +86,11 @@ for subject in all_features.index.get_level_values('subject').unique():
     # STATISTICAL TESTS
     independent_rows = []
     dependent_rows = []
-    from scipy.stats import mannwhitneyu
+
     for i in range(len(subject_features)):
         for j in range(i, len(subject_features)):
             # Perform <Mann-Whitney U test>
-            u_stat, p = mannwhitneyu(subject_features.iloc[i], subject_features.iloc[j])
+            u_stat, p = ks_2samp(subject_features.iloc[i], subject_features.iloc[j])
             # interpret
             # p > alpha: Likely come from the same distribution (fail to reject H0)
             # p <= alpha: Likely come from different distributions (reject H0)
@@ -126,4 +163,4 @@ for subject in all_features.index.get_level_values('subject').unique():
 
 # Save the independent tuples by subject
 independent_tuples_by_subject = pd.Series(independent_tuples_by_subject)
-independent_tuples_by_subject.to_csv(join(dataset_path, 'safe_multiples.csv'))
+independent_tuples_by_subject.to_csv(join(dataset_path, 'new_safe_multiples.csv'))

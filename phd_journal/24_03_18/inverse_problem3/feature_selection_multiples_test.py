@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split, cross_val_score, KFold, Sh
 
 from read import *
 from read import read_all_features
-from utils import feature_wise_normalisation
+from utils import feature_wise_normalisation, weighted_error
 
 # 1) Read features
 # 1.1. Multiples = yes
@@ -127,8 +127,6 @@ print("Number of features:", len(features.columns))
 features_train, features_test = train_test_split(features, test_size=0.3, random_state=0, shuffle=True, stratify=targets)
 targets_train, targets_test = targets[features_train.index], targets[features_test.index]
 
-
-
 # 4) Data Augmentation in the underrepresented MMSE scores
 
 # Histogram before
@@ -219,12 +217,11 @@ plt.show()
 # Test
 preditcions = model.predict(features_test)
 
-# MAE
-mae = np.mean(np.abs(targets_test - preditcions))
+# MAE, MSE
+mae, mse = weighted_error(preditcions, targets_test)
 print("MAE:", mae)
-# MSE
-mse = np.mean((targets_test - preditcions) ** 2)
 print("MSE:", mse)
+
 # R2
 r2 = r2_score(targets_test.to_numpy(), preditcions)
 print("R2:", r2)

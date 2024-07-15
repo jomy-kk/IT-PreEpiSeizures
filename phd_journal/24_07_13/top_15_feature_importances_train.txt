@@ -1,0 +1,15 @@
+Hjorth#Complexity#T3
+Spectral#EdgeFrequency#O2#beta
+COH#Frontal(R)-Parietal(L)#theta
+COH#Temporal(L)-Temporal(R)#alpha
+Spectral#Flatness#P3#beta
+Spectral#RelativePower#F7#theta
+COH#Frontal(R)-Temporal(L)#theta
+Spectral#Entropy#O2#alpha
+COH#Frontal(R)-Parietal(L)#gamma
+Hjorth#Mobility#P4
+COH#Temporal(L)-Parietal(L)#gamma
+COH#Frontal(L)-Temporal(R)#beta
+COH#Occipital(L)-Occipital(R)#alpha
+PLI#Frontal(R)-Parietal(L)#alpha
+Spectral#EdgeFrequency#O1#beta

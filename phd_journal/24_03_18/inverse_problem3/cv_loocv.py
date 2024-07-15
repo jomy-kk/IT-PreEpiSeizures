@@ -2,32 +2,30 @@ from os import mkdir
 from os.path import exists
 from pickle import dump
 
-import numpy as np
-from math import floor, ceil
-from matplotlib import pyplot as plt
 import seaborn as sns
-from pandas import Series
-from seaborn import regplot
-from sklearn.ensemble import GradientBoostingRegressor
 from imblearn.over_sampling import SMOTE
-#import ImbalancedLearningRegression as iblr
+from matplotlib import pyplot as plt
+from pandas import Series
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import StratifiedKFold, KFold
-
-#from pyloras import LORAS
 
 from read import *
 from read import read_all_features
-from utils import feature_wise_normalisation, feature_wise_normalisation_with_coeffs
+from utils import feature_wise_normalisation
 
+
+out_path = './scheme57/cv'
+
+PROCESS_NUMBER = 8  # FOR MULTIPROCESSING
+N_CORES = 8  # FOR MULTIPROCESSING
 
 def augment(features, targets):
     # 4) Data Augmentation in the underrepresented MMSE scores
 
     # Histogram before
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("Before")
-    plt.show()
+    #plt.hist(targets, bins=27, rwidth=0.8)
+    #plt.title("Before")
+    #plt.show()
 
     # 4.1. Create more examples of missing targets, by interpolation of the existing ones
     def interpolate_missing_mmse(features, targets, missing_targets):
@@ -67,8 +65,7 @@ def augment(features, targets):
             features = pd.concat([features, new_features])
             new_target = int((lower_target + upper_target) / 2)
             targets = pd.concat([targets, Series([new_target] * len(new_features), index=new_features.index)])
-            print(
-                f"Interpolated {len(new_features)} examples for target {new_target}, from targets {lower_target} and {upper_target}")
+            #print(f"Interpolated {len(new_features)} examples for target {new_target}, from targets {lower_target} and {upper_target}")
 
             return features, targets
 
@@ -84,191 +81,94 @@ def augment(features, targets):
             features, targets = interpolate_missing_mmse(features, targets, missing_targets)
 
     # Histogram after interpolation
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("After interpolation of missing targets")
-    plt.show()
+    #plt.hist(targets, bins=27, rwidth=0.8)
+    #plt.title("After interpolation of missing targets")
+    #plt.show()
 
     # 4.2. Data Augmentation method = SMOTE-C
     for k in (5, 4, 3, 2, 1):
         try:
             smote = SMOTE(random_state=42, k_neighbors=k, sampling_strategy='auto')
             features, targets = smote.fit_resample(features, targets)
-            print(f"Worked with k={k}")
+            print(f"SMOTE Worked with k={k}")
             break
         except ValueError as e:
-            print(f"Did not work with k={k}")
+            pass
+            #print(f"Did not work with k={k}")
 
     # Histogram after
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("After")
-    plt.show()
+    #plt.hist(targets, bins=27, rwidth=0.8)
+    #plt.title("After")
+    #plt.show()
 
     # Normalisation after DA
     features = feature_wise_normalisation(features, method='min-max')
     features = features.dropna(axis=1)
 
-    print("Features shape after DA:", features.shape)
     return features, targets
 
 
-def custom_cv(objects, targets, n_splits=5, random_state=42):
+def custom_loocv(objects, targets, start, end, random_state=42):
     """
-    Custom Cross-Validation with Data Augmentation on-the-fly that ensures that the same subject is not present in both
-    training and test sets.
-
-    1. Identify the minority target and select 30% of its instances for the test set.
-    2. Identify the INSIGHT examples in the test set and exclude other examples from the same subjects from the training set.
-    3. Augment the remaining examples that can be selected for training.
-    4. Select the remaining examples for training.
+    Leave one out Cross-Validation with:
+    a) ensures that the same subject is not present in both training and test sets.
+    b) Data Augmentation on-the-fly on training sets.
 
     Args:
         objects: A DataFrame of feature vectors
         targets: A Series of target values
-        test_size: The proportion of the minority target to be selected for the test set
+        start: The starting index of the objects to be considered for test sets
+        end: The ending index of the objects to be considered for test sets
 
     Returns:
         The augmented training objects, test objects, training targets, and test targets.
-
     """
-
-    # Create a list of indices
-    indices = np.arange(len(targets))
-
-    # Create a list to keep track of the indices that have already been used for the test set
-    used_test_indices = []
-
-    # Identify the minority target
-    unique_targets, counts = np.unique(targets, return_counts=True)
-    minority_target = unique_targets[np.argmin(counts)]
-    # How much is the minority target?
-    print(f"Minority target: {minority_target}")
-    print(f"Minority target count: {np.min(counts)}")
-    test_size = 1 / n_splits
-    n_test_per_target = ceil(np.min(counts) * test_size)
-    print(f"# test per target: {n_test_per_target}")
 
     # for each fold...
-    for i in range(n_splits):
-        # 1. Select 'n_test_per_target' per each target to constitute the test set
-        test_indices = []
-        for target in unique_targets:
+    for i in range(start, end):
 
-            # Get the indices for this target that have not been used for the test set yet
-            target_indices = [index for index in indices[targets == target] if index not in used_test_indices]
-
-            if len(target_indices) < n_test_per_target:
-                continue  # If the number of examples of this target is less than 'n_test_per_target', do not select any; they will be used in the training set
-            Y = np.random.choice(target_indices, size=n_test_per_target, replace=False)
-            test_indices.extend(Y)
-        # Add the test indices for this fold to the list of used test indices
-        used_test_indices.extend(test_indices)
-
-        # Print targets distribution for test set
-        print(f"Test set distribution:")
-        test_dist = {target: len([i for i in test_indices if targets.iloc[i] == target]) for target in unique_targets}
-        print(test_dist)
+        # 1) Select the i for the test set
+        test_indices = [i, ]
+        test_subject_code, test_multiple = objects.index[i].split('$')
+        if '_' in test_subject_code:  # if INSIGHT
+            test_subject_code = test_subject_code.split('_')[0]
+        objects_test, targets_test = objects.iloc[test_indices], targets.iloc[test_indices]
 
 
-        # 2. Identify the INSIGHT examples in the test set, and find remaining examples for training
-        insight_indices = [i for i in test_indices if '_' in str(objects.index[i])]
-        # Exclude other examples from the same subjects from the training set
-        excluded_subjects = {objects.index[i].split('_')[0] for i in insight_indices if '_' in objects.index[i]}
-        remaining_indices = [i for i in range(len(targets)) if i not in test_indices and str(objects.index[i]).split('_')[0] not in excluded_subjects]
+        # 2) Select all others for the training set
+        train_indices = [j for j in range(len(targets)) if j != i]
 
-        # Print amount unused examples
-        used = len(remaining_indices) + len(test_indices)
-        print(f"Unused examples: {len(targets) - used}")
+        # a) Ensure that the same subject is not present in both training and test sets
+        # In INSIGHT, subject codes are identifiable from what's left of '_' in the index
+        # In other datasets, independence check has to be done.
+        for j in train_indices:
+            subject_code, multiple = objects.index[j].split('$')
+            if '_' in subject_code:  # if INSIGHT
+                subject_code = subject_code.split('_')[0]
+                if subject_code == test_subject_code:
+                    train_indices.remove(j)
+            else:
+                if subject_code == test_subject_code:
+                    if '-' in str(subject_code):  # brainlat
+                        independents = brainlat_independents.loc[subject_code]
+                    elif 'PARTICIPANT' in str(subject_code):  # sapienza
+                        independents = sapienza_independents.loc[subject_code]
+                    else:  # miltiadous
+                        independents = miltiadous_independents.loc[subject_code]
+                    if (multiple, test_multiple) not in independents and (test_multiple, multiple) not in independents:
+                        train_indices.remove(j)
+                else:
+                    pass
 
-        # 3. Augment the remaining examples that can be selected for training
-        print("Train examples before augmentation:", len(remaining_indices))
-        augmented_objects, augmented_targets = augment(objects.iloc[remaining_indices], targets.iloc[remaining_indices])
-        print("Train examples after augmentation:", len(augmented_objects))
+        objects_train, targets_train = objects.iloc[train_indices], targets.iloc[train_indices]
 
-        yield augmented_objects, objects.iloc[test_indices], augmented_targets, targets.iloc[test_indices]
+        # b) Augment the training examples
+        print("Train examples before augmentation:", len(objects_train))
+        objects_train, targets_train = augment(objects_train, targets_train)
+        print("Train examples after augmentation:", len(objects_train))
 
+        yield objects_train, objects_test, targets_train, targets_test
 
-def cv(model, objects, targets, folds: int, random_state:int):
-    """
-    My own Implementation of Cross-Validation with Data Augmentation on-the-fly that ensures that the same subject
-    is not present in both training and test sets.
-    Args:
-        model: A Sklearn model
-        objects: The feature vectors of each example in DataFrame format
-        targets: The target values of each example in Series format
-        folds: The number of folds, k
-        stratified: Whether to use stratified k-fold
-        shuffle: Whether to shuffle the data before splitting
-        random_state: Random seed for reproducibility, if shuffle is True
-
-    Prints:
-        The average R2, MSE, and MAE scores across all folds.
-
-    Plots:
-        The regression plot between the true and predicted MMSE scores for each fold.
-    """
-
-    r2_scores = []
-    mse_scores = []
-    mae_scores = []
-
-    for i, (train_objects, test_objects, train_targets, test_targets) in enumerate(custom_cv(objects, targets, n_splits=folds, random_state=random_state)):
-        print(f"Fold {i+1}")
-
-        # make sub-dir if not exists
-        fold_path = join(out_path, str(i+1))
-        if not exists(fold_path):
-            mkdir(fold_path)
-
-        # Train the model
-        print(f"Train examples: {len(train_objects)}")
-        model.fit(train_objects, train_targets)
-        # save model
-        with open(join(fold_path, "model.pkl"), 'wb') as f:
-            dump(model, f)
-
-        # Test the model
-        print(f"Test examples: {len(test_objects)}")
-        predictions = model.predict(test_objects)
-        # save Dataframe predictions | targets of test set
-        res = pd.DataFrame({'predictions': predictions, 'targets': test_targets})
-        res.to_csv(join(out_path, 'predictions_targets.csv'))
-
-        # Calculate the scores
-        r2 = r2_score(test_targets, predictions)
-        print(f"R2: {r2}")
-        mse = mean_squared_error(test_targets, predictions)
-        print(f"MSE: {mse}")
-        mae = mean_absolute_error(test_targets, predictions)
-        print(f"MAE: {mae}")
-
-        # Append the scores
-        r2_scores.append(r2)
-        mse_scores.append(mse)
-        mae_scores.append(mae)
-
-        # Make regression plot
-        plt.figure(figsize=(6, 5))
-        plt.rcParams['font.family'] = 'Arial'
-        sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'},
-                    line_kws={'color': '#C60E4F'})
-        plt.xlabel('True MMSE (units)', fontsize=12)
-        plt.ylabel('Predicted MMSE (units)', fontsize=12)
-        plt.xlim(-1.5, 31.5)
-        plt.ylim(-1.5, 31.5)
-        plt.xticks([0, 4, 6, 9, 12, 15, 20, 25, 30], fontsize=11)
-        plt.yticks([0, 4, 6, 9, 12, 15, 20, 25, 30], fontsize=11)
-        plt.grid(linestyle='--', alpha=0.4)
-        plt.box(False)
-        plt.tight_layout()
-        plt.savefig(join(out_path, 'train.png'))
-    # Print the average scores
-    print(f'Average R2: {np.mean(r2_scores)} +/- {np.std(r2_scores)}')
-    print(f'Average MSE: {np.mean(mse_scores)} +/- {np.std(mse_scores)}')
-    print(f'Average MAE: {np.mean(mae_scores)} +/- {np.std(mae_scores)}')
-
-
-out_path = './scheme57/cv'
-model_path = './scheme57'
 
 FEATURES_SELECTED = ['Hjorth#Complexity#T5', 'Hjorth#Complexity#F4',
                      'COH#Frontal(R)-Parietal(L)#delta', 'Hjorth#Complexity#T3',
@@ -315,7 +215,7 @@ FEATURES_SELECTED = ['Hjorth#Complexity#T5', 'Hjorth#Complexity#F4',
 
 # 1) Read features
 # 1.1. Multiples = yes
-# 1.2. Which multiples = independent ones
+# 1.2. Which multiples = all (check for independence is done during CV)
 # 1.3. Which features = FEATURES_SELECTED
 miltiadous = read_all_features('Miltiadous Dataset', multiples=True)
 brainlat = read_all_features('BrainLat', multiples=True)
@@ -325,6 +225,13 @@ features = pd.concat([brainlat, miltiadous, sapienza, insight], axis=0)
 features = features[FEATURES_SELECTED]
 features = features.dropna(axis=0)
 print("Features Shape:", features.shape)
+
+# 1.1.) Load independence tables
+miltiadous_independents = pd.read_csv(join(common_datasets_path, 'Miltiadous Dataset', 'features', 'new_safe_multiples.csv'), index_col=0)
+miltiadous_independents.index = [format(n, '03') for n in miltiadous_independents.index]
+brainlat_independents = pd.read_csv(join(common_datasets_path, 'BrainLat', 'features', 'new_safe_multiples.csv'), index_col=0)
+sapienza_independents = pd.read_csv(join(common_datasets_path, 'Sapienza', 'features', 'new_safe_multiples.csv'), index_col=0)
+
 
 # 2) Read targets
 insight_targets = read_mmse('INSIGHT')
@@ -364,10 +271,78 @@ features = features.loc[targets.index]
 # 3) Normalisation of all dataset
 features = feature_wise_normalisation(features, method='min-max')
 features = features.dropna(axis=1)
+objects = features
 
 # 4) Define model
 model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
                                   learning_rate=0.04, )
 
+
+# EXTRA: Reduce time complexity
+# From examples with target classes higher than 200, randomly choose only 200
+for mmse in range(31):
+    if len(targets[targets == mmse]) > 200:
+        objects_this_mmse = objects[targets == mmse]
+        objects_this_mmse = objects_this_mmse.sample(n=200, random_state=42)
+        objects = pd.concat([objects[targets != mmse], objects_this_mmse])
+targets = targets.loc[objects.index]
+
+print("Features Shape after reducing time complexity:", objects.shape)
+
+
 # 5) Cross-Validation
-cv(model, features, targets, 5,42)
+N_FOLDS = int(len(objects) / N_CORES)
+start = int(N_FOLDS * (PROCESS_NUMBER - 1))
+end = int(N_FOLDS * PROCESS_NUMBER)
+
+print("PROCESS_NUMBER:", PROCESS_NUMBER)
+print("Test sets will go from", start, "to", end)
+
+predictions = []
+for i, (train_objects, test_objects, train_targets, test_targets) in (
+        enumerate(custom_loocv(objects, targets, start, end, random_state=42))):
+    print(f"Fold {i+1}/{N_FOLDS}")
+
+    # Train the model
+    print(f"Train examples: {len(train_objects)}")
+    model.fit(train_objects, train_targets)
+
+    # Test the model
+    print(f"Test examples: {len(test_objects)}")
+    prediction = model.predict(test_objects)
+    predictions.extend(prediction)
+
+    # Print absolute error and squared error
+    print("Absolute Error:", mean_absolute_error(test_targets, prediction))
+    print("Squared Error:", mean_squared_error(test_targets, prediction))
+
+test_targets = targets[start:end]
+# save Dataframe predictions | targets of test set
+res = pd.DataFrame({'predictions': predictions, 'targets': test_targets})
+res.to_csv(join(out_path, f'predictions_targets_{PROCESS_NUMBER}.csv'))
+
+"""
+# Print the average scores
+r2 = r2_score(targets, predictions)  # R2
+print(f'Average R2: {r2}')
+mse = mean_squared_error(targets, predictions)  # MSE
+print(f'Average MSE: {mse}')
+mae = mean_absolute_error(targets, predictions)  # MAE
+print(f'Average MAE: {mae}')
+
+# Make regression plot
+plt.figure(figsize=(6, 5))
+plt.rcParams['font.family'] = 'Arial'
+sns.regplot(x=targets, y=predictions, scatter_kws={'alpha': 0.3, 'color': '#C60E4F'},
+            line_kws={'color': '#C60E4F'})
+plt.xlabel('True MMSE (units)', fontsize=12)
+plt.ylabel('Predicted MMSE (units)', fontsize=12)
+plt.xlim(-1.5, 31.5)
+plt.ylim(-1.5, 31.5)
+plt.xticks([0, 4, 6, 9, 12, 15, 20, 25, 30], fontsize=11)
+plt.yticks([0, 4, 6, 9, 12, 15, 20, 25, 30], fontsize=11)
+plt.grid(linestyle='--', alpha=0.4)
+plt.box(False)
+plt.tight_layout()
+plt.savefig(join(out_path, 'train.png'))
+"""
