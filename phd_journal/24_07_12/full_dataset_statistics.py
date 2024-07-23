@@ -135,3 +135,5 @@ print("INSIGHT:", sum(insight_statistics.values()))
 print("BrainLat:", sum(brainlat_statistics.values()))
 print("Sapienza:", sum(spaienza_statistics.values()))
 print("Miltiadous:", sum(miltiadous_statistics.values()))
+
+print("")

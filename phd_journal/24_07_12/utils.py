@@ -3,6 +3,9 @@ from pandas import DataFrame, read_csv
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 
+ELDERS_COLOUR = '#C60E4F'
+CHILDREN_COLOUR = '#0067B1'
+
 def feature_wise_normalisation(features: DataFrame, method: str = 'mean-std', save=None) -> DataFrame:
     """
     Normalise feature matrices in a feature-wise manner.

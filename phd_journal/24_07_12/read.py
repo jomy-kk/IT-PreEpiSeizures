@@ -91,6 +91,22 @@ def read_all_features(dataset, multiples=False) -> DataFrame:
     else:
         return res # select_safe(res, dataset)
 
+
+def read_diagnosis(dataset: str) -> dict[str,str]:
+    if dataset == 'INSIGHT':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/DZNE/INSIGHT/EEG/cognition_m0.csv', sep=',')
+        return {row['CODE']: "SMC" for _, row in df.iterrows()}
+    if dataset == 'BrainLat':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/BrainLat/metadata.csv', sep=',')
+        return {row['ID']: row['Diagnosis'] for _, row in df.iterrows()}
+    if dataset == 'Miltiadous Dataset':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/participants.tsv', sep='\t')
+        map = {'A': 'AD', 'C': 'HC', 'F': 'FTD'}
+        return {row['participant_id']: map[row['Group']] for _, row in df.iterrows()}
+    if dataset == 'Sapienza':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/Sapienza/metadata.csv', sep=',')
+        return {row['ID']: row['DIAGNOSIS'] for _, row in df.iterrows()}
+
 def read_ages(dataset: str) -> dict[str|int, float|int]:
     if dataset == 'KJPP':
         #df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_as_given.csv', sep=';')
@@ -139,3 +155,15 @@ def read_all_eeg(dataset: str, N=None) -> Collection[EEG]:
             x = x[good]
             all_biosignals.append(x)
     return all_biosignals
+
+
+def read_patient_codes(dataset: str) -> dict[str, str]:
+    if dataset == 'KJPP':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata.csv', sep=';')
+        return {row['SESSION']: row['PATIENT'] for _, row in df.iterrows()}
+
+
+def read_gender(dataset: str) -> dict[str, str]:
+    if dataset == 'KJPP':
+        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata.csv', sep=';')
+        return {row['PATIENT']: row['GENDER'] for _, row in df.iterrows()}
