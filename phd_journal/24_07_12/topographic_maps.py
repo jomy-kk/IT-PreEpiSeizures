@@ -349,8 +349,8 @@ def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
                      #mask=np.array([x in ('T4', 'T3', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O2', 'O1', 'Fz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O1', 'P4',) for x in channel_order]),  # channels to highlight
-                     #mask=np.array([x in ('T3',) for x in channel_order]),  # channels to highlight
-                     #mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
+                     mask=np.array([x in ('P4',) for x in channel_order]),  # channels to highlight
+                     mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
                      cmap='viridis' if cmap is None else cmap, #colorbar=True,  # colormap
                      outlines='head', contours=6, image_interp='cubic', border='mean',  # head shape and interpolation
                      axes=None, res=1024, show=False, size=3)  # resolution and size
@@ -366,8 +366,8 @@ def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
 #######
 
 #"""
-feature_name = 'Spectral#PeakFrequency'
-feature_names = ['{}#{}#alpha'.format(feature_name, channel) for channel in channel_order]
+feature_name = 'Hjorth#Mobility'
+feature_names = ['{}#{}'.format(feature_name, channel) for channel in channel_order]
 
 # Get Elders
 features_elders, targets_elders, diagnosis = read_elders()

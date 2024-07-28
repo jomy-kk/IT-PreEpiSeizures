@@ -1,0 +1,15 @@
+COH#Frontal(R)-Parietal(L)#theta
+COH#Frontal(R)-Temporal(L)#theta
+COH#Frontal(R)-Temporal(L)#delta
+COH#Frontal(R)-Parietal(L)#delta
+COH#Temporal(R)-Parietal(R)#alpha
+COH#Temporal(L)-Temporal(R)#alpha
+Hjorth#Complexity#T3
+Spectral#Entropy#T4#theta
+COH#Temporal(L)-Parietal(R)#delta
+COH#Parietal(R)-Occipital(L)#beta
+COH#Frontal(L)-Occipital(L)#delta
+Spectral#RelativePower#F3#beta
+COH#Frontal(R)-Temporal(R)#delta
+COH#Parietal(L)-Occipital(R)#theta
+Spectral#Flatness#P3#theta

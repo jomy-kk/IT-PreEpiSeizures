@@ -64,25 +64,30 @@ top_15_features = importances[indices[:15]]
 top_15_features_names = [feature_names[i] for i in indices[:15]]
 np.savetxt("./top_15_feature_importances_train.txt", top_15_features_names, fmt='%s')
 
-# Make one color by category (Spectral, Hjorth, COH or PLI)
-# original color
-og_color = '#C60E4F'
-# same colour but with a little less contrast
-more_contrast = '#FF6699'
-# same colour but with less contrast
-less_contrast = '#FF99CC'
+# Curate feature names
+top_15_features_names = curate_feature_names(top_15_features_names)
+
+# Make colors
+in_common_color = '#C60E4F'
+lightgray_color = '#D3D3D3'
+
+in_common_features = (
+    "Hjorth Complexity T3",
+    "Edge Frequency O2 Beta",
+    "COH Frontal(R) - Parietal(L) Theta",
+    "COH Temporal(L) - Temporal(R) Alpha",
+    "COH Frontal(R) - Temporal(L) Theta",
+    "Entropy O2 Alpha",
+    "COH Frontal(R) - Parietal(L) Gamma",
+    "Hjorth Mobility P4"
+)
 
 colors = []
 for name in top_15_features_names:
-    if 'Spectral' in name:
-        colors.append(more_contrast)
-    elif 'Hjorth' in name:
-        colors.append(less_contrast)
-    elif 'COH' or 'PLI' in name:
-        colors.append(og_color)
-
-# Curate feature names
-top_15_features_names = np.array(curate_feature_names(top_15_features_names))
+    if name in in_common_features:
+        colors.append(in_common_color)
+    else:
+        colors.append(lightgray_color)
 
 # Bar plot of top 15 features with seaborn
 plt.rcParams['font.family'] = 'Arial'
