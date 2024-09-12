@@ -2,7 +2,7 @@ from os.path import join
 from pandas import read_csv
 from pickle import load
 
-common_path = '/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_03_18/inverse_problem3/scheme57'
+common_path = '/Users/saraiva/PycharmProjects/IT-LongTermBiosignals/phd_journal/24_03_18/inverse_problem3/scheme57'
 
 
 def read_elders():

@@ -118,9 +118,19 @@ def train_full_elders_dataset():
     # 4) Data Augmentation in the underrepresented MMSE scores
 
     # Histogram before
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("Before")
-    plt.show()
+    # Bar plot after with seaborn
+    ELDERS_COLOUR = '#C60E4F'
+    plt.figure(figsize=(8, 5))
+    count = {}
+    # count each target
+    for target in range(4, 31):
+        count[target] = len(targets[targets == target])
+    sns.barplot(x=list(count.keys()), y=list(count.values()), color=ELDERS_COLOUR)
+    sns.despine()
+    plt.xlabel('MMSE (units)', fontsize=12)
+    plt.ylabel('Number of examples', fontsize=12)
+    plt.tight_layout()
+    plt.savefig(join(out_path, 'distribution_before.png'))
 
     # 4.0. Create more examples of missing targets, by interpolation of the existing ones
     def interpolate_missing_mmse(features, targets, missing_targets):
@@ -177,9 +187,16 @@ def train_full_elders_dataset():
             features, targets = interpolate_missing_mmse(features, targets, missing_targets)
 
     # Histogram after interpolation
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("After interpolation of missing targets")
-    plt.show()
+    # Bar plot after with seaborn
+    ELDERS_COLOUR = '#C60E4F'
+    plt.figure(figsize=(8, 5))
+    sns.barplot(x=targets.value_counts().index, y=targets.value_counts(), color=ELDERS_COLOUR)
+    print(targets.value_counts().index)
+    sns.despine()
+    plt.xlabel('MMSE (units)', fontsize=12)
+    plt.ylabel('Number of examples', fontsize=12)
+    plt.tight_layout()
+    plt.savefig(join(out_path, 'distribution_after_interpolation.png'))
 
     """
     # 4.1. Data Augmentation method = Every target (self-made method)
@@ -245,13 +262,19 @@ def train_full_elders_dataset():
     lrs = LORAS(random_state=0, manifold_learner_params={'perplexity': 35, 'n_iter': 250})
     features, targets = lrs.fit_resample(features, targets)
     """
-
-    # Histogram after
-    plt.hist(targets, bins=27, rwidth=0.8)
-    plt.title("After")
-    plt.show()
+    # Bar plot after with seaborn
+    ELDERS_COLOUR = '#C60E4F'
+    plt.figure(figsize=(8, 5))
+    sns.barplot(x=targets.value_counts().index, y=targets.value_counts(), color=ELDERS_COLOUR)
+    sns.despine()
+    plt.xlabel('MMSE (units)', fontsize=12)
+    plt.ylabel('Number of examples', fontsize=12)
+    plt.tight_layout()
+    plt.savefig(join(out_path, 'distribution_after_smote.png'))
 
     print("Features shape after DA:", features.shape)
+
+    exit(0)
 
     # 5) Normalisation after DA
     # 5.1. Normalisation method = min-max
@@ -877,6 +900,6 @@ def feature_importance_kjpp():
 out_path = './scheme58'
 model_path = './scheme57'
 
-#train_full_elders_dataset()
-validate_kjpp()
+train_full_elders_dataset()
+#validate_kjpp()
 #feature_importance_kjpp()

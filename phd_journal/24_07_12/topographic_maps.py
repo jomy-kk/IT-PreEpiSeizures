@@ -92,7 +92,7 @@ def read_elders():
     features = features.loc[diagnosis.index]
 
     # 4) Normalize features min-max
-    #features = (features - features.min()) / (features.max() - features.min())
+    features = (features - features.min()) / (features.max() - features.min())
 
     return features, targets, diagnosis
 
@@ -112,7 +112,7 @@ def read_children(features_elders, targets_elders):
 
     # 1.2.2) Remove others
     # 1.2.2) Remove others
-    REMOVED_SESSIONS = np.loadtxt("/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_03_18/inverse_problem3/scheme57/removed_sessions.txt", dtype=str)
+    REMOVED_SESSIONS = np.loadtxt("../24_03_18/inverse_problem3/scheme57/removed_sessions.txt", dtype=str)
     n_before = len(features)
     features = features.drop(REMOVED_SESSIONS, errors='ignore')
     print("Removed:", n_before - len(features))
@@ -148,11 +148,11 @@ def read_children(features_elders, targets_elders):
     #elders_max = features_elders.max()
     #elders_min = features_elders.min()
     #features = (features - elders_min) / (elders_max - elders_min)
-    #features = feature_wise_normalisation(features, 'min-max')
+    features = feature_wise_normalisation(features, 'min-max')
 
     # 4) Calibration
     # 4.4. method = by groups
-    """
+
     #a, b, c, d = (0, 9), (9, 15), (15, 24), (24, 30)  # Elderly groups
     a, b, c, d = (0, 15), (16, 25), (26, 29), (29, 31)  # NEW Elderly groups
     #alpha, beta, gamma, delta = (0, 5), (5, 8), (8, 13), (13, 25)  # Children groups
@@ -203,7 +203,7 @@ def read_children(features_elders, targets_elders):
     features = features.dropna(axis=0)
     targets = targets.dropna()
     print("Number of subjects after calibration:", len(features))
-    """
+
     return features, targets
 
 
@@ -254,13 +254,13 @@ def plot(F, T, groups, label, vmin=None, vmax=None, cmap=None):
 
         # Plot the topomap
         plot_topomap(F_group, vlim=(vmin, vmax),  # features and their range
-                     pos=info, sensors=True,names=None, #channel_order, #show_names=False, # channel names and their order
+                     pos=info, sensors=True,names=channel_order, #show_names=False, # channel names and their order
                      #mask=np.array([x in ('T5', 'F4', 'T3', 'P3', 'O2', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('T4', 'T3', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O2', 'O1', 'Fz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O1', 'P4',) for x in channel_order]),  # channels to highlight
-                     #mask=np.array([x in ('T3',) for x in channel_order]),  # channels to highlight
-                     #mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
+                     mask=np.array([x in ('T3',) for x in channel_order]),  # channels to highlight
+                     mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
                      cmap='viridis' if cmap is None else cmap, #colorbar=True,  # colormap
                      outlines='head', contours=6, image_interp='cubic', border='mean',  # head shape and interpolation
                      axes=None, res=1024, show=False, size=3)  # resolution and size
@@ -344,12 +344,12 @@ def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
 
         # Plot the topomap
         plot_topomap(F_group, vlim=(vmin, vmax),  # features and their range
-                     pos=info, sensors=True,names=None, #channel_order, #show_names=False, # channel names and their order
+                     pos=info, sensors=True,names=channel_order, #show_names=True, # channel names and their order
                      #mask=np.array([x in ('T5', 'F4', 'T3', 'P3', 'O2', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('T4', 'T3', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O2', 'O1', 'Fz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O1', 'P4',) for x in channel_order]),  # channels to highlight
-                     mask=np.array([x in ('P4',) for x in channel_order]),  # channels to highlight
+                     mask=np.array([x in ('T3',) for x in channel_order]),  # channels to highlight
                      mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
                      cmap='viridis' if cmap is None else cmap, #colorbar=True,  # colormap
                      outlines='head', contours=6, image_interp='cubic', border='mean',  # head shape and interpolation
@@ -366,7 +366,7 @@ def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
 #######
 
 #"""
-feature_name = 'Hjorth#Mobility'
+feature_name = 'Hjorth#Complexity'
 feature_names = ['{}#{}'.format(feature_name, channel) for channel in channel_order]
 
 # Get Elders
@@ -384,7 +384,7 @@ features_children = features_children[feature_names]
 # Normalise children features
 #features_children = feature_wise_normalisation(features_children, 'min-max')
 
-VMIN, VMAX = 8.5, 10.5
+VMIN, VMAX = 0.06, 0.39
 
 # Plot
 
