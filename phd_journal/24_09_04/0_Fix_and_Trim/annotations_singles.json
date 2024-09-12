@@ -1,0 +1,927 @@
+{
+    "ev": {
+        "sub_string": true,
+        "category": "Electrode Adjustment",
+        "exclude": true,
+        "inf_padding": 2.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "montage": {
+        "sub_string": true,
+        "category": "Changing Montages",
+        "exclude": false
+    },
+    "impedance": {
+        "exclude": false,
+        "category": "Checking Impedance",
+        "sub_string": true
+    },
+    "IMpedanzmessungen": {
+        "exclude": false,
+        "category": "Checking Impedance",
+        "sub_string": true
+    },
+    "hv": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": true
+    },
+    "Start Recording": {
+        "exclude": false,
+        "category": "Natus markers",
+        "sub_string": false
+    },
+    "Stop Recording": {
+        "exclude": false,
+        "category": "Natus markers",
+        "sub_string": false
+    },
+    "New Segment": {
+        "exclude": false,
+        "category": "BVA markers",
+        "sub_string": false
+    },
+    "unr. Augen": {
+        "exclude": true,
+        "category": "Restless Eyes",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "movement": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "klatschen": {
+        "exclude": true,
+        "category": "Clapping",
+        "sub_string": true,
+        "inf_padding": 15.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "theta": {
+        "exclude": true,
+        "category": "Theta Rhythms",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 1.0
+    },
+    "paroxys": {
+        "exclude": true,
+        "category": "Paroxysmal Activity",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 1.0,
+        "default_duration": 5.0
+    },
+    "schluck": {
+        "exclude": true,
+        "category": "Swallow Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "hochgespannte wellen": {
+        "exclude": true,
+        "category": "Spike and Slow-Wave Complexes",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "sw": {
+        "exclude": true,
+        "category": "Spike and Slow-Wave Complexes",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "augen fixiert": {
+        "exclude": false,
+        "category": "Fixed Eyes",
+        "sub_string": true
+    },
+    "herzschlagartefakte": {
+        "exclude": true,
+        "category": "Cardiac Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "unruhige Augen": {
+        "exclude": true,
+        "category": "Restless Eyes",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "bulbusbew": {
+        "exclude": true,
+        "category": "Bulbus Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 1.0,
+        "default_duration": 6.0
+    },
+    "augenfix": {
+        "exclude": false,
+        "category": "Fixed Eyes",
+        "sub_string": true
+    },
+    "wirkt unruhig": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "ruhig liegen bleiben": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "blink": {
+        "exclude": false,
+        "category": "Blink",
+        "sub_string": true
+    },
+    "lidschlag": {
+        "exclude": false,
+        "category": "Blink",
+        "sub_string": true
+    },
+    "kopfnickeen": {
+        "exclude": true,
+        "category": "Head Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 1.0
+    },
+    "bewegungsartefakt": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 4.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "Bewegungsatefakt": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 4.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "g\u001a\u001ahnt": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": false,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 4.0
+    },
+    "hustet": {
+        "exclude": true,
+        "category": "Cough Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "augen unr": {
+        "exclude": true,
+        "category": "Restless Eyes",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "muskelartefakt": {
+        "exclude": true,
+        "category": "Muscle Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "kneift augen": {
+        "exclude": true,
+        "category": "Eye Squinting",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 1.0
+    },
+    "sharp waves": {
+        "exclude": true,
+        "category": "Sharp Waves",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 1.0
+    },
+    "beschreibt": {
+        "exclude": true,
+        "category": "Speaking",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "ekg-art": {
+        "exclude": true,
+        "category": "Cardiac Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "?": {
+        "exclude": true,
+        "category": "Unknown Artifact",
+        "sub_string": false,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "sehr unruhig": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "Tic": {
+        "exclude": true,
+        "category": "Tic Artifact",
+        "sub_string": false,
+        "inf_padding": 0.2,
+        "sup_padding": 0.2,
+        "default_duration": 1.0
+    },
+    "Wasserbr\u001a\u001acke": {
+        "exclude": true,
+        "category": "Electrode Problem",
+        "sub_string": true,
+        "inf_padding": 120.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "schmatzen": {
+        "exclude": true,
+        "category": "Lip Smaking",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 2.0
+    },
+    "spike": {
+        "exclude": true,
+        "category": "Spike and Slow-Wave Complexes",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "gute mitarbeit": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": true
+    },
+    "mund ge\u001a\u001affn": {
+        "exclude": true,
+        "category": "Mouth Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "schlafen": {
+        "exclude": true,
+        "category": "Sleepiness",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "sehr m\u001a\u001ade!": {
+        "exclude": false,
+        "category": "Patient/Session Info",
+        "sub_string": false
+    },
+    "kauartefakt": {
+        "exclude": true,
+        "category": "Chewing Artifact",
+        "sub_string": true,
+        "inf_padding": 0.5,
+        "sup_padding": 0.5,
+        "default_duration": 0.0
+    },
+    "phasenumkehr": {
+        "exclude": false,
+        "category": "Normal phenomenan",
+        "sub_string": true
+    },
+    "sharp wave": {
+        "exclude": true,
+        "category": "Sharp Waves",
+        "sub_string": true,
+        "inf_padding": 0.5,
+        "sup_padding": 0.5,
+        "default_duration": 0.0
+    },
+    "steile abl": {
+        "exclude": true,
+        "category": "Steep Gradients",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "spricht": {
+        "exclude": true,
+        "category": "Speaking",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "f\u001a\u001asst sich ins Gesicht": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "mund leicht ge\u001a\u001affn.": {
+        "exclude": true,
+        "category": "Mouth Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "stirnrunzeln": {
+        "exclude": true,
+        "category": "Frowning",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "position ver\u001a\u001andert": {
+        "exclude": true,
+        "category": "Electrode Adjustment",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "kopfnicken": {
+        "exclude": true,
+        "category": "Head Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "kaugummi entfernt": {
+        "exclude": true,
+        "category": "Eating gum",
+        "sub_string": true,
+        "inf_padding": 50.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "alpha": {
+        "exclude": false,
+        "category": "Alpha Rhythms",
+        "sub_string": true
+    },
+    "amplitudenmoduliert": {
+        "exclude": true,
+        "category": "Technical setting",
+        "sub_string": false,
+        "inf_padding": 20.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "berger postitv": {
+        "exclude": false,
+        "category": "Berger manouver",
+        "sub_string": false
+    },
+    "demaskierung von \u001a\u001a-rhythmus": {
+        "exclude": false,
+        "category": "Berger manouver",
+        "sub_string": false
+    },
+    "kieermuskulatur": {
+        "exclude": true,
+        "category": "Jaw Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "Minzten Ruhe Start": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": true
+    },
+    "augen kurzzeitg ge": {
+        "exclude": true,
+        "category": "Eyes Opened",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "augen kurzzeitig ge": {
+        "exclude": true,
+        "category": "Eyes Opened",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "lab noise": {
+        "exclude": true,
+        "category": "External Noise",
+        "sub_string": true,
+        "inf_padding": 1.5,
+        "sup_padding": 1.5,
+        "default_duration": 0.0
+    },
+    "ruhephase": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": true
+    },
+    "lagerung ge\u001a\u001andert": {
+        "exclude": false,
+        "category": "Technical setting",
+        "sub_string": false
+    },
+    "gesichtsmuskulatur": {
+        "exclude": true,
+        "category": "Face Myogenic Noise",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 4.0,
+        "default_duration": 0.0
+    },
+    ".": {
+        "exclude": false,
+        "category": "Unknown",
+        "sub_string": false
+    },
+    "etp": {
+        "exclude": true,
+        "category": "Epileptic-typical Potential",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "artifact": {
+        "exclude": true,
+        "category": "Unclassified Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "patientin sehr angespannt": {
+        "exclude": false,
+        "category": "Patient/Session Info",
+        "sub_string": false
+    },
+    "lidschl\u001a\u001age": {
+        "exclude": true,
+        "category": "Eyelids Closing",
+        "sub_string": true,
+        "inf_padding": 0.3,
+        "sup_padding": 0.3,
+        "default_duration": 0.0
+    },
+    "augen kurzzeitig ge\u001a\u001affn. / wieder geschlossen": {
+        "exclude": true,
+        "category": "Eyes Opened",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "angesprochen": {
+        "exclude": false,
+        "category": "Technician talks",
+        "sub_string": true
+    },
+    "start +10 min": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": false
+    },
+    "pat. wird unruhiger": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "Schwitzartefakte": {
+        "exclude": true,
+        "category": "Sweating Artifacts",
+        "sub_string": true,
+        "inf_padding": 30.0,
+        "sup_padding": 5.0,
+        "default_duration": 0.0
+    },
+    "\u001a\u001a-rhythmus?": {
+        "exclude": false,
+        "category": "Unknown Band Rhythm",
+        "sub_string": false
+    },
+    "\u001a\u001a-rhythmus bei augen\u001a\u001afnen": {
+        "exclude": false,
+        "category": "Alpha Rhythms",
+        "sub_string": false
+    },
+    "beta aktivit\u001a\u001at?": {
+        "exclude": false,
+        "category": "Beta Rhythms",
+        "sub_string": false
+    },
+    "kind unruhig": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "bewegung": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "augenrollen": {
+        "exclude": true,
+        "category": "Eye Artifact",
+        "sub_string": false,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "headbox disconnecting": {
+        "exclude": true,
+        "category": "Instrumentation",
+        "sub_string": false,
+        "inf_padding": 4.0,
+        "sup_padding": 0.0,
+        "default_duration": 0.0
+    },
+    "headbox reconnected": {
+        "exclude": true,
+        "category": "Instrumentation",
+        "sub_string": false,
+        "inf_padding": 0.0,
+        "sup_padding": 4.0,
+        "default_duration": 0.0
+    },
+    "grinsen": {
+        "exclude": true,
+        "category": "Sneer Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "blinzeln": {
+        "exclude": true,
+        "category": "Eye Blinking",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "zunehmend unruhiger": {
+        "exclude": false,
+        "category": "Patient/Session Info",
+        "sub_string": true
+    },
+    "EKG Artefakte": {
+        "exclude": true,
+        "category": "Cardiac Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "myoklonie": {
+        "exclude": true,
+        "category": "Myoclonic Discharge",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "techn. Artefakt": {
+        "exclude": true,
+        "category": "Instrumentation Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "im vergleich zur voruntersuchung, heute deutlich schlechtere mi": {
+        "exclude": false,
+        "category": "Patient/Session Info",
+        "sub_string": false
+    },
+    "augen bei fehlender compliance fixiert": {
+        "exclude": true,
+        "category": "Restless Eyes",
+        "sub_string": false,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "Augen wieder ge": {
+        "exclude": true,
+        "category": "Eyes Opened",
+        "sub_string": true,
+        "inf_padding": 1.5,
+        "sup_padding": 20.0,
+        "default_duration": 0.0
+    },
+    "spannt Kiefermuskulatur an": {
+        "exclude": true,
+        "category": "Jaw Artifact",
+        "sub_string": true,
+        "inf_padding": 4.0,
+        "sup_padding": 4.0,
+        "default_duration": 0.0
+    },
+    "sprechen": {
+        "exclude": true,
+        "category": "Speaking",
+        "sub_string": true,
+        "inf_padding": 4.0,
+        "sup_padding": 4.0,
+        "default_duration": 0.0
+    },
+    "mimik": {
+        "exclude": true,
+        "category": "Facial Expression Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "wird unruhig": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "pat.insgesamt unruhig": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": false,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "Triphasische Welle": {
+        "exclude": false,
+        "category": "Triphasic Waves",
+        "sub_string": true
+    },
+    "Pat. unruhig": {
+        "exclude": true,
+        "category": "Restless Body",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "hyperventilation": {
+        "exclude": false,
+        "category": "Hyperventilation",
+        "sub_string": false
+    },
+    "akustischer Reiz": {
+        "exclude": true,
+        "category": "Accoustic Stimuli",
+        "sub_string": true,
+        "inf_padding": 30.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "akustsicher Reiz": {
+        "exclude": true,
+        "category": "Accoustic Stimuli",
+        "sub_string": true,
+        "inf_padding": 30.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "bei schlechter compliance kind \u001a\u001affnet immer wieder die augen, f": {
+        "exclude": true,
+        "category": "Eyes Opening",
+        "sub_string": false,
+        "inf_padding": 0.0,
+        "sup_padding": 30.0,
+        "default_duration": 0.0
+    },
+    "kind \"spielt \" permanent am ekg - kabel rum": {
+        "exclude": true,
+        "category": "Electrode Pop",
+        "sub_string": false,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "kind \u001a\u001affnet immer wieder die augen, fejlende kooperation": {
+        "exclude": true,
+        "category": "Eyes Opening",
+        "sub_string": false,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "pat. muss immer wieder aufgefordert werden die augen zu schlie\u001a\u001a": {
+        "exclude": true,
+        "category": "Eyes Opening",
+        "sub_string": false,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "schlaf": {
+        "exclude": true,
+        "category": "Sleeping",
+        "sub_string": true,
+        "inf_padding": 20.0,
+        "sup_padding": 20.0,
+        "default_duration": 0.0
+    },
+    "pat. sehr m\u001a\u001ade / schl\u001a\u001aft ges. abl. immer wieder ein u muss gewe": {
+        "exclude": true,
+        "category": "Sleeping",
+        "sub_string": false,
+        "inf_padding": 20.0,
+        "sup_padding": 20.0,
+        "default_duration": 0.0
+    },
+    "lautes ger\u001a\u001ausch": {
+        "exclude": true,
+        "category": "Accoustic Stimuli",
+        "sub_string": true,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "lacht": {
+        "exclude": true,
+        "category": "Laughing",
+        "sub_string": true,
+        "inf_padding": 4.0,
+        "sup_padding": 10.0,
+        "default_duration": 0.0
+    },
+    "streck": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "artefakt? ": {
+        "exclude": true,
+        "category": "Unknown Artifact",
+        "sub_string": false,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "negiert m\u001a\u001adigkeit": {
+        "exclude": true,
+        "category": "Patient/Session Info",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "Stirnmuskulatur": {
+        "exclude": true,
+        "category": "Forhead Myogenic Noise",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "artefakt": {
+        "exclude": true,
+        "category": "Unknown Artefakt",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0.0
+    },
+    "pos. ver\u001a\u001andert": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": false,
+        "inf_padding": 4.0,
+        "sup_padding": 2.0,
+        "default_duration": 0.0
+    },
+    "galle eeg- widerst\u001a\u001ande unter 5 kohm": {
+        "exclude": false,
+        "category": "Impedance",
+        "sub_string": false
+    },
+    "eog widerst\u001a\u001ande <20kohm": {
+        "exclude": false,
+        "category": "Impedance",
+        "sub_string": false
+    },
+    "aufzeichnung mit ge\u001a\u001affn. augen": {
+        "exclude": true,
+        "category": "Eyes Opening",
+        "sub_string": false,
+        "inf_padding": 5.0,
+        "sup_padding": 0.0,
+        "default_duration": 900.0
+    },
+    "??": {
+        "exclude": true,
+        "category": "Unknown Artifact",
+        "sub_string": false,
+        "inf_padding": 3.0,
+        "sup_padding": 3.0,
+        "default_duration": 0.0
+    },
+    "hypnagoge": {
+        "exclude": true,
+        "category": "Hypnagogic Hallucinations",
+        "sub_string": true,
+        "inf_padding": 10.0,
+        "sup_padding": 10.0,
+        "default_duration": 2.0
+    },
+    "schmatz": {
+        "exclude": true,
+        "category": "Chewing Artifact",
+        "sub_string": true,
+        "inf_padding": 2.0,
+        "sup_padding": 2.0,
+        "default_duration": 5.0
+    },
+    "zuck": {
+        "exclude": true,
+        "category": "Movement Artifact",
+        "sub_string": true,
+        "inf_padding": 1.0,
+        "sup_padding": 1.0,
+        "default_duration": 0
+    },
+    "augen wieder geschlossen": {
+        "exclude": true,
+        "category": "Eyes Opened",
+        "sub_string": true,
+        "inf_padding": 5.0,
+        "sup_padding": 1.0,
+        "default_duration": 0
+    }
+}

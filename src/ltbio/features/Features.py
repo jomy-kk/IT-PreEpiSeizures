@@ -187,7 +187,7 @@ class SpectralFeatures(ABC):
         return np.exp(np.mean(np.log2(normalised_powers))) / np.mean(normalised_powers)
 
     @staticmethod
-    def spectral_edge_frequency(psd: PSD, percentile: float = 0.5) -> float:
+    def spectral_edge_frequency(psd: PSD, percentile: float = 0.90) -> float:
         """
         Returns the edge frequency of the PSD at percentile%.
         The SEF is a Hz, where the Hz is the threshold frequency where percentile% of the EEG power lies beneath it.

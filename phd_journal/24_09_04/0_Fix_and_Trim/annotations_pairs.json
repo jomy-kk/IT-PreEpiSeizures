@@ -1,0 +1,55 @@
+{
+  "Eyes Opened": {
+    "start": [
+      "20",
+      "eyes open",
+      "augen geöff",
+      "augen ge",
+      "augen ge\\x1a\\x1af",
+      "Open Eyes"
+    ],
+    "end": [
+      "30",
+      "eyes clos",
+      "augen gesch",
+      "augen wieder gesch",
+      "Close Eyes"
+    ],
+    "exclude": true,
+    "separate_segment": false,
+    "default_duration": 20,
+    "inf_padding": 5,
+    "sup_padding": 5
+  },
+  "Hyperventilation": {
+    "start": [
+      "hv start",
+      "hv-start",
+      "hv begin",
+      "Hyperventilation begins"
+    ],
+    "end": [
+      "hv end",
+      "hv-end",
+      "End HV"
+    ],
+    "exclude": true,
+    "separate_segment": true,
+    "default_duration": 60,
+    "inf_padding": 1,
+    "sup_padding": 120
+  },
+  "Photostimulation": {
+    "start": [
+      "Photostimulation", "Beginn Stimulation"
+    ],
+    "end": [
+      "Photic: Off", "Stimulation Ende"
+    ],
+    "exclude": true,
+    "separate_segment": false,
+    "default_duration": 5,
+    "inf_padding": 1,
+    "sup_padding": 1
+  }
+}
