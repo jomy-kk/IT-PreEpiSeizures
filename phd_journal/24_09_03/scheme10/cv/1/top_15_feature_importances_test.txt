@@ -1,0 +1,10 @@
+Spectral#RelativePower#Fz#delta
+Hjorth#Mobility#Cz
+Spectral#RelativePower#Cz#gamma
+Spectral#Flatness#T4#beta
+Spectral#RelativePower#Fz#beta
+Hjorth#Mobility#C4
+Spectral#Flatness#P3#gamma
+Hjorth#Mobility#Fz
+COH#Frontal(L)-Parietal(R)#alpha
+Spectral#RelativePower#C3#beta

@@ -2,7 +2,7 @@ import numpy as np
 from imblearn.over_sampling import SMOTE
 from matplotlib import pyplot as plt
 from pandas import Series
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.feature_selection import RFE, VarianceThreshold, SelectKBest, SelectPercentile, r_regression, f_regression, \
     mutual_info_regression, RFECV
 from sklearn.model_selection import train_test_split, cross_val_score, KFold, ShuffleSplit
@@ -179,40 +179,27 @@ def mutual_information_selection(features, targets, features_to_select: int|floa
     return features_transformed, indices
 
 
-def feature_importances(model):
-    importances = model.feature_importances_
-    importances = pd.Series(importances, index=feature_names)
-    importances = importances.nlargest(15) # Get max 15 features
-    fig, ax = plt.subplots()
-    importances.plot.bar(ax=ax)
-    ax.set_title("Feature importances using MDI")
-    ax.set_ylabel("Mean decrease in impurity")
-    fig.tight_layout()
-    plt.show()
-
-
-def train_test_cv(model, cv, objects, targets):
-    scores = cross_val_score(model, objects, targets,
-                             cv=cv, scoring='r2', #'neg_mean_absolute_error',
-                             verbose=2, n_jobs=-1)
-    print("Cross-Validation mean score:", scores.mean())
-    print("Cross-Validation std score:", scores.std())
-    print("Cross-Validation max score:", scores.max())
-    print("Cross-Validation min score:", scores.min())
-
 # 1) Read features
-features = read_all_features('Healthy Brain Network', multiples=True)
+#features = read_all_features('Healthy Brain Network', multiples=True)
+features = read_all_features('KJPP', multiples=True)
+features.index = features.index.str.split('$').str[0]  # remove $ from the index
 print("Features Shape before drop subjects:", features.shape)
 features = features.dropna(axis=0)
 print("Features Shape before drop features:", features.shape)
 features = features.dropna(axis=1)
 print("Features Shape:", features.shape)
 
+# Discard bad-diagnoses
+BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/bad_diagnoses.txt", dtype=str)
+features = features.drop(BAD_DIAGNOSES, errors='ignore')
+print("Features Shape after drop bad diagnoses:", features.shape)
+
 # Shuffle columns order randomly
 features = features.sample(frac=1, axis=1, random_state=0)
 
 # 2) Read targets
-ages = read_ages('HBN')
+#ages = read_ages('HBN')
+ages = read_ages('KJPP')
 targets = Series()
 for index in features.index:
     if '$' in str(index):  # Multiples
@@ -228,6 +215,7 @@ features = features.loc[targets.index]
 
 print("Features Shape before drop wo/ages:", features.shape)
 
+"""
 # 4) Data Augmentation in the underrepresented MMSE scores
 
 # round targets to integers
@@ -248,7 +236,7 @@ plt.title("After")
 plt.show()
 
 print("Features shape after DA:", features.shape)
-
+"""
 
 # 4) Convert features to an appropriate format
 # e.g. {..., 'C9': (feature_names_C9, features_C9), 'C10': (feature_names_C10, features_C10), ...}
@@ -267,48 +255,25 @@ for i, session in enumerate(sessions):
 #print("Size of the dataset for feature selection:", len(dataset_feature_selection))
 
 # 5.2) Define model
-model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
-                                  learning_rate=0.04,)
+#model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error', learning_rate=0.04,)
+model = RandomForestRegressor(n_estimators=300, random_state=0, )
 
 # 6.1 Feature Selection (Pearson)
+"""
 objects = np.array([x[0] for x in dataset]) #dataset_feature_selection])
 targets = np.array([x[1] for x in dataset]) #dataset_feature_selection])
 transformed_features, indices = person_correlation_selection(objects, targets, feature_names=feature_names, features_to_select=200)
 # update dataset
 dataset = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset]
 print("Size of the dataset after Pearson feature selection:", len(dataset), len(dataset[0][0]))
-
-
+"""
+#"""
 # 6.2 Feature Selection (RFE)
 objects = np.array([x[0] for x in dataset]) #dataset_feature_selection])
 targets = np.array([x[1] for x in dataset]) #dataset_feature_selection])
-transformed_features, indices = rfe_selection(model, objects, targets, feature_names=feature_names, n_features_to_select=80, step=5)
+transformed_features, indices = rfe_selection(model, objects, targets, feature_names=feature_names, n_features_to_select=30, step=5)
 # update dataset
 dataset = [([y for i, y in enumerate(x[0]) if i in indices], x[1]) for x in dataset]
 print("Size of the dataset after RFE selection:", len(dataset), len(dataset[0][0]))
-
-
-# 7. Train and Test (without CV)
-print("Size of the dataset:", len(dataset))
-print("Number of features:", len(dataset[0][0]))
-objects = np.array([x[0] for x in dataset])
-targets = np.array([x[1] for x in dataset])
-# Split training and testing
-objects_train, objects_test, targets_train, targets_test = train_test_split(objects, targets, test_size=0.25, random_state=0, shuffle=True, stratify=targets)
-# Train
-model.fit(objects_train, targets_train)
-# Test
-preditcions = model.predict(objects_test)
-# MAE
-mae = np.mean(np.abs(targets_test - preditcions))
-print("MAE:", mae)
-# MSE
-mse = np.mean((targets_test - preditcions) ** 2)
-print("MSE:", mse)
-# R2
-r2 = model.score(objects_test, targets_test)
-print("R2:", r2)
-
-# 6.1. Feature Importances
-feature_importances(model)
+#"""
 

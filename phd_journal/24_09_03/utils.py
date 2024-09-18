@@ -1,5 +1,12 @@
-from pandas import DataFrame, read_csv
+import re
 
+import pandas as pd
+from imblearn.over_sampling import SMOTE
+from pandas import DataFrame, read_csv
+from sklearn.model_selection import StratifiedKFold
+import simple_icd_10 as icd
+
+from read import read_diagnoses
 
 def feature_wise_normalisation(features: DataFrame, method: str = 'mean-std') -> DataFrame:
     """
@@ -28,6 +35,153 @@ def feature_wise_normalisation_with_coeffs(features: DataFrame, method: str, coe
         return (features-coefficients.loc['min'])/(coefficients.loc['max']-coefficients.loc['min'])
     else:
         raise ValueError("Invalid method. Choose from 'mean-std' or 'min-max'.")
+
+def curate_feature_names(F):
+    for i, name in enumerate(F):
+        components = name.split('#')
+        if len(components) == 3:
+            if '-' not in components[1]:  # Hjorth
+                F[i] = f"{components[0]} {components[1]} {components[2]}"
+            else:  # Connectivity
+                regions = components[1].replace('-', ' - ')
+                F[i] = f"{components[0]} {regions} {components[2].title()}"
+        elif len(components) == 4:  # Spectral
+            type_ = ' '.join(
+                re.findall(r'[A-Z][a-z]*', components[1]))  # convert components[1] from camel case to spaces
+            F[i] = f"{type_} {components[2]} {components[3].title()}"
+
+    return F
+
+def augment(features: pd.DataFrame, targets):
+    #targets = targets.round().astype(int)
+
+    # Histogram before
+    #plt.hist(targets, bins=4, rwidth=0.8)
+    #plt.title("Before")
+    #plt.show()
+
+    # 4.1. Data Augmentation for regression (target is continuous values)
+    """
+    features['target'] = targets
+    # make indexes sequential numbers
+    features.reset_index()
+    features, targets = iblr.adasyn(features, 'target', k=3)
+    targets = features['target']
+    features = features.drop('target', axis=1)
+    """
+
+    # 4.2. Data Augmentation method = SMOTE-C
+
+    for k in (5, 4, 3, 2, 1):
+        try:
+            smote = SMOTE(random_state=42, k_neighbors=k, sampling_strategy='auto')
+            features, targets = smote.fit_resample(features, targets)
+            print(f"Worked with k={k}")
+            break
+        except ValueError as e:
+            print(f"Did not work with k={k}:", e)
+
+
+    # Histogram after
+    #plt.hist(targets, bins=4, rwidth=0.8)
+    #plt.title("After")
+    #plt.show()
+
+    # Normalisation after DA
+    #features = feature_wise_normalisation(features, method='min-max')
+    print("Features shape after DA:", features.shape)
+
+    return features, targets
+
+
+def custom_cv(objects, targets, n_splits=5, random_state=42):
+    """
+    Custom Cross-Validation with Data Augmentation on-the-fly.
+
+    Args:
+        objects: A DataFrame of feature vectors
+        targets: A Series of target values
+        n_splits: Number of folds in CV
+
+    Returns:
+        The augmented training objects, test objects, training targets, and test targets.
+    """
+
+    # Stratify by class
+    sss = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
+    #sss = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+    # Select test_size % of examples in a random and stratified way
+    split_res = sss.split(objects, targets)
+
+    # for each fold...
+    for train_indices, test_indices in split_res:
+        print("Train:", len(train_indices))
+        print("Test:", len(test_indices))
+
+        # Make sets
+        train_objets = objects.iloc[train_indices]
+        train_targets = targets.iloc[train_indices]
+        test_objects = objects.iloc[test_indices]
+        test_targets = targets.iloc[test_indices]
+
+        # Augment train set
+        print("Train examples before augmentation:", len(train_targets))
+        train_objets, train_targets = augment(train_objets, train_targets)
+        print("Train examples after augmentation:", len(train_targets))
+
+        yield train_objets, test_objects, train_targets, test_targets
+
+
+
+# make a colour for each diagnoses supergroup
+diagnoses_supergroups = ((0, 15), (15, 25), (25, 37), (37, 41))
+diagnoses_supergroups_colors = ['red', 'blue', 'green', 'orange']
+no_diagnosis_color = 'gray'
+
+
+def get_classes(subject_codes):
+
+    # Statistics counters
+    N_no_list, N_empty_list, N_not_found = 0, 0, 0
+    not_found = []
+
+
+    # Read diagnoses
+    diagnoses = read_diagnoses('KJPP')
+    colors = []
+    for code in subject_codes:
+        code = code.split('$')[0]
+        subject_diagnoses = diagnoses[code]
+        class_decided = None
+        if isinstance(subject_diagnoses, list):
+            for d in subject_diagnoses:
+                if icd.is_valid_item(d):
+                    for i, D in enumerate(diagnoses_groups.values()):
+                        for el_D in D:
+                            if icd.is_valid_item(el_D) and icd.is_descendant(d, el_D):  # diagnosis belongs to this group
+                                for j in range(len(diagnoses_supergroups)):
+                                    if diagnoses_supergroups[j][0] < i < diagnoses_supergroups[j][1]:
+                                        class_decided = diagnoses_supergroups_colors[j]
+                                        break
+                                break
+
+        colors.append(class_decided)
+
+        if not isinstance(subject_diagnoses, list):
+            N_no_list += 1
+        elif len(subject_diagnoses) == 0:
+            N_empty_list += 1
+        elif class_decided == no_diagnosis_color:
+            N_not_found +=1
+            not_found.append(subject_diagnoses)
+
+    print("Statistics")
+    print("No list: ", N_no_list)
+    print("Empty list: ", N_empty_list)
+    print("Not found: ", N_not_found)
+    print(not_found)
+
+    return colors
 
 
 diagnoses_groups = {

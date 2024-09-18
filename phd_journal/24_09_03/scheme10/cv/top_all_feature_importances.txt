@@ -1,0 +1,15 @@
+Relative Power Cz Gamma
+Hjorth Mobility Cz
+Flatness T4 Beta
+Relative Power Fz Delta
+Hjorth Mobility Fz
+Relative Power C3 Beta
+Hjorth Mobility C3
+Relative Power Cz Beta
+Edge Frequency T4 Alpha
+Hjorth Mobility C4
+COH Frontal(R) - Parietal(L) Theta
+COH Frontal(L) - Parietal(R) Alpha
+COH Frontal(L) - Occipital(L) Beta
+Flatness P3 Gamma
+Relative Power Fz Beta
