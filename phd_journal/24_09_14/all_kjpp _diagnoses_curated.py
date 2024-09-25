@@ -7,7 +7,8 @@ from pandas import read_csv
 import simple_icd_10 as icd
 
 
-out_filepath = '/Volumes/MMIS-Saraiv/Datasets/KJPP/all_diagnoses_curated.csv'
+#out_filepath = '/Volumes/MMIS-Saraiv/Datasets/KJPP/all_diagnoses_curated.csv'
+out_filepath = '/Users/saraiva/Desktop/Doktorand/KJPP/all_diagnoses_curated.csv'
 
 
 diagnoses_groups = {
@@ -95,13 +96,16 @@ else:
 
 
 # Read metadata_as_given
-metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_with_letters.csv', index_col=0, sep=',')
+#metadata = read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/metadata_with_letters.csv', index_col=0, sep=',')
+metadata = read_csv('/Users/saraiva/Desktop/Doktorand/KJPP/metadata_with_letters.csv', index_col=0, sep=',')
 
 # Get list of all session codes
 all_eeg_sessions = metadata.index.tolist()
 
+"""
 if len(df) > 0:
     all_eeg_sessions = list(set(all_eeg_sessions) - set(df['SESSION']))
+"""
 
 print("Number of files done:", len(df))
 print("Number of files left:", len(all_eeg_sessions))
@@ -114,10 +118,12 @@ for eeg_session in all_eeg_sessions:
     print(eeg_session)
 
     # Find if it is in metadata
+    """
     if eeg_session not in metadata.index:
         print(f"Session {eeg_session} not found in metadata.")
         not_found += 1
         continue
+    """
 
     row = metadata.loc[eeg_session]
     patient_code = row['PATIENT']
@@ -130,7 +136,7 @@ for eeg_session in all_eeg_sessions:
     emu = 'KI.3' in study or 'KI3' in study or 'KI.3' in unit or 'KI3' in unit
 
     # Check if any report was read
-    if row.iloc[5:].isna().all():
+    if row.iloc[4:].isna().all():
         print(f"No report read for session {eeg_session}.")
         no_report_read += 1
         diagnoses = 'no report'
@@ -139,7 +145,7 @@ for eeg_session in all_eeg_sessions:
     else:
         diagnoses = []
         # only MAS1 to MAS4 (inclusive)
-        for axis, d in row.iloc[5:20].items():
+        for axis, d in row.iloc[4:20].items():
             if not pd.isna(d):
                 # fit d to the expected format 'X00.0' or 'X00'
                 d = d.replace(' ', '')

@@ -58,7 +58,8 @@ def read_ages(dataset: str) -> dict[str|int, float|int]:
 def read_diagnoses(dataset: str) -> dict[str|int, list[str]]:
     if dataset == 'KJPP':
         #df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/curated_metadata.csv', sep=';')
-        df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/all_diagnoses_curated.csv', sep=';')
+        #df = pd.read_csv('/Volumes/MMIS-Saraiv/Datasets/KJPP/all_diagnoses_curated_witgMAS11.csv', sep=';')
+        df = pd.read_csv('/Users/saraiva/Desktop/Doktorand/KJPP/all_diagnoses_curated_withMAS11.csv', sep=';')
         res = {}
         for _, row in df.iterrows():
             if row['AGE'] is np.nan or row['GENDER'] is np.nan:  # EXTRA

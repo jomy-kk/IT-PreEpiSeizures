@@ -11,7 +11,7 @@ from utils import get_diagnoses
 #sessions = features.index
 
 # 1) Get all sessions
-sessions = np.loadtxt('/Volumes/MMIS-Saraiv/Datasets/KJPP/raw/all_recordings_codes.txt', dtype=str)
+sessions = np.loadtxt('/Users/saraiva/Desktop/Doktorand/KJPP/woFG_tochristoph_old.txt', dtype=str)
 
 # 2) Read diagnoses of those that have age and gender
 all_diagnoses = get_diagnoses(sessions)
