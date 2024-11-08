@@ -1,9 +1,13 @@
 # -*- encoding: utf-8 -*-
 from datetime import timedelta
 
+import mne.io
 import numpy as np
 from array import array
 
+import pandas as pd
+from mne import create_info, make_fixed_length_epochs, compute_covariance
+from mne.minimum_norm import apply_inverse
 from numpy import average
 
 from ltbio.biosignals.modalities import ECG
@@ -339,3 +343,48 @@ class EEG(Biosignal):
         # Make unique timeline
         good = Timeline.union(bw_good, hfn_good, bd_good)
         return good
+
+    def inverse_solution(self, method: str, epoch_duration: float, spacing: str, mri_space: str = "fsaverage", eeg_channel_locations:str=None):
+        assert self._n_segments == 1, "The EEG should be contiguous."
+
+        # 0. Convert to MNE Rawobject
+        _channel_order = tuple(self.channel_names)
+        _array = self.to_array(_channel_order)
+        _info = create_info(_channel_order, self.sampling_frequency, ch_types='eeg')
+        # channel locations from ´eeg_channel_locations´
+        if eeg_channel_locations is not None:
+            with open(eeg_channel_locations, 'r') as f:
+                locs = [line.split('\t') for line in f]
+                locs = {str(l[4].replace('\n', '').replace(' ', '')): (float(l[1]), float(l[2]), float(l[3])) for l in locs}
+                montage = mne.channels.make_dig_montage(ch_pos=locs, coord_frame='head')
+                _info.set_montage(montage)
+
+        raw = mne.io.RawArray(_array, _info)
+        raw.set_eeg_reference(projection=True)  # Set EEG reference
+
+        # 1. Equally-spaced epochs
+        epochs = make_fixed_length_epochs(raw, duration=epoch_duration,
+                                          preload=True, baseline=(None, 0))  # with baseline correction
+
+        # 2. Noise covariance
+        noise_cov = compute_covariance(epochs, tmax=0., method=['shrunk', 'empirical'], rank=None, verbose=True)
+
+        # 3. Compute forward solution
+        src = mne.setup_source_space(mri_space, spacing='oct6', subjects_dir="/Users/saraiva/mne_data/MNE-fsaverage-data", add_dist=False)
+        model = mne.make_bem_model(subject=mri_space, ico=4, subjects_dir="/Users/saraiva/mne_data/MNE-fsaverage-data")
+        bem = mne.make_bem_solution(model)
+        fwd = mne.make_forward_solution(raw.info, trans=mri_space, src=src, bem=bem, eeg=True, mindist=5.0, n_jobs=1)
+        print(src)
+
+        # 4. Compute inverse operator
+        inverse_operator = mne.minimum_norm.make_inverse_operator(epochs.info, fwd, noise_cov, loose=0.2, depth=0.8)
+        del fwd, noise_cov
+
+        # 5. Apply inverse operator
+        stc = mne.minimum_norm.apply_inverse(epochs, inverse_operator, lambda2=1.0 / 9.0, method=method)
+
+        data = stc.data  # The source time courses (n_sources x n_times)
+        times = stc.times  # The time points corresponding to the data
+
+        res = pd.DataFrame(data, columns=times).T
+        return res

@@ -18,7 +18,7 @@ else:
                            #+ list(diagnoses_groups.keys()))
 
 # Read metadata_as_given
-metadata = read_csv('/Users/saraiva/Desktop/Doktorand/KJPP/metadata_with_letters.csv', index_col=0, sep=',')
+metadata = read_csv('/Users/saraiva/Desktop/Doktorand/KJPP/metadata.csv', sep=';')
 
 # Get list of all session codes
 all_eeg_sessions = metadata.index.tolist()

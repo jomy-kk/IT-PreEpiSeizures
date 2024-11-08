@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from read import *
 from utils import weighted_error
 
-out_path = './scheme57/cv'
+out_path = ('./scheme59/cv')
 
 # Read predictions|targets from all batches
 all_predictions_targets = []
@@ -18,7 +18,7 @@ predictions, targets = all_predictions_targets['predictions'], all_predictions_t
 
 print("Number of samples:", len(predictions))
 
-
+"""
 # Remove outliers
 # For the mmse targets > 15, remove all points with |error| > 4
 to_remove = []
@@ -32,14 +32,15 @@ predictions = np.delete(predictions, to_remove)
 targets = np.delete(targets, to_remove)
 
 print("Number of outliers removed:", len(to_remove))
-
+"""
 
 # Print the average scores
 r2 = r2_score(targets, predictions)  # R2
 print(f'Average R2: {r2}')
-mae, mse = weighted_error(predictions, targets)  # MAE, MSE
-print(f'Average MAE: {mae}')
-print(f'Average MSE: {mse}')
+weighted_mae, weighted_mse, weighted_r2 = weighted_error(predictions, targets)  # MAE, MSE
+print(f'Average MAE: {weighted_mae}')
+print(f'Average MSE: {weighted_mse}')
+print(f'Average weighted R2: {weighted_r2}')
 
 # Make regression plot
 plt.figure(figsize=(6, 5))

@@ -2,9 +2,11 @@ from os import mkdir
 from os.path import exists
 from pickle import dump
 
+import numpy as np
 import seaborn as sns
 from imblearn.over_sampling import SMOTE
 from matplotlib import pyplot as plt
+from neuroHarmonize import harmonizationLearn
 from pandas import Series
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -14,7 +16,7 @@ from read import read_all_features
 from utils import feature_wise_normalisation
 
 
-out_path = './scheme57/cv'
+out_path = './scheme59/cv'
 
 PROCESS_NUMBER = 8  # FOR MULTIPROCESSING
 N_CORES = 8  # FOR MULTIPROCESSING
@@ -268,14 +270,35 @@ for index in features.index:
 targets = targets.dropna()  # Drop subject_sessions with nans targets
 features = features.loc[targets.index]
 
-# 3) Normalisation of all dataset
-features = feature_wise_normalisation(features, method='min-max')
-features = features.dropna(axis=1)
-objects = features
+# 3.1) Normalisation of all dataset
+#features = feature_wise_normalisation(features, method='min-max')
+#features = features.dropna(axis=1)
+#objects = features
+
+# 3.2) Combat
+
+# Log10 transformation of features
+features = np.log10(features+1)  # +1 to avoid log(0)
+# Prepare
+data = features.to_numpy(dtype=np.float32)
+covariates = DataFrame(batch, index=features.index, columns=['SITE'])
+
+# Does 'data' have nans or infs?
+if np.isnan(data).any() or np.isinf(data).any():
+    print("Data has nans or infs")
+    print(data)
+    exit(-1)
+
+# Run
+_, harmonized_data = harmonizationLearn(data, covariates)
+features = pd.DataFrame(harmonized_data, index=features.index, columns=features.columns)
+print("Combat done!")
 
 # 4) Define model
 model = GradientBoostingRegressor(n_estimators=300, max_depth=15, random_state=0, loss='absolute_error',
                                   learning_rate=0.04, )
+
+objects = features
 
 
 # EXTRA: Reduce time complexity

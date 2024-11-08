@@ -12,6 +12,7 @@
 # ===================================
 from datetime import timedelta
 
+import numpy as np
 from biosppy.signals.tools import welch_spectrum
 from numpy import ndarray
 
@@ -47,6 +48,21 @@ class PSD:
         else:
             return tuple([cls(freqs, powers[0], x.sampling_frequency) for freqs, powers in psd_by_seg])
 
+    @classmethod
+    def average(cls, *multiple_psds: tuple['PSD']) -> 'PSD':
+        if len(multiple_psds) < 2:
+            return multiple_psds[0]
+
+        for i in range(1, len(multiple_psds)):
+            if not np.array_equal(multiple_psds[i].freqs, multiple_psds[0].freqs):
+                raise ValueError("The PSD objects do not have the same frequency bins.")
+            if not np.array_equal(multiple_psds[i].sampling_frequency, multiple_psds[0].sampling_frequency):
+                raise ValueError("The PSD objects do not have the same sample frequency attribute.")
+
+        average_powers = np.mean([psd.powers for psd in multiple_psds], axis=0)
+
+        return cls(multiple_psds[0].freqs, average_powers, multiple_psds[0].sampling_frequency)
+
     ###############################
     # Getters
 
@@ -61,6 +77,22 @@ class PSD:
     @property
     def sampling_frequency(self) -> float:
         return float(self.__sampling_frequency)
+
+    @property
+    def argmax(self) -> float:
+        i = np.argmax(self.__powers)
+        return self.freqs[i]
+
+    @property
+    def argmin(self) -> float:
+        i = np.argmin(self.__powers)
+        return self.freqs[i]
+
+    def iaf(self):
+        return self.get_band(8., 14.).argmax  # maxiumum of the extended alpha range
+
+    def tf(self):
+        return self.get_band(3., 8.).argmin  # minimum between 3-8 Hz
 
     ###############################
     # Bands
