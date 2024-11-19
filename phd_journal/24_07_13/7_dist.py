@@ -17,11 +17,11 @@ features_elders, targets_elders = read_elders()
 features_children, targets_children = read_children()
 
 # Groups with targets boundaries
-age_classes = ((0,8), (15, 20))
-#age_classes = ((0,8), (8, 13), (13, 20))
+#age_classes = ((0,8), (15, 20))
+age_classes = ((0,8), (8, 13), (13, 20))
 #age_classes = ((0,6), (6, 10), (10, 13), (13, 20))
-mmse_classes = ((0,15), (26, 30))
-#mmse_classes = ((0,15), (15,24), (24, 30))
+#mmse_classes = ((0,15), (26, 30))
+mmse_classes = ((0,15), (15,24), (24, 30))
 #mmse_classes = ((0,12), (13, 16), (17,24), (24, 30))
 
 # Assign groups and population
@@ -47,7 +47,7 @@ features_children.dropna(inplace=True)
 FEATURES = [
     "COH#Frontal(R)-Temporal(L)#theta",
     "COH#Frontal(R)-Parietal(L)#theta",
-    #"COH#Temporal(L)-Temporal(R)#alpha",
+    "COH#Temporal(L)-Temporal(R)#alpha",
     #"COH#Temporal(L)-Parietal(L)#gamma",
 ]
 
@@ -106,7 +106,7 @@ for feature in FEATURES:
         statistic, pvalue = ks_2samp(*data)
         print("Group: {}, KS: {}, p-value: {}".format(group, statistic, pvalue))
 
-        if pvalue < 0.05:
+        if pvalue < 2:#0.05:
             ks_values.append(statistic)
         else:
             ks_values.append(None)
@@ -149,7 +149,7 @@ for feature in FEATURES:
     # curate legend
     handles, labels = ax.get_legend_handles_labels()
     labels = ["ABCD (Elders)", "P (Children)", ]
-    ax.legend(handles, labels, loc="best")
+    ax.legend(handles, labels, loc="lower left")
     # no legend
     #ax.legend_.remove()
 
@@ -168,6 +168,6 @@ for feature in FEATURES:
     #plt.show()
 
     plt.savefig(
-        "/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/Distributions/interesting/" +
+        "/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/Distributions/" +
         "7_distribution_{}.png".format(feature), dpi=300, bbox_inches='tight')
 

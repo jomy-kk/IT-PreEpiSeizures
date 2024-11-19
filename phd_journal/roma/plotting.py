@@ -26,6 +26,13 @@ sns.set_palette("bright")
 
 regions = ["Frontal", "Central", "Parietal", "Temporal", "Occipital", "Limbic"]
 
+# Set default font size
+plt.rcParams.update({'font.size': 13})
+# Set default Verdana font
+plt.rcParams.update({'font.family': 'Verdana'})
+# Set default colour for text
+#plt.rcParams.update({'text.color': [0/255, 37/255, 77/255]})
+
 
 def get_band_abbrev(band: str) -> str:
     band = band.split("_")[0]
@@ -51,7 +58,7 @@ def plot_mean_std_indep(_datasets, _datasets_metadata, log_scale=False):
                    ["Delta", "Theta", "Alpha1", "Alpha2", "Alpha3", "Beta1", "Beta2", "Gamma"]]
 
         # Colors
-        diagnoses_colors = {"HC": [135, 208, 207], "AD": [227, 123, 130]}
+        diagnoses_colors = {"HC": [100, 100, 100], "AD": [0, 74, 153]}
         diagnoses_colors = {l: [c / 255 for c in color] for l, color in diagnoses_colors.items()}
 
         # Line styles
@@ -81,7 +88,7 @@ def plot_mean_std_indep(_datasets, _datasets_metadata, log_scale=False):
                 y_std = y.std(axis=0)
 
                 # Line plot with error bars
-                plt.plot(y_mean.index, y_mean, label=D, linestyle=datasets_lines[dataset_name],
+                plt.plot(y_mean.index.to_numpy(), y_mean.to_numpy(), label=D, linestyle=datasets_lines[dataset_name],
                          color=diagnoses_colors[D],
                          linewidth=1)
                 #plt.fill_between(y_mean.index, y_mean - y_std, y_mean + y_std, alpha=0.1, color=diagnoses_colors[D])
@@ -94,6 +101,7 @@ def plot_mean_std_indep(_datasets, _datasets_metadata, log_scale=False):
                 diagnosis_independency_intradataset_res[(dataset_name, band)] = p < 0.05
                 #print(f"{dataset_name} {band} p-value: {p}")
 
+        """
         # Add an asterisk if the diagnoses distributions are independent
         for band in to_keep:
             asterisks_label = ''
@@ -103,9 +111,10 @@ def plot_mean_std_indep(_datasets, _datasets_metadata, log_scale=False):
 
             # Draw asterisks directly above each band
             plt.text(to_keep.index(band), 0, asterisks_label, horizontalalignment='center', verticalalignment='bottom')
+        """
 
         plt.title(f"{region}")
-        plt.ylabel('eLORETA Current Density')
+        #plt.ylabel('eLORETA Current Density')
         if log_scale:  # y in log scale?
             plt.yscale('log')
         xlabels = [get_band_abbrev(band) for band in to_keep]
@@ -113,7 +122,7 @@ def plot_mean_std_indep(_datasets, _datasets_metadata, log_scale=False):
         plt.title(region)
 
     plt.subplots_adjust(hspace=0.3, wspace=0.3)
-    plt.savefig(join(plots_path, f"all_regions.png"), dpi=300, transparent=True, bbox_inches='tight')
+    plt.savefig(join(plots_path, f"all_regions.pdf"), dpi=300, transparent=True, bbox_inches='tight')
 
 
 def plot_mean_diffs(_datasets, log=False):
@@ -435,12 +444,12 @@ def plot_2components(_datasets_before, _datasets_after, _metadata, method='pca')
     transformed_after = pd.DataFrame(transformed_after, index=_datasets_after.index)
 
     # Plot stlyles
-    dataset_colors = {"Newcastle": [135, 208, 207], "Izmir": [227, 123, 130], "Sapienza": [120, 146, 97]}
+    dataset_colors = {"Newcastle": [62, 156, 73], "Izmir": [212, 120, 14], "Sapienza": [182, 35, 50]}
     dataset_colors = {l: [c / 255 for c in color] for l, color in dataset_colors.items()}
-    diagnoses_circles = {"HC": "o", "AD": "x"}
+    diagnoses_circles = {"HC": "x", "AD": "o"}
 
     # One plot, all datasets
-    for version, pc in {"Before": transformed_before, "After": transformed_after}.items():
+    for version, (model, original, pc) in {"Before": (before, _datasets_before, transformed_before), "After": (after, _datasets_after, transformed_after)}.items():
         plt.figure(figsize=(6, 6))
         for dataset, color in dataset_colors.items():
             for diagnosis, marker in diagnoses_circles.items():
@@ -448,12 +457,27 @@ def plot_2components(_datasets_before, _datasets_after, _metadata, method='pca')
                 existing_idx = pc.index.intersection(idx)
                 plt.scatter(pc[0].loc[existing_idx], pc[1].loc[existing_idx], color=color,
                             label=f"{dataset} - {diagnosis}", marker=marker)
-        plt.legend()
-        plt.xlabel("Component 1")
-        plt.ylabel("Component 2")
-        plt.title(version)
 
-        plt.show()
+        # Calculate and plot discriminant lines
+        if method == 'lda':
+            x_min, x_max = original.iloc[:, 0].min() - 1, original.iloc[:, 0].max() + 1
+            y_min, y_max = original.iloc[:, 1].min() - 1, original.iloc[:, 1].max() + 1
+            xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100), np.linspace(y_min, y_max, 100))
+
+            # Create a grid of points with the same number of features as the original data
+            grid_points = np.c_[xx.ravel(), yy.ravel()]
+
+            # Predict the class for each grid point
+            Z = model.predict(grid_points)
+            Z = Z.reshape(xx.shape)
+            plt.contourf(xx, yy, Z, alpha=0.3, color='black')
+
+        #plt.legend()
+        plt.xlabel("Component 1", fontsize=14)
+        plt.ylabel("Component 2", fontsize=14)
+        plt.title(version)
+        #plt.show()
+        plt.savefig(join(plots_path, f"{method}_{version}.pdf"), dpi=300, transparent=True, bbox_inches='tight')
 
 
 def plot_distance_matrix(_datasets_before, _datasets_after, _metadata):

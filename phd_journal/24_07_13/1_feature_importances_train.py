@@ -74,12 +74,19 @@ lightgray_color = '#D3D3D3'
 in_common_features = (
     "Hjorth Complexity T3",
     "Edge Frequency O2 Beta",
-    "COH Frontal(R) - Parietal(L) Theta",
+    "COH Frontal(R) - Temporal(L) Delta",
     "COH Temporal(L) - Temporal(R) Alpha",
+    "COH Frontal(R) - Parietal(L) Theta",
     "COH Frontal(R) - Temporal(L) Theta",
-    "Entropy O2 Alpha",
+    "Hjorth Complexity P3",
+    "COH Frontal(R) - Occipital(L) Delta",
+    "Hjorth Mobility P4",
+    "Hjorth Complexity T5",
     "COH Frontal(R) - Parietal(L) Gamma",
-    "Hjorth Mobility P4"
+    "Hjorth Mobility O1",
+    "COH Parietal(R) - Occipital(R) Beta",
+    "Relative Power F3 Beta",
+    "COH Temporal(L) - Parietal(L) Gamma",
 )
 
 colors = []
@@ -99,7 +106,7 @@ plt.xticks(fontsize=11)
 # remove top and right spines
 sns.despine()
 
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/" + "1_feature_importances_Ai.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/" + "1_feature_importances_Ai.png", dpi=300, bbox_inches='tight')
 
 
 

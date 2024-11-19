@@ -128,7 +128,7 @@ def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
 
 
 def neuro_harmonize(_X: pd.DataFrame, _metadata: pd.DataFrame,
-                    cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> pd.DataFrame:
+                    cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=False) -> pd.DataFrame:
 
     assert _X.index.tolist() == _metadata.index.tolist()
     data = _X.to_numpy(dtype=np.float32)

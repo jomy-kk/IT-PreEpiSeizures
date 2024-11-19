@@ -105,17 +105,10 @@ def read_children(features_elders, targets_elders):
     features.index = features.index.str.split('$').str[0]  # remove $ from the index
 
     # 1.2.1) Remove the ones with bad-diagnoses
-    BAD_DIAGNOSES = np.loadtxt("/Volumes/MMIS-Saraiv/Datasets/KJPP/session_ids/bad_diagnoses.txt", dtype=str)
+    USED_SESSIONS = np.loadtxt("../24_03_18/inverse_problem3/scheme59/used_sessions.txt", dtype=str)
     n_before = len(features)
-    features = features.drop(BAD_DIAGNOSES, errors='ignore')
-    print("Removed Bad diagnoses:", n_before - len(features))
-
-    # 1.2.2) Remove others
-    # 1.2.2) Remove others
-    REMOVED_SESSIONS = np.loadtxt("../24_03_18/inverse_problem3/scheme57/removed_sessions.txt", dtype=str)
-    n_before = len(features)
-    features = features.drop(REMOVED_SESSIONS, errors='ignore')
-    print("Removed:", n_before - len(features))
+    features = features.loc[USED_SESSIONS]
+    print("Removed not used sessions:", n_before - len(features))
 
     # 2) Get targerts
     targets = pd.Series()
@@ -259,26 +252,26 @@ def plot(F, T, groups, label, vmin=None, vmax=None, cmap=None):
                      #mask=np.array([x in ('T4', 'T3', 'Cz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O2', 'O1', 'Fz') for x in channel_order]),  # channels to highlight
                      #mask=np.array([x in ('O1', 'P4',) for x in channel_order]),  # channels to highlight
-                     mask=np.array([x in ('T3',) for x in channel_order]),  # channels to highlight
+                     mask=np.array([x in ('O2',) for x in channel_order]),  # channels to highlight
                      mask_params=dict(marker='o', markerfacecolor='w', markeredgecolor='k', linewidth=0, markersize=15, alpha=0.6),  # style of highlighted channels
                      cmap='viridis' if cmap is None else cmap, #colorbar=True,  # colormap
                      outlines='head', contours=6, image_interp='cubic', border='mean',  # head shape and interpolation
                      axes=None, res=1024, show=False, size=3)  # resolution and size
 
-        """
+        #"""
         # Annotate the topomap with the amplitude values
         for ch_name, ch_val in zip(channel_order, F_group):
-            if ch_name in ('T3',):  # channels to highlight
+            if ch_name in ('O2',):  # channels to highlight
                 x, y = info['chs'][channel_order.index(ch_name)]['loc'][:2]
-                plt.annotate(f"{ch_val:.2f}", xy=(x-0.007, y-0.015), xytext=(0, 10), textcoords='offset points', ha='center',
-                             va='bottom', color='black')
-        """
+                plt.annotate(f"{ch_val:.2f}", xy=(x-0.007, y-0.015), xytext=(0, 10), textcoords='offset points', ha='center', va='bottom', color='black')
+                #plt.annotate(f"{ch_val:.2f}", xy=(x+0.015, y-0.038), xytext=(0, 10), textcoords='offset points', ha='center', va='bottom', color='white')
+        #"""
 
         # no axes
         plt.axis('off')
         plt.grid(False)
         plt.tight_layout()
-        plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/TopoMaps/" + "topomap_{}_{}_{}_{}.png".format(feature_name, label, group[0], group[1]), dpi=300, bbox_inches='tight')
+        plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/TopoMaps/" + "topomap_{}_{}_{}_{}.png".format(feature_name, label, group[0], group[1]), dpi=300, bbox_inches='tight')
 
 
 def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
@@ -366,8 +359,8 @@ def plot_by_stage(F, T, D, vmin=None, vmax=None, cmap=None):
 #######
 
 #"""
-feature_name = 'Hjorth#Complexity'
-feature_names = ['{}#{}'.format(feature_name, channel) for channel in channel_order]
+feature_name = 'Spectral#EdgeFrequency'
+feature_names = ['{}#{}#beta'.format(feature_name, channel) for channel in channel_order]
 
 # Get Elders
 features_elders, targets_elders, diagnosis = read_elders()
@@ -381,41 +374,39 @@ features_elders = features_elders[feature_names]
 features_children, targets_children = read_children(features_elders, targets_elders)
 features_children = features_children[feature_names]
 
-# Normalise children features
-#features_children = feature_wise_normalisation(features_children, 'min-max')
-
-VMIN, VMAX = 0.06, 0.39
+VMIN, VMAX = 0.3, 0.55
 
 # Plot
 
+print("\n\nELDERS\n")
 cmap = LinearSegmentedColormap.from_list("my_cmap", ["white", ELDERS_COLOUR], N=256)
 
-plot_by_stage(features_elders, targets_elders, diagnosis, vmin=VMIN, vmax=VMAX, cmap=cmap)
+#plot_by_stage(features_elders, targets_elders, diagnosis, vmin=VMIN, vmax=VMAX, cmap=cmap)
 #plot(features_elders, targets_elders, ((0, 12), (13, 23), (24, 29), (30, 30)), label='mmse', vmin=0.1, vmax=0.42, cmap=cmap)
 #plot(features_elders, targets_elders, ((0, 15), (16, 25), (26, 28), (27, 29), (28, 30)), label='mmse', vmin=0, vmax=0.4)
-#plot(features_elders, targets_elders, ((0, 18), (18, 28) ), label='mmse', vmin=0, vmax=0.4)
+plot(features_elders, targets_elders, ((0, 13), (13, 28) ), label='mmse', vmin=VMIN, vmax=VMAX)
 
 plt.figure()
 mappable = plt.cm.ScalarMappable(cmap=cmap)
 mappable.set_clim(VMIN, VMAX)
 plt.colorbar(mappable, shrink=0.5, aspect=20, orientation='vertical')
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/TopoMaps/colorbar_edlers.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/TopoMaps/colorbar_edlers.png", dpi=300, bbox_inches='tight')
 
+print("\n\nCHILDREN\n")
 cmap = LinearSegmentedColormap.from_list("my_cmap", ["white", CHILDREN_COLOUR], N=256)
-plot(features_children, targets_children, ((0, 8), (8, 12), (12, 17), (17, 20)), label='age', vmin=VMIN, vmax=VMAX, cmap=cmap)
+#plot(features_children, targets_children, ((0, 8), (8, 12), (12, 17), (17, 20)), label='age', vmin=VMIN, vmax=VMAX, cmap=cmap)
 #plot(features_children, targets_children, ((0, 4.5), (4.5, 6), (6, 8), (8, 12), (12, 19)), label='age', vmin=0, vmax=0.4)
-#plot(features_children, targets_children, ((0, 4.7), ), label='age', vmin=0, vmax=0.4)
+plot(features_children, targets_children, ((0, 8), (8, 13)), label='age', vmin=VMIN, vmax=VMAX)
 plt.figure()
 mappable = plt.cm.ScalarMappable(cmap=cmap)
 mappable.set_clim(VMIN, VMAX)
 plt.colorbar(mappable, shrink=0.5, aspect=20, orientation='vertical')
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/TopoMaps/colorbar_children.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/TopoMaps/colorbar_children.png", dpi=300, bbox_inches='tight')
 #"""
 
-"""
+
 # Make colourbar in horizontal
 mappable = plt.cm.ScalarMappable(cmap='viridis')
 mappable.set_clim(0, 0.4)
 plt.colorbar(mappable, shrink=0.8, aspect=60, orientation='horizontal')
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/TopoMaps/colorbar.png", dpi=300, bbox_inches='tight')
-"""
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/TopoMaps/colorbar.png", dpi=300, bbox_inches='tight')

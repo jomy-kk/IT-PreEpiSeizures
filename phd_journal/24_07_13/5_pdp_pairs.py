@@ -29,7 +29,7 @@ feature_names = [name for name in feature_names if name in important_features]
 model = load_model()
 
 # Make directory for images
-dir_path = "/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/pdp_pairs_children"
+dir_path = "/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/pdp_pairs_children"
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
 

@@ -17,7 +17,7 @@ features_children, targets_children = read_children()
 model = load_model()
 
 # Make directory for images
-dir_path = "/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/pdp_children"
+dir_path = "/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/pdp_children"
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
 
@@ -36,6 +36,7 @@ def custom_partial_dependence(estimator, X, feature, percentiles=100):
 
 # Iterate over the features
 for i, feature in enumerate(features_children.columns):
+    print(f'Processing feature {feature} ({i+1}/{len(features_children.columns)})')
     # define arial 12pt font for both axes ticks and y-axis label; and 16pt for x-axis label
     plt.rcParams['font.family'] = 'Arial'
     plt.rcParams['font.size'] = 12

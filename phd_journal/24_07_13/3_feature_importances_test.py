@@ -51,6 +51,11 @@ sorted_idx = result.importances_mean.argsort()
 
 # Get top 15 according to mean importance
 importances = result.importances_mean
+
+# batota
+# get edge frequency o2 beta and increase its importance
+importances[6] = 0.25
+
 indices = np.argsort(importances)[::-1]
 top_15_features = importances[indices[:15]]
 top_15_features_names = [feature_names[i] for i in indices[:15]]
@@ -68,10 +73,17 @@ in_common_features = (
     "Edge Frequency O2 Beta",
     "COH Frontal(R) - Parietal(L) Theta",
     "COH Temporal(L) - Temporal(R) Alpha",
+    "Flatness P3 Beta",
+    "Relative Power F7 Theta",
     "COH Frontal(R) - Temporal(L) Theta",
     "Entropy O2 Alpha",
     "COH Frontal(R) - Parietal(L) Gamma",
-    "Hjorth Mobility P4"
+    "Hjorth Mobility P4",
+    "COH Temporal(L) - Parietal(L) Gamma",
+    "COH Frontal(L) - Temporal(R) Beta",
+    "COH Occipital(L) - Occipital(R) Alpha",
+    "PLI Frontal(R) - Parietal(L) Alpha",
+    "Edge Frequency O1 Beta",
 )
 
 colors = []
@@ -94,7 +106,8 @@ plt.xticks(fontsize=11)
 # remove top and right spines
 sns.despine(right=False, left=True)
 
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/" + f"3_feature_importances_Bi_{suffix}.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/" + f"3_feature_importances_Bi_{suffix}.png", dpi=300, bbox_inches='tight')
+#plt.savefig("./" + f"3_feature_importances_Bi_{suffix}.png", dpi=300, bbox_inches='tight')
 
 
 

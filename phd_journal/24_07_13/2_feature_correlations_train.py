@@ -70,7 +70,7 @@ sns.heatmap(features_Ai_corr, cmap='coolwarm', center=0, square=True, vmin=-1, v
 labels = curate_feature_names(list(elders_important_features))
 plt.xticks(np.array(np.arange(len(labels)+1)) + 0.5, labels + ['Age', ], rotation=90)
 plt.yticks(np.array(np.arange(len(labels)+1)) + 0.5, labels + ['MMSE', ], rotation=0)
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/" + "2_feature_correlations_Ai.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed/" + "2_feature_correlations_Ai.png", dpi=300, bbox_inches='tight')
 plt.clf()
 
 #plt.figure(figsize=(10, 10))
@@ -78,6 +78,6 @@ sns.heatmap(features_Bi_corr, cmap='coolwarm', center=0, square=True, vmin=-1, v
 labels = curate_feature_names(list(children_important_features))
 plt.xticks(np.array(np.arange(len(labels)+1)) + 0.5, labels + ['Age', ], rotation=90)
 plt.yticks(np.array(np.arange(len(labels)+1)) + 0.5, labels + ['MMSE', ], rotation=0)
-plt.savefig("/Users/saraiva/Desktop/Doktorand/Scientific Outputs/Journal Articles/RH-images/" + "4_feature_correlations_Bi_wr2.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/saraiva/Desktop/Doktorand/2. Scientific Outputs/Journal Articles/RH-images/after MAS11 fixed" + "4_feature_correlations_Bi_wr2.png", dpi=300, bbox_inches='tight')
 plt.clf()
 

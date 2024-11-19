@@ -1,26 +1,35 @@
 from os.path import join
+
+import numpy as np
 from pandas import read_csv
 from pickle import load
 
-common_path = '/Users/saraiva/PycharmProjects/IT-LongTermBiosignals/phd_journal/24_03_18/inverse_problem3/scheme57'
+out_path = '/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_03_18/inverse_problem3/scheme59'
+model_path = '/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_03_18/inverse_problem3/scheme57'
 
 
 def read_elders():
-    features = read_csv(join(common_path, 'elders_features.csv'), index_col=0)
-    targets = read_csv(join(common_path, 'elders_targets.csv'), index_col=0)
+    features = read_csv(join(model_path, 'elders_features.csv'), index_col=0)
+    targets = read_csv(join(model_path, 'elders_targets.csv'), index_col=0)
     targets = targets['0']  # targets to DataFrame -> Series
     return features, targets
 
 
 def read_children():
-    features = read_csv(join(common_path, 'children_features.csv'), index_col=0)
-    targets = read_csv(join(common_path, 'children_targets.csv'), index_col=0)
+    features = read_csv(join(out_path, 'children_features.csv'), index_col=0)
+    targets = read_csv(join(out_path, 'children_targets.csv'), index_col=0)
     targets = targets['0']  # targets to DataFrame -> Series
+
+    # which sessions where used
+    USED_SESSIONS = np.loadtxt(join(out_path, 'used_sessions.txt'), dtype=str)
+    features = features.loc[USED_SESSIONS]
+    targets = targets.loc[USED_SESSIONS]
+
     return features, targets
 
 
 def load_model():
-    return load(open(join(common_path, 'model.pkl'), 'rb'))
+    return load(open(join(model_path, 'model.pkl'), 'rb'))
 
 # Feature names
 feature_names = ['Hjorth#Complexity#T5', 'Hjorth#Complexity#F4',
