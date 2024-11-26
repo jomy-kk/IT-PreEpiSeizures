@@ -559,8 +559,9 @@ class Timeseries():
             for i in range(0, len(self), step):
                 trimmed_samples = self.__samples[i: i + individual_length]
                 trimmed_raw_samples = self.__raw_samples[i: i + individual_length]
-                res.append(self._new(samples=trimmed_samples, raw_samples=trimmed_raw_samples,
-                                     initial_datetime=self.__initial_datetime + timedelta(seconds=i/self.__sampling_frequency)))
+                if len(trimmed_samples) == individual_length:
+                    res.append(self._new(samples=trimmed_samples, raw_samples=trimmed_raw_samples,
+                                         initial_datetime=self.__initial_datetime + timedelta(seconds=i/self.__sampling_frequency)))
 
             return res
 
@@ -1486,7 +1487,10 @@ class Timeseries():
 
         res_trimmed_segments = []
         for segment in self.__segments:
-            res_trimmed_segments += segment._partition(n_window_length, n_overlap_length)
+            partitioned_segments = segment._partition(n_window_length, n_overlap_length)
+            for s in partitioned_segments:
+                assert len(s) == n_window_length
+            res_trimmed_segments += partitioned_segments
 
         return self.__new(segments=res_trimmed_segments, equally_segmented=True, overlapping_segments=n_overlap_length != 0)
 
