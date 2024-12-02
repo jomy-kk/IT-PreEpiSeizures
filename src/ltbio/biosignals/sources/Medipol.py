@@ -150,7 +150,7 @@ class Medipol(BiosignalSource):
     @staticmethod
     def __find_sex_age_diagnosis(patient_code) -> tuple[Sex, int, MedicalCondition | None]:
         with open(Medipol.demographic_csv) as csv_file:
-            reader = csv.DictReader(csv_file, delimiter=';')
+            reader = csv.DictReader(csv_file, delimiter=',')
             for row in reader:
                 if row['CODE'] == patient_code:
                     sex =  Sex.M if row['GENDER'] == 'M' else Sex.F

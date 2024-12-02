@@ -1,0 +1,10 @@
+Delta_Temporal
+Delta_Limbic
+Alpha1_Limbic
+Theta_Occipital
+Theta_Temporal
+Theta_Limbic
+Alpha3_Occipital
+Alpha3_Temporal
+Beta1_Occipital
+Beta2_Occipital
