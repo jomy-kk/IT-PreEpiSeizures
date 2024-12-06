@@ -16,9 +16,9 @@ def _check_input(_X: pd.DataFrame, _metadata: pd.DataFrame):
     return data, covariates
 
 
-def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True, cov_education=True):
+def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True):
     # keep only the age and gender columns
-    covariates = covariates[['AGE', 'GENDER', 'EDUCATION YEARS', 'SITE']]
+    covariates = covariates[['AGE', 'GENDER', 'EDUCATION YEARS', 'DIAGNOSIS', 'SITE']]
     # binarize gender: M=1, F=0
     covariates['GENDER'].replace('M', 1, inplace=True)
     covariates['GENDER'].replace('F', 0, inplace=True)
@@ -30,6 +30,8 @@ def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True,
         covariates.drop(columns='AGE', inplace=True)
     if not cov_education:
         covariates.drop(columns='EDUCATION YEARS', inplace=True)
+    if not cov_diagnosis:
+        covariates.drop(columns='DIAGNOSIS', inplace=True)
 
     print("Covariates:", covariates.columns)
     return covariates
@@ -72,7 +74,7 @@ def original_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
 
 
 def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
-                 cov_gender=True, cov_age=True, cov_education=True) -> tuple[pd.DataFrame, dict]:
+                 cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> tuple[pd.DataFrame, dict]:
 
     data, covariates = _check_input(_X, _metadata)
     data = data.T  # data should be (features, samples)
@@ -81,8 +83,16 @@ def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
     # To specify the name of the variable that encodes for the batch covariate
     batch_col = 'SITE'
     # To specify names of the variables that are categorical:
-    categorical_cols = ['GENDER', ]
-    continuous_cols = ['AGE', 'EDUCATION YEARS']
+    categorical_cols = []
+    if cov_gender:
+        categorical_cols.append('GENDER')
+    if cov_diagnosis:
+        categorical_cols.append('DIAGNOSIS')
+    continuous_cols = []
+    if cov_age:
+        continuous_cols.append('AGE')
+    if cov_education:
+        continuous_cols.append('EDUCATION YEARS')
 
     # Harmonization step
     res = neuroCombat(dat=data, covars=covariates, batch_col=batch_col, categorical_cols=categorical_cols, continuous_cols=continuous_cols)
@@ -138,7 +148,7 @@ def neuro_harmonize(_X: pd.DataFrame, _metadata: pd.DataFrame,
     data = _X.to_numpy(dtype=np.float32)
 
     # run
-    combat_model, harmonized_data = harmonizationLearn(data, covariates)
+    combat_model, harmonized_data = harmonizationLearn(data, covariates, eb=True)
 
     # Batch effects estimates
     sites = combat_model['SITE_labels']

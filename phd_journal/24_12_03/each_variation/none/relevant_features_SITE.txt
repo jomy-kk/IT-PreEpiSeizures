@@ -1,0 +1,10 @@
+Delta_Frontal
+Delta_Parietal
+Delta_Limbic
+Alpha1_Parietal
+Alpha3_Frontal
+Alpha3_Limbic
+Beta1_Limbic
+Beta2_Parietal
+Beta2_Limbic
+Gamma_Limbic

@@ -10,8 +10,8 @@ datasets_paths = {
     "Izmir": "/Volumes/MMIS-Saraiv/Datasets/Izmir/EC/features_source_ind-bands",
     "Istambul": "/Volumes/MMIS-Saraiv/Datasets/Istambul/features_source_ind-bands",
     "Miltiadous": "/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/features_source_ind-bands",
-    "BrainLat:CL": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/CL",
-    "BrainLat:AR": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/AR",
+    #"BrainLat:CL": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/CL",
+    #"BrainLat:AR": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/AR",
 }
 
 datasets_metadata_paths = {
@@ -19,8 +19,8 @@ datasets_metadata_paths = {
     "Izmir": "/Volumes/MMIS-Saraiv/Datasets/Izmir/metadata.csv",
     "Istambul": "/Volumes/MMIS-Saraiv/Datasets/Istambul/metadata.csv",
     "Miltiadous": "/Volumes/MMIS-Saraiv/Datasets/Miltiadous Dataset/metadata.csv",
-    "BrainLat:CL": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/metadata_CL.csv",
-    "BrainLat:AR": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/metadata_AR.csv",
+    #"BrainLat:CL": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/metadata_CL.csv",
+    #"BrainLat:AR": "/Volumes/MMIS-Saraiv/Datasets/BrainLat/features_source_ind-bands/metadata_AR.csv",
 }
 
 

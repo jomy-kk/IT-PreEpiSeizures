@@ -1,0 +1,10 @@
+Alpha1_Frontal
+Alpha1_Limbic
+Theta_Temporal
+Theta_Limbic
+Alpha3_Parietal
+Alpha3_Occipital
+Alpha3_Temporal
+Alpha3_Limbic
+Beta1_Parietal
+Beta1_Occipital

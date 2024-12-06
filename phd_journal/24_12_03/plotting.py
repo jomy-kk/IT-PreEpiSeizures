@@ -1,5 +1,6 @@
 import itertools
 from os.path import join
+from pickle import load
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,12 +8,12 @@ import pandas as pd
 import seaborn as sns
 import statsmodels.api as sm
 from matplotlib.colors import LinearSegmentedColormap, Normalize
-from scipy.stats import norm, invgamma
+from neptune.types import File
+from scikitplot.metrics import plot_roc_curve
 from scipy.stats import shapiro
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.feature_selection import RFE
-from sklearn.metrics import classification_report
-from sklearn.model_selection import LeaveOneOut
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve, roc_auc_score
+import neptune.integrations.sklearn as npt_utils
+
 
 image_format = "png"
 dpi = 300
@@ -21,7 +22,7 @@ dpi = 300
 sns.set_style("whitegrid")
 sns.set_palette("bright")
 
-regions = ["Parietal", "Temporal", "Occipital", "Limbic"]
+regions = ["Parietal", "Temporal", "Occipital", "Limbic", "Frontal"]
 bands = ["Delta", "Theta", "Alpha1", "Alpha2", "Alpha3", "Beta1", "Beta2", "Gamma"]
 
 # Set default font size
@@ -42,7 +43,7 @@ def get_band_abbrev(band: str) -> str:
     return band
 
 
-def plot_babiloni_quality_control(in_path, out_path):
+def plot_babiloni_quality_control(run, in_path, out_path):
     # Load babilony_quality.pkl
     babilony_quality = pd.read_pickle(join(in_path, f"babilony_quality.pkl"))
     # What are the datasets names?
@@ -50,41 +51,49 @@ def plot_babiloni_quality_control(in_path, out_path):
     # What are the diagnoses names?
     diagnoses_names = set([k[2] for k in babilony_quality.keys()])
 
-    fig = plt.figure(figsize=(4 * 4, 6))
+    fig = plt.figure(figsize=(6 * len(regions), 6))
 
     # for each region -> a subplot
     for i, region in enumerate(regions):
 
-        diagnosis_independency_intradataset_res = {}
-
         # Keep only all features of the region
         to_keep = [f"{band}_{region}" for band in bands]
 
-        # Colors
-        diagnoses_colors = {"HC": [100, 100, 100], "AD": [0, 74, 153]}
-        diagnoses_colors = {l: [c / 255 for c in color] for l, color in diagnoses_colors.items()}
-
         # Line styles
-        datasets_lines = {"Newcastle": "-", "Izmir": "--", "Istambul": "-."}
+        diagnoses_lines = {"HC": '--', "AD": '-'}
+
+        # Colors
+        datasets_colors = ["blue", "green", "orange", "pink", "black", "yellow"]
+        #datasets_colors = {l: [c / 255 for c in color] for l, color in datasets_colors.items()}
 
         # make subplot
-        plt.subplot(2, 4, i + 1)
+        plt.subplot(1, len(regions), i + 1)
 
-        # for each dataset -> a line
-        for dataset_name in datasets_names:
+        diagnoses_shadow = {"HC": "grey", "AD": "red"}
 
-            # for each diagnosis -> a color
-            for i, D in enumerate(diagnoses_names):
-                _mean_std = babilony_quality[(region, dataset_name, D)]
-                mean, std = _mean_std['mean'], _mean_std['std']
+        # for each diagnosis
+        for i, D in enumerate(diagnoses_lines.keys()):
+
+            # for each dataset
+            for j, dataset_name in enumerate(datasets_names):
+
+                y = babilony_quality[(region, dataset_name, D)]
+                #mean, std = _mean_std['mean'], _mean_std['std']
+                #q1, q2, q3 = stats['q1'], stats['q2'], stats['q3']
+                q1, q2, q3 = y.quantile(0.25), y.quantile(0.5), y.quantile(0.75)
 
                 # Mean
-                plt.plot(mean.index.to_numpy(), mean, label=D, linestyle=datasets_lines[dataset_name],
-                         color=diagnoses_colors[D],
-                         linewidth=1)
+                #plt.plot(mean.index.to_numpy(), mean, linestyle=diagnoses_lines[D], color=datasets_colors[dataset_name], linewidth=1)
+                plt.plot(q2.index, q2, linestyle=diagnoses_lines[D], color=datasets_colors[j], linewidth=2.5)
 
                 # Std
-                #plt.fill_between(y_mean.index, y_mean - y_std, y_mean + y_std, alpha=0.1, color=diagnoses_colors[D])
+                #plt.fill_between(mean.index, mean - std, mean + std, alpha=0.1, color=datasets_colors[dataset_name])
+                #plt.fill_between(q2.index, q1, q3, alpha=0.1, color=datasets_colors[dataset_name])
+
+            # Plot grey shadow for this diagnosis, with global q1 and q3
+            all_y = pd.concat([babilony_quality[(region, dataset_name, D)] for dataset_name in datasets_names])
+            q1, q2, q3 = all_y.quantile(0.25), all_y.quantile(0.5), all_y.quantile(0.75)
+            plt.fill_between(q2.index, q1, q3, alpha=0.1, color=diagnoses_shadow[D])
 
         plt.title(f"{region}")
         plt.ylabel('eLORETA Current Density')
@@ -93,11 +102,13 @@ def plot_babiloni_quality_control(in_path, out_path):
         plt.title(region)
 
     plt.subplots_adjust(hspace=0.3, wspace=0.3)
+    plt.legend(loc='best', fontsize=6)
     plt.tight_layout()
+    run["quality_control/babiloni_spectrum"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"babiloni_quality_control.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
 
-
-def plot_mean_diffs(_datasets, outpath, log=False):
+def plot_mean_diffs(run, _datasets, outpath, log=False):
     # y-axis: difference between the average feature value at site 1 and the average feature value at site 2
     # x-axis: average feature value across all participants from both sites
     # only izmir and newcastle
@@ -109,13 +120,15 @@ def plot_mean_diffs(_datasets, outpath, log=False):
     all_dataset_names = list(_datasets.keys())
     combinations = list(itertools.combinations(all_dataset_names, 2))
 
-    fig, axes = plt.subplots(1, 3, figsize=(4 * 3, 3))
+    # Each row can have 4 columns. How many rows do we need?
+    num_rows = (len(combinations) + 3) // 4
+
+    fig = plt.figure(figsize=(4 * 4, 3 * num_rows))
     for i, (dataset_name_1, dataset_name_2) in enumerate(combinations):
         if dataset_name_1 == dataset_name_2:
             break
 
-        # subplot
-        ax = axes[i]
+        plt.subplot(num_rows, 4, i + 1)
 
         # Extract datasets for Izmir and Newcastle
         d1_data = _datasets[dataset_name_1]
@@ -126,17 +139,18 @@ def plot_mean_diffs(_datasets, outpath, log=False):
         avg_values = (d1_data.mean() + d2_data.mean()) / 2
 
         # Plotting
-        ax.scatter(avg_values, diff_values, color='blue')
-        ax.set_xlabel('Average feature value across sites')
-        ax.set_ylabel('Feature difference across sites')
-        ax.axhline(0, color='red', linestyle='--')
-        ax.set_ylim(ymin, ymax)
-        ax.set_title(f'{dataset_name_1} - {dataset_name_2}')
+        plt.scatter(avg_values, diff_values, color='blue')
+        plt.xlabel('Average feature value across sites')
+        plt.ylabel('Feature difference across sites')
+        plt.axhline(0, color='red', linestyle='--')
+        plt.ylim(ymin, ymax)
+        plt.title(f'{dataset_name_1} - {dataset_name_2}')
 
     plt.subplots_adjust(hspace=0.3, wspace=0.3)
     plt.tight_layout()
+    run["quality_control/mean_diffs"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(outpath, f"mean_diffs.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
-
+    plt.close(fig)
 
 def check_normality(_datasets, _datasets_metadata):
     for dataset_name, dataset in _datasets.items():
@@ -157,7 +171,7 @@ def check_normality(_datasets, _datasets_metadata):
         print(f"Number of normally distributed features: {N_normal} out of {len(dataset.columns)}")
 
 
-def plot_qq(_datasets, out_path):
+def plot_qq(run, _datasets, out_path):
     for dataset_name, dataset in _datasets.items():
         print(f"Creating Q-Q plots for dataset: {dataset_name}")
         num_features = len(dataset.columns)
@@ -175,15 +189,17 @@ def plot_qq(_datasets, out_path):
             fig.delaxes(axes[j])
 
         plt.tight_layout()
+        run[f"quality_control/qq/{dataset_name}"].upload(File.as_image(plt.gcf()))
         plt.savefig(join(out_path, f"qq_{dataset_name}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+        plt.close(fig)
 
-
-def plot_correlation_with_var(in_path, out_path, var_of_interest, variant):
+def plot_correlation_with_var(run, in_path, out_path, var_of_interest, variant):
     # x-axis: site/batch
     # y-axis: percentage of features significantly correlated with the variable of interest
 
     # Read correlations csv -> pandas dataframe
     correlations = pd.read_csv(join(in_path, f"correlation_{var_of_interest}.csv"), index_col=0)
+    run[f"correlation/{var_of_interest}/all"].upload(join(in_path, f"correlation_{var_of_interest}.csv"))
 
     # Percentage of features significantly correlated with the variable of interest
     N_significant = sum(correlations['p'] < 0.05)
@@ -195,43 +211,69 @@ def plot_correlation_with_var(in_path, out_path, var_of_interest, variant):
     plt.ylim(0, 100)
     plt.ylabel(f"% of features significantly correlated with {var_of_interest.capitalize()}")
     plt.tight_layout()
+    run[f"correlation/{var_of_interest}/significant"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"correlation_with_{var_of_interest}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
 
-
-def plot_classification_with_var(in_path, out_path, var_of_interest, variant):
+def plot_classification_with_var(run, in_path, out_path, var_of_interest, variant):
     # x-axis: site/batch
     # y-axis: percentage of features significantly correlated with the variable of interest
 
     # Read classifications csv -> pandas dataframe
     classification_res = pd.read_csv(join(in_path, f"classification_{var_of_interest}.csv"), index_col=0)
-    pred = classification_res['pred'].to_numpy()
-    true = classification_res['true'].to_numpy()
+    pred = classification_res['pred']
+    true = classification_res['true']
 
-    # Compute sensitivity and specificity from sklearn
-    report = classification_report(true, pred, output_dict=True)
-    print(var_of_interest)
-    print(report)
+    # Make sample weights (n_samples, ) according to the class size
+    classes = true.unique()
+    class_weight = {c: len(true) / (len(classes) * len(true[true == c])) for c in classes}
+    sample_weight = true.map(class_weight)
 
-    # plot
-    plt.figure(figsize=(3, 4))
+    # Compute classification metrics
+    report = classification_report(true, pred, output_dict=True, sample_weight=sample_weight)
+    run[f"classification/{var_of_interest}/my_metrics"] = report
+
+    # Plot weighted F1-Score
+    fig = plt.figure(figsize=(3, 4))
     plt.bar(variant, report['weighted avg']['f1-score'])
+    # Write value on bar
+    plt.text(0, report['weighted avg']['f1-score'], f"{report['weighted avg']['f1-score']:.2f}", ha='center', va='bottom')
     plt.ylim(0, 1.0)
     plt.ylabel(f"F1-score (w.avg) to classify {var_of_interest.capitalize()}")
     plt.tight_layout()
     plt.savefig(join(out_path, f"classification_with_{var_of_interest}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close(fig)
 
+    # Plot Confusion matrix
+    fig = plt.figure(figsize=(4, 4))
+    sns.heatmap(confusion_matrix(true, pred), annot=True, fmt='d', cmap='Blues', cbar=False)
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.tight_layout()
+    run[f"classification/{var_of_interest}/confusion_matrix"].upload(File.as_image(plt.gcf()))
+    plt.savefig(join(out_path, f"confusion_matrix_{var_of_interest}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close(fig)
 
-def plot_2components(_metadata, in_path, out_path, method):
+    """
+    # Plot ROC-AUC curve with sklearn library
+    plot_roc_curve(true.to_numpy(), pred.to_numpy())
+    run[f"classification/{var_of_interest}/roc_auc"].upload(File.as_image(plt.gcf()))
+    plt.savefig(join(out_path, f"roc_auc_{var_of_interest}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    auc_score = roc_auc_score(true, pred, sample_weight=sample_weight)
+    run[f"classification/{var_of_interest}/roc_auc_score"] = auc_score
+    """
+
+def plot_2components(run, _metadata, in_path, out_path, method):
     # Read csv principal components file
     pc = pd.read_csv(join(in_path, f"{method}_transformed.csv"), index_col=0)
 
     # Plot stlyles
-    dataset_colors = {"Newcastle": [62, 156, 73], "Izmir": [212, 120, 14], "Istambul": [182, 35, 50]}
-    dataset_colors = {l: [c / 255 for c in color] for l, color in dataset_colors.items()}
+    dataset_colors = {"Newcastle": "blue", "Izmir": "green", "Istambul": "orange", "Miltiadous": "pink", "BrainLat:AR": "black", "BrainLat:CL": "yellow"}
+    #dataset_colors = {l: [c / 255 for c in color] for l, color in dataset_colors.items()}
     diagnoses_circles = {"HC": "x", "AD": "o"}
 
     # One plot, all datasets
-    plt.figure(figsize=(6, 6))
+    fig = plt.figure(figsize=(6, 6))
     for dataset, color in dataset_colors.items():
         for diagnosis, marker in diagnoses_circles.items():
             idx = _metadata[(_metadata["DIAGNOSIS"] == diagnosis) & (_metadata["SITE"] == dataset)].index
@@ -239,14 +281,15 @@ def plot_2components(_metadata, in_path, out_path, method):
             plt.scatter(pc['0'].loc[existing_idx], pc['1'].loc[existing_idx], color=color,
                         label=f"{dataset} - {diagnosis}", marker=marker)
 
-    #plt.legend()
+    plt.legend(loc='best', fontsize=8)
     plt.xlabel("Component 1", fontsize=14)
     plt.ylabel("Component 2", fontsize=14)
     plt.tight_layout()
+    run[f"quality_control/{method}"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"{method}.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close(fig)
 
-
-def plot_distance_matrix(in_path, out_path):
+def plot_distance_matrix(run, in_path, out_path):
     # Distance matrices show the Euclidean distance across all features between batch/site-average values
     # x-axis: batches
     # y-axis: batches
@@ -269,16 +312,18 @@ def plot_distance_matrix(in_path, out_path):
     avg_distance = np.mean([v for v in np.array(matrix).flatten() if v > 0])
     plt.title(f"Distance between datasets\nAverage distance: {avg_distance:.2f}")
     plt.tight_layout()
+    run["quality_control/distance_matrix"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"distance_matrix.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
 
 
-def plot_batch_effects_dist(in_path, out_path):
+def plot_batch_effects_dist(run, in_path, out_path):
     print("Creating batch effects distribution plots.")
     # Load distributions_by_dataset.pkl
     distributions = pd.read_pickle(join(in_path, "distributions_by_dataset.pkl"))
 
     # visualize fit of the prior distribution, along with the observed distribution of site effects
-    colors = ['blue', 'red', 'green']
+    colors = ['blue', 'red', 'green', 'orange', 'pink', 'black', 'yellow']
 
     # Gamma prior and observed
     plt.figure()
@@ -291,7 +336,9 @@ def plot_batch_effects_dist(in_path, out_path):
     plt.legend()
     plt.title("Additive Batch Effects (Gamma)")
     plt.tight_layout()
+    run["harmonization/additive_batch_effects"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"add_batch_effects_dist.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
 
     # Delta squared prior and observed
     plt.figure()
@@ -304,4 +351,86 @@ def plot_batch_effects_dist(in_path, out_path):
     plt.legend()
     plt.title("Multiplicative Batch Effects (Delta^2)")
     plt.tight_layout()
+    run["harmonization/multiplicative_effects"].upload(File.as_image(plt.gcf()))
     plt.savefig(join(out_path, f"mul_batch_effects_dist.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
+
+
+def plot_mmse_distribution(run, datasets_metadata, in_path, out_path):
+    # Get dataset names
+    dataset_names = datasets_metadata.keys()
+
+    # Get all MMSE data
+    datasets_metadata = {k: v for k, v in datasets_metadata.items() if k in dataset_names}
+    datasets_metadata = {k: v[['MMSE', 'DIAGNOSIS']] for k, v in datasets_metadata.items()}
+
+    # Get subjects used in the analysis
+    subjects = pd.read_csv(join(in_path, "lda_transformed.csv"), index_col=0).index
+    # Get all dataset_names from the subjects index and put it in a column
+    subjects_datasets = [s.split("-")[0] for s in subjects]
+    subjects = pd.DataFrame(subjects_datasets, index=subjects, columns=['Dataset'])
+
+    # Filter MMSE data for the subjects used in the analysis
+    for dataset_name in dataset_names:
+        these_subjects = subjects[subjects['Dataset'] == dataset_name].index
+        filtered_data = datasets_metadata[dataset_name].loc[these_subjects]
+        datasets_metadata[dataset_name] = filtered_data
+
+   # Combine the counts for each dataset and diagnosis into a single DataFrame
+    combined_counts = pd.DataFrame()
+
+    for dataset_name, mmse in datasets_metadata.items():
+        for D in ("HC", "AD"):
+            mmse_D = mmse[datasets_metadata[dataset_name]['DIAGNOSIS'] == D]
+            mmse_D = mmse_D['MMSE']
+            counts = mmse_D.value_counts(normalize=True).sort_index()
+            counts_df = counts.reset_index()
+            counts_df.columns = ['MMSE', 'Density']
+            counts_df['Dataset'] = dataset_name
+            counts_df['Diagnosis'] = D
+            combined_counts = pd.concat([combined_counts, counts_df], ignore_index=True)
+
+    # Combine the Dataset and Diagnosis into a single column
+    combined_counts['Dataset_Diagnosis'] = combined_counts['Dataset'] + '_' + combined_counts['Diagnosis']
+
+    # Plot
+    plt.figure(figsize=(10, 2))
+    sns.barplot(x='MMSE', y='Density', hue='Dataset_Diagnosis', data=combined_counts)
+    plt.legend(loc='upper left', fontsize=5)
+    plt.xlabel("MMSE")
+    plt.ylabel("Density")
+    plt.tight_layout()
+    run["datasets/mmse_distribution"].upload(File.as_image(plt.gcf()))
+    plt.savefig(join(out_path, f"mmse_distribution.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close()
+
+
+def plot_simple_diagnosis_discriminant(run, datasets_metadata, in_path, out_path):
+    # Read csv principal components file
+    pc = pd.read_csv(join(in_path, f"simple_diagnosis_discriminant_transformed.csv"), index_col=0)
+
+    # Load model
+    model = load(open(join(in_path, "simple_diagnosis_discriminant.pkl"), 'rb'))
+
+    # Plot stlyles
+    dataset_colors = {"Newcastle": "blue", "Izmir": "green", "Istambul": "orange", "Miltiadous": "pink", "BrainLat:AR": "black", "BrainLat:CL": "yellow"}
+    #dataset_colors = {l: [c / 255 for c in color] for l, color in dataset_colors.items()}
+    diagnoses_circles = {"HC": "x", "AD": "o"}
+
+    # One plot, all datasets
+    fig = plt.figure(figsize=(6, 6))
+    for dataset, color in dataset_colors.items():
+        for diagnosis, marker in diagnoses_circles.items():
+            idx = datasets_metadata[(datasets_metadata["DIAGNOSIS"] == diagnosis) & (datasets_metadata["SITE"] == dataset)].index
+            existing_idx = pc.index.intersection(idx)
+            # plot 1d
+            plt.scatter(pc['0'].loc[existing_idx], np.zeros(len(existing_idx)), color=color, label=f"{dataset} - {diagnosis}", marker=marker)
+
+    plt.legend(loc='best', fontsize=8)
+    plt.xlabel("Component 1", fontsize=14)
+    plt.ylabel("Component 2", fontsize=14)
+    plt.tight_layout()
+    run[f"simple_diagnosis_discriminant/visual_separation"].upload(File.as_image(plt.gcf()))
+    plt.savefig(join(out_path, f"simple_diagnosis_discriminant.{image_format}"), dpi=dpi, transparent=True, bbox_inches='tight')
+    plt.close(fig)
+

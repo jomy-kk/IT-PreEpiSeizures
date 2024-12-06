@@ -1,0 +1,10 @@
+Delta_Temporal
+Delta_Limbic
+Alpha1_Parietal
+Alpha2_Frontal
+Alpha2_Parietal
+Alpha3_Frontal
+Alpha3_Occipital
+Alpha3_Limbic
+Beta1_Central
+Gamma_Parietal
