@@ -3,14 +3,16 @@ import pickle
 from typing import Sequence
 
 import numpy as np
+from imblearn.over_sampling import SMOTE
 from neptune.types import File
 from neptune.utils import stringify_unsupported
 from scipy.stats import pearsonr
+from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE
 from sklearn.manifold import TSNE
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import LeaveOneOut
 import neptune.integrations.sklearn as npt_utils
 
@@ -62,14 +64,18 @@ def apply_combat(run, datasets, datasets_metadata, _out_path, log_transform, sta
     # Apply Combat
     match harmonization_method:
         case "none":
+            print(0)
             dist_parameters = None
         case "original":
-            X, dist_parameters = original_combat(X, all_metadata, cov_age=cov_age,
-                                                        cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+            print(1)
+            X = original_combat(X, all_metadata, cov_age=cov_age, cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+            dist_parameters = None
         case "neurocombat":
+            print(2)
             X, dist_parameters = neuro_combat(X, all_metadata, cov_age=cov_age,
                                                      cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
         case "neuroharmonize":
+            print(3)
             X, dist_parameters = neuro_harmonize(X, all_metadata, cov_age=cov_age,
                                                         cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
         case _:
@@ -167,15 +173,18 @@ def babiloni_quality_control(run, datasets, datasets_metadata, _out_path):
 # 5. tSNE and LDA
 def tsne_lda(run, datasets_concatenated, datasets_metadata_concatenated, _out_path):
     # Linear Discriminant Analysis
-    lda = LDA(n_components=2, priors=None, shrinkage=None, solver='svd', store_covariance=False, tol=0.0001)
-    _metadata = datasets_metadata_concatenated.loc[datasets_metadata_concatenated.index.intersection(datasets_concatenated.index)]
-    lda.fit(datasets_concatenated, _metadata["SITE"])
-    lda_transformed = lda.transform(datasets_concatenated)
-    lda_transformed = pd.DataFrame(lda_transformed, index=datasets_concatenated.index)
-    # Save model and transformed
-    with open(join(_out_path, "lda_model.pkl"), "wb") as f:
-        pickle.dump(lda, f)
-    lda_transformed.to_csv(join(_out_path, "lda_transformed.csv"))
+    try:
+        lda = LDA(n_components=2, priors=None, shrinkage=None, solver='svd', store_covariance=False, tol=0.0001)
+        _metadata = datasets_metadata_concatenated.loc[datasets_metadata_concatenated.index.intersection(datasets_concatenated.index)]
+        lda.fit(datasets_concatenated, _metadata["SITE"])
+        lda_transformed = lda.transform(datasets_concatenated)
+        lda_transformed = pd.DataFrame(lda_transformed, index=datasets_concatenated.index)
+        # Save model and transformed
+        with open(join(_out_path, "lda_model.pkl"), "wb") as f:
+            pickle.dump(lda, f)
+        lda_transformed.to_csv(join(_out_path, "lda_transformed.csv"))
+    except ValueError:
+        pass
 
     # tSNE
     tsne = TSNE(n_components=2, learning_rate='auto', perplexity=30, random_state=0)
@@ -228,14 +237,14 @@ def correlation_with_var(run, datasets_concatenated, datasets_metadata_concatena
 
 # 8. Classification with var
 def classification_with_var(run, datasets_concatenated, datasets_metadata_concatenated, _out_path,
-                            var_name, model, relevant_features=None, norm_method=None):
+                            var_name, model, relevant_features=None, norm_method=None, augmentation=False):
     # Normalise/Standardize
     match norm_method:
         case "z-score":
             print("Applying z-score...")
             datasets_concatenated = (datasets_concatenated - datasets_concatenated.mean()) / datasets_concatenated.std()
         case "min-max":
-            print("Applying min-max norm...")
+            #print("Applying min-max norm...")
             datasets_concatenated = (datasets_concatenated - datasets_concatenated.min()) / (datasets_concatenated.max() - datasets_concatenated.min())
         case None:
             print("No normalization applied.")
@@ -246,17 +255,17 @@ def classification_with_var(run, datasets_concatenated, datasets_metadata_concat
     # Shuffle the data
     datasets_concatenated = datasets_concatenated.sample(frac=1, random_state=0)
 
-    print(f"Classification with {var_name}")
+    #print(f"Classification with {var_name}")
     datasets_metadata_concatenated = datasets_metadata_concatenated.loc[datasets_concatenated.index]
     metadata_var = datasets_metadata_concatenated[var_name]
     metadata_var = pd.Series(pd.factorize(metadata_var)[0], index=metadata_var.index)
-    print("Targets:", metadata_var.unique())
+    #print("Targets:", metadata_var.unique())
     metadata_var = metadata_var[datasets_concatenated.index]
 
-    print(model.get_params())
+    #print(model.get_params())
 
-    run[f"classification/{var_name}/relevant_features"] = f"RFE ({relevant_features})"
     if isinstance(relevant_features, int):
+        run[f"classification/{var_name}/relevant_features"] = f"RFE ({relevant_features})"
         # RFE
         print("Running RFE...")
         model_rfe = RandomForestClassifier(n_estimators=200, max_depth=15, random_state=0)
@@ -290,8 +299,8 @@ def classification_with_var(run, datasets_concatenated, datasets_metadata_concat
         selected_features = datasets_concatenated
     else:
         selected_features = datasets_concatenated[relevant_features]
-    print("Selected features:")
-    print(stringify_unsupported(selected_features.columns))
+    #print("Selected features:")
+    #print(selected_features.columns)
     run[f"classification/{var_name}/features"] = stringify_unsupported(selected_features.columns.tolist())
 
     loo = LeaveOneOut()
@@ -306,20 +315,32 @@ def classification_with_var(run, datasets_concatenated, datasets_metadata_concat
         assert (X_train.index == y_train.index).all()
 
         # Make sample weights (n_samples, ) according to the class size
-        classes = y_train.unique()
-        class_weight = {c: len(y_train) / (len(classes) * len(y_train[y_train == c])) for c in classes}
-        sample_weight = y_train.map(class_weight)
+        if augmentation:
+            # SMOTE
+            smote = SMOTE(k_neighbors=5, random_state=0)
+            X_train, y_train = smote.fit_resample(X_train, y_train)
+        else:
+            classes = y_train.unique()
+            class_weight = {c: len(y_train) / (len(classes) * len(y_train[y_train == c])) for c in classes}
+            sample_weight = y_train.map(class_weight)
 
         # Create fresh model with same architecture
         model = model.__class__(**model.get_params())
 
         # Train with weights
-        try:
-            run[f"classification/{var_name}/class_weight"] = str(class_weight)
-            model.fit(X_train, y_train, sample_weight=sample_weight)
-        except TypeError:
-            run[f"classification/{var_name}/class_weight"] = "n.a."
+        if not augmentation:
+            try:
+                run[f"classification/{var_name}/class_weight"] = str(class_weight)
+                model.fit(X_train, y_train, sample_weight=sample_weight)
+                print(f"LOOCV {i}/{len(metadata_var)}. Used class weights.")
+            except TypeError:
+                run[f"classification/{var_name}/class_weight"] = "n.a."
+                model.fit(X_train, y_train)
+                print(f"LOOCV {i}/{len(metadata_var)}. Did not use class weights.")
+        else:
+            run[f"classification/{var_name}/class_weight"] = "SMOTE augmented"
             model.fit(X_train, y_train)
+            #print(f"LOOCV {i}/{len(metadata_var)}. SMOTE augmented.")
 
         # Validate
         y_pred = model.predict(X_test)[0]
@@ -333,6 +354,10 @@ def classification_with_var(run, datasets_concatenated, datasets_metadata_concat
         pred.append(y_pred)
         true.append(y_test.values[0])
         index.append(y_test.index[0])
+
+        # Go updating score in the terminal
+        f1 = f1_score(true, pred, average='weighted')
+        #print(f"F1 score: {f1:.2f}")
 
     run[f"classification/{var_name}/model_description"] = str(model)
     run[f"classification/{var_name}/validation"] = str(loo)
@@ -351,7 +376,7 @@ def simple_diagnosis_discriminant(run, datasets_concatenated, datasets_metadata_
             print("Applying z-score...")
             datasets_concatenated = (datasets_concatenated - datasets_concatenated.mean()) / datasets_concatenated.std()
         case "min-max":
-            print("Applying min-max norm...")
+            #print("Applying min-max norm...")
             datasets_concatenated = (datasets_concatenated - datasets_concatenated.min()) / (
                         datasets_concatenated.max() - datasets_concatenated.min())
         case None:
@@ -364,8 +389,8 @@ def simple_diagnosis_discriminant(run, datasets_concatenated, datasets_metadata_
         datasets_concatenated = datasets_concatenated
     else:
         datasets_concatenated = datasets_concatenated[relevant_features]
-    print("Selected features:")
-    print(datasets_concatenated.columns.tolist())
+    #print("Features for dimensionality reduction:")
+    #print(datasets_concatenated.columns.tolist())
     run[f"simple_diagnosis_discriminant/features"] = stringify_unsupported(datasets_concatenated.columns.tolist())
 
     # Shuffle the data
@@ -398,16 +423,27 @@ def simple_diagnosis_discriminant(run, datasets_concatenated, datasets_metadata_
         print(report)
         run["simple_diagnosis_discriminant/my_metrics"] = report
 
+        # Confusion matrix
+        fig = plt.figure(figsize=(4, 4))
+        sns.heatmap(confusion_matrix(y_true, y_pred), annot=True, fmt='d', cmap='Blues', cbar=False)
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.tight_layout()
+        run[f"simple_diagnosis_discriminant/confusion_matrix"].upload(File.as_image(plt.gcf()))
+        plt.savefig(join(_out_path, "simple_diagnosis_discriminant_confusion_matrix.pdf"), dpi=300, transparent=True,
+                    bbox_inches='tight')
+        plt.close(fig)
+
+    elif method == 'pca':
+        pca = PCA(n_components=n_components, random_state=0, svd_solver='auto')
+        run[f"simple_diagnosis_discriminant/model_description"] = str(pca)
+        pca.fit(datasets_concatenated)
+        pca_transformed = pca.transform(datasets_concatenated)
+        pca_transformed = pd.DataFrame(pca_transformed, index=datasets_concatenated.index)
+        # Save model and transformed
+        with open(join(_out_path, f"simple_diagnosis_discriminant.pkl"), "wb") as f:
+            pickle.dump(pca, f)
+        pca_transformed.to_csv(join(_out_path, f"simple_diagnosis_discriminant_transformed.csv"))
+        return pca_transformed
     else:
         raise ValueError("Invalid method")
-
-    # Confusion matrix
-    fig = plt.figure(figsize=(4, 4))
-    sns.heatmap(confusion_matrix(y_true, y_pred), annot=True, fmt='d', cmap='Blues', cbar=False)
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.tight_layout()
-    run[f"simple_diagnosis_discriminant/confusion_matrix"].upload(File.as_image(plt.gcf()))
-    plt.savefig(join(_out_path, "simple_diagnosis_discriminant_confusion_matrix.pdf"), dpi=300, transparent=True,
-                bbox_inches='tight')
-    plt.close(fig)

@@ -17,36 +17,37 @@ def _check_input(_X: pd.DataFrame, _metadata: pd.DataFrame):
 
 
 def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True):
+    columns_to_keep = ['SITE', ]
+    if cov_gender:
+        columns_to_keep.append('GENDER')
+    if cov_age:
+        columns_to_keep.append('AGE')
+    if cov_education:
+        columns_to_keep.append('EDUCATION YEARS')
+    if cov_diagnosis:
+        columns_to_keep.append('DIAGNOSIS')
+
     # keep only the age and gender columns
-    covariates = covariates[['AGE', 'GENDER', 'EDUCATION YEARS', 'DIAGNOSIS', 'SITE']]
+    covariates = covariates[columns_to_keep]
     # binarize gender: M=1, F=0
     covariates['GENDER'].replace('M', 1, inplace=True)
     covariates['GENDER'].replace('F', 0, inplace=True)
-
-    # test
-    if not cov_gender:
-        covariates.drop(columns='GENDER', inplace=True)
-    if not cov_age:
-        covariates.drop(columns='AGE', inplace=True)
-    if not cov_education:
-        covariates.drop(columns='EDUCATION YEARS', inplace=True)
-    if not cov_diagnosis:
-        covariates.drop(columns='DIAGNOSIS', inplace=True)
 
     print("Covariates:", covariates.columns)
     return covariates
 
 
-
-
-
 def original_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
-                    cov_gender=True, cov_age=True, cov_education=True) -> pd.DataFrame:
+                    cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> pd.DataFrame:
+    print("Applying original Combat...")
+
     data, covariates = _check_input(_X, _metadata)
-    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education)
+    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education, cov_diagnosis)
 
     biological_covars = covariates.copy()
     biological_covars.drop(columns=['SITE'], inplace=True)
+    if cov_diagnosis:  # factorize diagnosis
+        biological_covars['DIAGNOSIS'] = pd.factorize(biological_covars['DIAGNOSIS'])[0]
     biological_covars = biological_covars.to_numpy(dtype=np.float32)
     batches = covariates['SITE'].to_numpy()
 
@@ -75,7 +76,7 @@ def original_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
 
 def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
                  cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> tuple[pd.DataFrame, dict]:
-
+    print("Applying NeuroCombat...")
     data, covariates = _check_input(_X, _metadata)
     data = data.T  # data should be (features, samples)
     covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education)
@@ -118,29 +119,11 @@ def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
 
 def neuro_harmonize(_X: pd.DataFrame, _metadata: pd.DataFrame,
                     cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=False) -> tuple[pd.DataFrame, dict]:
-
+    print("Applying NeuroHarmonize...")
     assert _X.index.tolist() == _metadata.index.tolist()
-    covariates: pd.DataFrame = _metadata.copy()
-    # keep only the age and gender columns
-    covariates = covariates[['AGE', 'GENDER', 'EDUCATION YEARS', 'SITE', 'DIAGNOSIS']]
-    # binarize gender: M=1, F=0
-    covariates['GENDER'].replace('M', 1, inplace=True)
-    covariates['GENDER'].replace('F', 0, inplace=True)
-    # binarize gender: M=1, F=0
+    covariates = _prepare_covariates(_metadata, cov_gender, cov_age, cov_education, cov_diagnosis)
     covariates['DIAGNOSIS'].replace('AD', 1, inplace=True)
     covariates['DIAGNOSIS'].replace('HC', 0, inplace=True)
-
-    # test
-    if not cov_gender:
-        covariates.drop(columns='GENDER', inplace=True)
-    if not cov_age:
-        covariates.drop(columns='AGE', inplace=True)
-    if not cov_education:
-        covariates.drop(columns='EDUCATION YEARS', inplace=True)
-    if not cov_diagnosis:
-        covariates.drop(columns='DIAGNOSIS', inplace=True)
-
-    print("Covariates:", covariates.columns)
 
     # Drop rows with missing values in covariates
     covariates.dropna(inplace=True, axis=0)
