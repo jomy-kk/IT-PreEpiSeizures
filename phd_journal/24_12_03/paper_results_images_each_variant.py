@@ -1,4 +1,5 @@
 import itertools
+import gc
 
 import neptune
 from paper_results_each_variant import make_results
@@ -8,9 +9,12 @@ datasets = ['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'Brai
 n_pcs = range(2, 16) # 2 ... 15
 variants = ['none', 'neuroharmonize']
 
-for n_datasets in range(2, 3):  #7):
-    #dataset_combinations = list(itertools.combinations(datasets, n_datasets))
-    dataset_combinations = [('Miltiadous', 'BrainLat:CL'), ('Miltiadous', 'BrainLat:AR'), ('Istambul', 'BrainLat:CL'), ('Istambul', 'BrainLat:AR'), ('BrainLat:CL', 'BrainLat:AR')]
+for n_datasets in range(5, 7):
+    dataset_combinations = list(itertools.combinations(datasets, n_datasets))
+    print(f"Number of combinations: {len(dataset_combinations)}")
+    #print(dataset_combinations)
+    #exit(0)
+    #dataset_combinations = [('Izmir', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR')]
     for dataset_combination in dataset_combinations:
         print(dataset_combination)
         for n_pc in n_pcs:
@@ -26,7 +30,7 @@ for n_datasets in range(2, 3):  #7):
                                            capture_stdout=True,
                                            source_files=["*.py"],
                                            name="no name",
-                                           tags=[f"{dataset_combination} datasets", "mmse gap 24-26",] + list(dataset_combination),
+                                           tags=[f"{len(dataset_combination)} datasets", "mmse gap 24-26",] + list(dataset_combination),
                                            )
 
                     run['datasets/combination'] = str(list(dataset_combination))
@@ -53,4 +57,9 @@ for n_datasets in range(2, 3):  #7):
                     print(e)
                     run.stop()
                     exit(-1)
+
+
+                # Clean up memory
+                del run
+                gc.collect()
 
