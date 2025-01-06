@@ -2,10 +2,12 @@ import itertools
 import pickle
 
 from scipy.stats import pearsonr
+from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE
 from sklearn.manifold import TSNE
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import LeaveOneOut
 
 from combat_variations import *
@@ -183,53 +185,125 @@ def correlation_with_var(datasets_concatenated, datasets_metadata_concatenated, 
 
 
 # 8. Classification with var
-def classification_with_var(datasets_concatenated, datasets_metadata_concatenated, _out_path):
+def classification_with_var(datasets_concatenated, datasets_metadata_concatenated, _out_path, var_name='DIAGNOSIS'):
     # By Diagnosis and Site
-    for var_name in ("DIAGNOSIS", "SITE"):
-        metadata_var = datasets_metadata_concatenated[var_name]
-        if var_name == "DIAGNOSIS":
-            metadata_var.replace({"HC": 0, "AD": 1}, inplace=True)
-            metadata_var = metadata_var.astype(int)
-        if var_name == "SITE":
-            metadata_var.replace({"Newcastle": 0, "Izmir": 1, "Istambul": 2}, inplace=True)
-            metadata_var = metadata_var.astype(int)
-        metadata_var = metadata_var[datasets_concatenated.index]
+    metadata_var = datasets_metadata_concatenated[var_name]
+    if var_name == "DIAGNOSIS":
+        metadata_var.replace({"HC": 0, "AD": 1}, inplace=True)
+        metadata_var = metadata_var.astype(int)
+    if var_name == "SITE":
+        metadata_var.replace({"Newcastle": 0, "Izmir": 1, "Istambul": 2}, inplace=True)
+        metadata_var = metadata_var.astype(int)
+    metadata_var = metadata_var[datasets_concatenated.index]
 
-        # RFE
-        model = RandomForestClassifier(n_estimators=150, max_depth=10, random_state=0)
-        rfe = RFE(estimator=model, n_features_to_select=10, step=1)
-        rfe.fit(datasets_concatenated, metadata_var)
-        relevant_features = datasets_concatenated.columns[rfe.support_]
-        #print("Relevant features by RFE:")
-        #print(relevant_features)
-        # Save relevant features in txt
-        with open(join(_out_path, f"relevant_features_{var_name}.txt"), "w") as f:
-            f.write("\n".join(relevant_features))
+    # RFE
+    model = RandomForestClassifier(n_estimators=150, max_depth=10, random_state=0)
+    rfe = RFE(estimator=model, n_features_to_select=10, step=1)
+    rfe.fit(datasets_concatenated, metadata_var)
+    relevant_features = datasets_concatenated.columns[rfe.support_]
+    #print("Relevant features by RFE:")
+    #print(relevant_features)
+    # Save relevant features in txt
+    with open(join(_out_path, f"relevant_features_{var_name}.txt"), "w") as f:
+        f.write("\n".join(relevant_features))
 
-        # Select only relevant features
-        selected_features = datasets_concatenated[relevant_features]
+    # Select only relevant features
+    selected_features = datasets_concatenated[relevant_features]
 
-        loo = LeaveOneOut()
-        index, pred, true = [], [], []
-        for i, (train_index, test_index) in enumerate(loo.split(datasets_concatenated)):
-            model = RandomForestClassifier(n_estimators=200, max_depth=15, random_state=0)
-            X_train, X_test = selected_features.iloc[train_index], selected_features.iloc[test_index]
-            y_train, y_test = metadata_var.iloc[train_index], metadata_var.iloc[test_index]
+    loo = LeaveOneOut()
+    index, pred, true = [], [], []
+    for i, (train_index, test_index) in enumerate(loo.split(datasets_concatenated)):
+        model = RandomForestClassifier(n_estimators=200, max_depth=15, random_state=0)
+        X_train, X_test = selected_features.iloc[train_index], selected_features.iloc[test_index]
+        y_train, y_test = metadata_var.iloc[train_index], metadata_var.iloc[test_index]
 
-            # Make sample weights (n_samples, ) according to the class size
-            classes = y_train.unique()
-            class_weight = {c: len(y_train) / (len(classes) * len(y_train[y_train == c])) for c in classes}
-            sample_weight = y_train.map(class_weight)
+        # Make sample weights (n_samples, ) according to the class size
+        classes = y_train.unique()
+        class_weight = {c: len(y_train) / (len(classes) * len(y_train[y_train == c])) for c in classes}
+        sample_weight = y_train.map(class_weight)
 
-            # Train with weights
-            model.fit(X_train, y_train, sample_weight=sample_weight)
+        # Train with weights
+        model.fit(X_train, y_train, sample_weight=sample_weight)
 
-            # Validate
-            y_pred = model.predict(X_test)[0]
-            pred.append(y_pred)
-            true.append(y_test.values[0])
-            index.append(y_test.index[0])
+        # Validate
+        y_pred = model.predict(X_test)[0]
+        pred.append(y_pred)
+        true.append(y_test.values[0])
+        index.append(y_test.index[0])
 
-        # make df with pred and true and save
-        df = pd.DataFrame({"pred": pred, "true": true}, index=index)
-        df.to_csv(join(_out_path, f"classification_{var_name}.csv"))
+    # make df with pred and true and save
+    df = pd.DataFrame({"pred": pred, "true": true}, index=index)
+    df.to_csv(join(_out_path, f"classification_{var_name}.csv"))
+
+
+def simple_diagnosis_discriminant(datasets_concatenated, datasets_metadata_concatenated, _out_path, method='lda', n_components=2,
+                                  norm_method='min-max', relevant_features=None):
+    # Normalise/Standardize
+    match norm_method:
+        case "z-score":
+            print("Applying z-score...")
+            datasets_concatenated = (datasets_concatenated - datasets_concatenated.mean()) / datasets_concatenated.std()
+        case "min-max":
+            #print("Applying min-max norm...")
+            datasets_concatenated = (datasets_concatenated - datasets_concatenated.min()) / (
+                        datasets_concatenated.max() - datasets_concatenated.min())
+        case None:
+            print("No normalization applied.")
+            pass
+
+    # Select only relevant features
+    if isinstance(relevant_features, str) and relevant_features == 'all':
+        datasets_concatenated = datasets_concatenated
+    else:
+        datasets_concatenated = datasets_concatenated[relevant_features]
+    #print("Features for dimensionality reduction:")
+    #print(datasets_concatenated.columns.tolist())
+
+    # Shuffle the data
+    datasets_concatenated = datasets_concatenated.sample(frac=1, random_state=0)
+    if method == 'lda':  # Linear Discriminant Analysis
+        class_priors = datasets_metadata_concatenated["DIAGNOSIS"].value_counts(normalize=True)
+
+        lda = LDA(n_components=n_components, priors=class_priors, shrinkage=None, solver='svd', store_covariance=False, tol=0.0001)
+
+        _metadata = datasets_metadata_concatenated.loc[datasets_metadata_concatenated.index.intersection(datasets_concatenated.index)]
+        lda.fit(datasets_concatenated, _metadata["DIAGNOSIS"])
+        lda_transformed = lda.transform(datasets_concatenated)
+        lda_transformed = pd.DataFrame(lda_transformed, index=datasets_concatenated.index)
+        # Save model and transformed
+        with open(join(_out_path, f"simple_diagnosis_discriminant.pkl"), "wb") as f:
+            pickle.dump(lda, f)
+        lda_transformed.to_csv(join(_out_path, f"simple_diagnosis_discriminant_transformed.csv"))
+
+        # Classify with LDA and get F1 score
+        y_pred = lda.predict(datasets_concatenated)
+        y_true = _metadata["DIAGNOSIS"]
+        df = pd.DataFrame({"pred": y_pred, "true": y_true}, index=y_true.index)
+        df.to_csv(join(_out_path, f"simple_diagnosis_discriminant.csv"))
+        # Save report
+        report = classification_report(y_true, y_pred, output_dict=True)
+        print(f"Simple diagnosis discriminant report - {method}({n_components}):")
+        print(report)
+
+        # Confusion matrix
+        fig = plt.figure(figsize=(4, 4))
+        sns.heatmap(confusion_matrix(y_true, y_pred), annot=True, fmt='d', cmap='Blues', cbar=False)
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.tight_layout()
+        plt.savefig(join(_out_path, "simple_diagnosis_discriminant_confusion_matrix.pdf"), dpi=300, transparent=True,
+                    bbox_inches='tight')
+        plt.close(fig)
+
+    elif method == 'pca':
+        pca = PCA(n_components=n_components, random_state=0, svd_solver='auto')
+        pca.fit(datasets_concatenated)
+        pca_transformed = pca.transform(datasets_concatenated)
+        pca_transformed = pd.DataFrame(pca_transformed, index=datasets_concatenated.index)
+        # Save model and transformed
+        with open(join(_out_path, f"simple_diagnosis_discriminant.pkl"), "wb") as f:
+            pickle.dump(pca, f)
+        pca_transformed.to_csv(join(_out_path, f"simple_diagnosis_discriminant_transformed.csv"))
+        return pca_transformed
+    else:
+        raise ValueError("Invalid method")

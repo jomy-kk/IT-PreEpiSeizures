@@ -6,7 +6,7 @@ from plotting import *
 from read import *
 
 out_path = "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_11_22/each_variation"
-harmonization_method = "none"
+harmonization_method = "neurocombat"
 
 #############
 
@@ -16,9 +16,9 @@ if not exists(variation_out_path):
     raise NotADirectoryError(f"Processed data not in directory {variation_out_path} because it does not exist.")
 
 # Read datasets
-datasets = read_all_transformed_datasets(variation_out_path)
+datasets = read_all_transformed_datasets(variation_out_path, ['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'])
 # Read metadata
-metadata = read_all_metadata()
+metadata = read_all_metadata(['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'])
 
 #############
 
@@ -52,6 +52,6 @@ metadata = read_all_metadata()
 #plot_correlation_with_var(variation_out_path, variation_out_path, "DIAGNOSIS", harmonization_method.capitalize())
 
 # 8. Classification with var
-plot_classification_with_var(variation_out_path, variation_out_path, "SITE", harmonization_method.capitalize())
+#plot_classification_with_var(variation_out_path, variation_out_path, "SITE", harmonization_method.capitalize())
 plot_classification_with_var(variation_out_path, variation_out_path, "DIAGNOSIS", harmonization_method.capitalize())
 

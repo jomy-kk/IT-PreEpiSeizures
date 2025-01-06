@@ -6,10 +6,10 @@ from paper_results_each_variant import make_results
 from paper_images_each_variant import make_images
 
 datasets = ['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR']
-n_pcs = range(2, 16) # 2 ... 15
-variants = ['none', 'neuroharmonize']
+n_pcs = (11, ) #range(2, 16) # 2 ... 15
+variants = ['none', 'neuroharmonize', 'neurocombat', 'original']
 
-for n_datasets in range(5, 7):
+for n_datasets in range(6, 7):
     dataset_combinations = list(itertools.combinations(datasets, n_datasets))
     print(f"Number of combinations: {len(dataset_combinations)}")
     #print(dataset_combinations)

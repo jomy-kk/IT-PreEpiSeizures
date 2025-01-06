@@ -5,17 +5,23 @@ from processing import *
 from read import *
 
 out_path = "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_11_22/each_variation"
-harmonization_method = "none"
+harmonization_method = "original"
 cov_age = True
 cov_gender = True
-cov_education = True
+cov_education = False
 cov_diagnosis = True
+
+MMSE_criteria = (23, 27)
+MoCA_criteria = (18, 24)
 
 #############
 
+variation_out_path = join(out_path, harmonization_method)
+makedirs(variation_out_path, exist_ok=True)
+
 # Read data
-datasets = read_all_datasets()
-datasets_metadata = read_all_metadata()
+datasets = read_all_datasets(['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'])
+datasets_metadata = read_all_metadata(['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'])
 
 # Discard rows that don't mean our DIAGNOSIS definitions
 # Criteria to keep a row:
@@ -23,16 +29,20 @@ datasets_metadata = read_all_metadata()
 # HC criteria: HC & (MMSE>26 | MoCA>=24)
 for dataset_name, metadata in datasets_metadata.items():
     # Find rows to discard
-    rows_to_discard = []
-    for i, row in metadata.iterrows():  # be careful because column MoCA may not exist
-        if row['DIAGNOSIS'] == 'AD' and (row['MMSE'] >= 24 or (row['MoCA'] > 18 if 'MoCA' in metadata.columns else False)):
-            rows_to_discard.append(i)
-        elif row['DIAGNOSIS'] == 'HC' and (row['MMSE'] <= 26 or (row['MoCA'] < 24 if 'MoCA' in metadata.columns else False)):
-            rows_to_discard.append(i)
-        elif row['DIAGNOSIS'] == 'MCI':
-            rows_to_discard.append(i)
+    rows_to_keep = []
+    for i, row in metadata.iterrows():
+        if row['DIAGNOSIS'] == 'AD':
+            if 'MoCA' in metadata.columns and pd.notna(row['MoCA']) and row['MoCA'] != ' ' and int(row['MoCA']) <= MoCA_criteria[0]:
+                rows_to_keep.append(i)
+            elif 'MMSE' in metadata.columns and pd.notna(row['MMSE']) and row['MMSE'] != ' ' and int(row['MMSE']) <= MMSE_criteria[0]:
+                rows_to_keep.append(i)
+        elif row['DIAGNOSIS'] == 'HC':
+            if 'MoCA' in metadata.columns and pd.notna(row['MoCA']) and row['MoCA'] != ' 'and int(row['MoCA']) >= MoCA_criteria[1]:
+                rows_to_keep.append(i)
+            elif 'MMSE' in metadata.columns and pd.notna(row['MMSE']) and row['MMSE'] != ' ' and int(row['MMSE']) >= MMSE_criteria[1]:
+                rows_to_keep.append(i)
     # Discard rows in metadata
-    datasets_metadata[dataset_name] = datasets_metadata[dataset_name].drop(rows_to_discard)
+    datasets_metadata[dataset_name] = datasets_metadata[dataset_name].loc[rows_to_keep]
     # Discard rows in datasets
     rows_to_discard = [i for i in datasets[dataset_name].index if i not in datasets_metadata[dataset_name].index]
     datasets[dataset_name] = datasets[dataset_name].drop(rows_to_discard)
@@ -40,22 +50,23 @@ for dataset_name, metadata in datasets_metadata.items():
     datasets_metadata[dataset_name] = datasets_metadata[dataset_name].loc[datasets[dataset_name].index]
 
 # Print all DIAGNOSIS values is datasets_metadata
+"""
 for dataset_name, metadata in datasets_metadata.items():
-    print(f"{dataset_name}: {metadata['DIAGNOSIS'].unique()}")
-    print(f"{dataset_name}: Length: {len(datasets[dataset_name])}, Length metadata: {len(metadata)}")
-    assert len(metadata) == len(datasets[dataset_name])
-
+    print(f"\nDataset: {dataset_name}")
+    print(f"Total: {len(metadata)}")
+    for diagnosis in metadata['DIAGNOSIS'].unique():
+        print(f"{diagnosis}: {len(metadata[metadata['DIAGNOSIS'] == diagnosis])}")
+"""
 
 # Harmonization Step
 datasets, dist_parameters = apply_combat(datasets, datasets_metadata,
                                          log_transform=True, harmonization_method=harmonization_method,
-                                         cov_age=cov_age, cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=True)
+                                         cov_age=cov_age, cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
 
-# Save output datasets
-variation_out_path = join(out_path, harmonization_method)
-makedirs(variation_out_path, exist_ok=True)
-for dataset_name, dataset in datasets.items():
-    dataset.to_csv(join(variation_out_path, f"{dataset_name}.csv"))
+for dataset_name, _ in datasets.items():
+    out_filepath = join(variation_out_path, f"{dataset_name}.csv")
+    datasets[dataset_name].to_csv(out_filepath)
+
 
 # --- Process data for plots ---
 
@@ -84,6 +95,12 @@ datasets_metadata_concatenated = pd.concat(datasets_metadata.values(), axis=0)
 # 7. Correlation with var
 #correlation_with_var(datasets_concatenated, datasets_metadata_concatenated, variation_out_path)
 
+pc = simple_diagnosis_discriminant(datasets_concatenated, datasets_metadata_concatenated, variation_out_path,
+                                  method='pca', norm_method='none', n_components=11,
+                                  relevant_features='all'
+                                  #relevant_features=['Alpha1_Frontal', 'Theta_Temporal', 'Alpha3_Occipital']
+                                  )
+
 # 8. Classification with var
-classification_with_var(datasets_concatenated, datasets_metadata_concatenated, variation_out_path)
+classification_with_var(datasets_concatenated, datasets_metadata_concatenated, variation_out_path, "DIAGNOSIS")
 

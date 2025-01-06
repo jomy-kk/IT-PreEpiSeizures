@@ -1,0 +1,644 @@
+{"obj": {"type": "AssignString", "path": ["sys", "name"], "value": "no name"}, "version": 1, "at": 1733684638.048491}
+{"obj": {"type": "AssignString", "path": ["sys", "description"], "value": ""}, "version": 2, "at": 1733684638.0489018}
+{"obj": {"type": "AssignString", "path": ["monitoring", "88d9e63b", "hostname"], "value": "Macmini.fritz.box"}, "version": 3, "at": 1733684638.048987}
+{"obj": {"type": "AssignString", "path": ["sys", "hostname"], "value": "Macmini.fritz.box"}, "version": 4, "at": 1733684638.0490298}
+{"obj": {"type": "AssignString", "path": ["monitoring", "88d9e63b", "pid"], "value": "14508"}, "version": 5, "at": 1733684638.049071}
+{"obj": {"type": "AssignString", "path": ["monitoring", "88d9e63b", "tid"], "value": "8515762240"}, "version": 6, "at": 1733684638.0491068}
+{"obj": {"type": "AddStrings", "path": ["sys", "tags"], "values": ["mmse gap 24-26", "4 datasets"]}, "version": 7, "at": 1733684638.0491588}
+{"obj": {"type": "AssignBool", "path": ["sys", "failed"], "value": false}, "version": 8, "at": 1733684638.049195}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "88d9e63b", "stdout"]}, "version": 9, "at": 1733684638.049242}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "88d9e63b", "stderr"]}, "version": 10, "at": 1733684638.049273}
+{"obj": {"type": "AssignString", "path": ["source_code", "entrypoint"], "value": "paper_results_images_each_variant.py"}, "version": 11, "at": 1733684638.049776}
+{"obj": {"type": "UploadFileSet", "path": ["source_code", "files"], "file_globs": ["/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/*.py"], "reset": "False"}, "version": 12, "at": 1733684638.049834}
+{"obj": {"type": "UploadFile", "path": ["source_code", "diff"], "ext": "patch", "file_path": null, "tmp_file_name": "source_code_diff-1733684638.218477-2024-12-08_20.03.58.218477.patch", "clean_after_upload": false}, "version": 13, "at": 1733684638.219289}
+{"obj": {"type": "ConfigFloatSeries", "path": ["monitoring", "88d9e63b", "cpu"], "min": 0.0, "max": 100.0, "unit": "%"}, "version": 14, "at": 1733684638.242176}
+{"obj": {"type": "ClearFloatLog", "path": ["monitoring", "88d9e63b", "cpu"]}, "version": 15, "at": 1733684638.242226}
+{"obj": {"type": "ConfigFloatSeries", "path": ["monitoring", "88d9e63b", "memory"], "min": 0.0, "max": 16.0, "unit": "GB"}, "version": 16, "at": 1733684638.242272}
+{"obj": {"type": "ClearFloatLog", "path": ["monitoring", "88d9e63b", "memory"]}, "version": 17, "at": 1733684638.242291}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stderr"], "values": [{"value": "[neptune] [warning] /Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/paper_results_images_each_variant.py:6: NeptuneWarning: Info (NVML): NVML Shared Library Not Found. GPU usage metrics may not be reported. For more information, see https://docs.neptune.ai/help/nvml_error/\n", "step": null, "ts": 1733684638.244288}]}, "version": 18, "at": 1733684638.244357}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684638.244544}]}, "version": 19, "at": 1733684638.244732}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.771514892578125, "step": null, "ts": 1733684638.244544}]}, "version": 20, "at": 1733684638.244849}
+{"obj": {"type": "AssignString", "path": ["datasets", "criteria"], "value": "AD criteria: AD & (MMSE<=23 | MoCA<=18)\nHC criteria: HC & (MMSE>=27 | MoCA>=24)"}, "version": 21, "at": 1733684638.281743}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\nDataset: Newcastle", "step": null, "ts": 1733684638.283093}]}, "version": 22, "at": 1733684638.2831428}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.283294}]}, "version": 23, "at": 1733684638.283316}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Total: 36", "step": null, "ts": 1733684638.2834089}]}, "version": 24, "at": 1733684638.283427}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.283512}]}, "version": 25, "at": 1733684638.2835279}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "AD: 19", "step": null, "ts": 1733684638.283659}]}, "version": 26, "at": 1733684638.283681}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.284291}]}, "version": 27, "at": 1733684638.284319}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "HC: 17", "step": null, "ts": 1733684638.284936}]}, "version": 28, "at": 1733684638.2849548}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.28562}]}, "version": 29, "at": 1733684638.2856472}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\nDataset: Izmir", "step": null, "ts": 1733684638.285759}]}, "version": 30, "at": 1733684638.2857769}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.28587}]}, "version": 31, "at": 1733684638.285887}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Total: 80", "step": null, "ts": 1733684638.286017}]}, "version": 32, "at": 1733684638.286039}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.28613}]}, "version": 33, "at": 1733684638.286148}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "AD: 20", "step": null, "ts": 1733684638.288852}]}, "version": 34, "at": 1733684638.28888}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.289074}]}, "version": 35, "at": 1733684638.289093}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "HC: 60", "step": null, "ts": 1733684638.2891772}]}, "version": 36, "at": 1733684638.2891939}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.289279}]}, "version": 37, "at": 1733684638.2892978}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\nDataset: Istambul", "step": null, "ts": 1733684638.289415}]}, "version": 38, "at": 1733684638.289431}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.2895129}]}, "version": 39, "at": 1733684638.289529}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Total: 59", "step": null, "ts": 1733684638.2896059}]}, "version": 40, "at": 1733684638.289622}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.289699}]}, "version": 41, "at": 1733684638.289715}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "AD: 24", "step": null, "ts": 1733684638.289793}]}, "version": 42, "at": 1733684638.289809}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.289998}]}, "version": 43, "at": 1733684638.290015}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "HC: 35", "step": null, "ts": 1733684638.290095}]}, "version": 44, "at": 1733684638.290111}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.290189}]}, "version": 45, "at": 1733684638.2902038}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\nDataset: Miltiadous", "step": null, "ts": 1733684638.2902799}]}, "version": 46, "at": 1733684638.2902951}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.290483}]}, "version": 47, "at": 1733684638.290505}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Total: 65", "step": null, "ts": 1733684638.290842}]}, "version": 48, "at": 1733684638.290862}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.2909539}]}, "version": 49, "at": 1733684638.2909708}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "AD: 36", "step": null, "ts": 1733684638.291051}]}, "version": 50, "at": 1733684638.291067}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.291183}]}, "version": 51, "at": 1733684638.291199}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "HC: 29", "step": null, "ts": 1733684638.2912772}]}, "version": 52, "at": 1733684638.291293}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.291368}]}, "version": 53, "at": 1733684638.291384}
+{"obj": {"type": "UploadFile", "path": ["datasets", "before", "Newcastle"], "ext": "html", "file_path": null, "tmp_file_name": "datasets_before_Newcastle-1733684638.303274-2024-12-08_20.03.58.303274.html", "clean_after_upload": false}, "version": 54, "at": 1733684638.303518}
+{"obj": {"type": "UploadFile", "path": ["datasets", "before", "Izmir"], "ext": "html", "file_path": null, "tmp_file_name": "datasets_before_Izmir-1733684638.329447-2024-12-08_20.03.58.329447.html", "clean_after_upload": false}, "version": 55, "at": 1733684638.3298838}
+{"obj": {"type": "UploadFile", "path": ["datasets", "before", "Istambul"], "ext": "html", "file_path": null, "tmp_file_name": "datasets_before_Istambul-1733684638.35225-2024-12-08_20.03.58.352250.html", "clean_after_upload": false}, "version": 56, "at": 1733684638.352451}
+{"obj": {"type": "UploadFile", "path": ["datasets", "before", "Miltiadous"], "ext": "html", "file_path": null, "tmp_file_name": "datasets_before_Miltiadous-1733684638.370143-2024-12-08_20.03.58.370143.html", "clean_after_upload": false}, "version": 57, "at": 1733684638.370666}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Covariates:", "step": null, "ts": 1733684638.377878}]}, "version": 58, "at": 1733684638.377921}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": " ", "step": null, "ts": 1733684638.379168}]}, "version": 59, "at": 1733684638.3791978}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Index(['AGE', 'GENDER', 'SITE', 'DIAGNOSIS'], dtype='object')", "step": null, "ts": 1733684638.379333}]}, "version": 60, "at": 1733684638.379352}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684638.379437}]}, "version": 61, "at": 1733684638.379454}
+{"obj": {"type": "AssignString", "path": ["harmonization", "params", "method"], "value": "neuroharmonize"}, "version": 62, "at": 1733684638.397748}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "log_transform"], "value": true}, "version": 63, "at": 1733684638.39793}
+{"obj": {"type": "AssignString", "path": ["harmonization", "params", "standardize"], "value": "none"}, "version": 64, "at": 1733684638.3980439}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_age"], "value": true}, "version": 65, "at": 1733684638.398145}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_gender"], "value": true}, "version": 66, "at": 1733684638.398241}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_education"], "value": false}, "version": 67, "at": 1733684638.398443}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_diagnosis"], "value": true}, "version": 68, "at": 1733684638.3985631}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Newcastle_track"], "entries": [["./each_variation/neuroharmonize/Newcastle.csv", null]], "project_id": "0185c1d2-e230-4393-98bd-19b911873975"}, "version": 69, "at": 1733684638.398738}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Newcastle"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/each_variation/neuroharmonize/Newcastle.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 70, "at": 1733684638.3990688}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Izmir_track"], "entries": [["./each_variation/neuroharmonize/Izmir.csv", null]], "project_id": "0185c1d2-e230-4393-98bd-19b911873975"}, "version": 71, "at": 1733684638.39918}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Izmir"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/each_variation/neuroharmonize/Izmir.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 72, "at": 1733684638.399394}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Istambul_track"], "entries": [["./each_variation/neuroharmonize/Istambul.csv", null]], "project_id": "0185c1d2-e230-4393-98bd-19b911873975"}, "version": 73, "at": 1733684638.399488}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Istambul"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/each_variation/neuroharmonize/Istambul.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 74, "at": 1733684638.3996952}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Miltiadous_track"], "entries": [["./each_variation/neuroharmonize/Miltiadous.csv", null]], "project_id": "0185c1d2-e230-4393-98bd-19b911873975"}, "version": 75, "at": 1733684638.399796}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Miltiadous"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/each_variation/neuroharmonize/Miltiadous.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 76, "at": 1733684638.399957}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Istambul", "normal_dist"], "value": "[ 0.35572034  0.15412548  0.40365214 ... -0.02590402  0.35541918\n  0.40260442]"}, "version": 77, "at": 1733684638.4788558}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Istambul", "gamma_hat"], "value": "[-1.56202688e-01  5.73460161e-01  6.49291215e-01  3.77508096e-01\n  1.64621793e-01  1.15249078e-01  2.13428718e-04  2.42809179e-01\n  1.62986498e-01  6.43637783e-02 -4.89691287e-02  1.65063396e-02\n -1.86397887e-02  4.39173993e-01  4.61813165e-01  3.29432233e-01\n  1.90794497e-01  1.41282603e-01  4.43759297e-01  3.97701991e-01\n  5.17833074e-01  5.43510049e-01  4.11677007e-01  4.58758001e-01\n  7.66000739e-01  5.77049911e-01  6.25272162e-01  5.54987433e-01\n  5.88187775e-01  5.57056677e-01 -2.03227678e-01  2.28714746e-01\n  3.70318409e-01  3.50973818e-01 -4.27777624e-02  1.31976552e-01\n -4.42229428e-01  1.60176870e-01  2.87438398e-01  2.25562230e-01\n -2.73997412e-01 -1.07641984e-01 -5.50808375e-01 -1.36601106e-02\n  4.76414066e-02 -3.39966799e-02 -4.13231753e-01 -3.63661598e-01]"}, "version": 78, "at": 1733684638.4795048}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Istambul", "inverse_gamma_dist"], "value": "[0.80537143 0.78933256 1.00128481 ... 1.1327047  0.86869797 1.2391701 ]"}, "version": 79, "at": 1733684638.479869}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Istambul", "delta_hat"], "value": "[0.79319083 1.39146262 1.32216386 0.97937332 1.49366483 1.05252733\n 1.07106682 0.90481113 0.47676902 0.44392248 0.71272172 0.67829796\n 1.24730421 1.22060971 0.998281   0.97877747 1.56247471 1.38179077\n 0.87793347 0.67480833 0.56554312 0.80799394 0.7154613  0.5601555\n 1.22681802 1.28226882 0.98749344 1.04046576 0.88802117 0.95546021\n 1.02185239 0.88826369 0.8653282  1.32441649 1.16843343 1.1400456\n 0.59002872 0.98167695 0.95875586 1.18042057 0.73166269 0.90295662\n 0.47979169 0.59978982 0.45347103 0.5519853  0.58375677 0.481181  ]"}, "version": 80, "at": 1733684638.480344}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Izmir", "normal_dist"], "value": "[ 0.2675098   0.02842499  0.32435532 ... -0.18508401  0.26715263\n  0.32311275]"}, "version": 81, "at": 1733684638.480652}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Izmir", "gamma_hat"], "value": "[-0.85612698 -0.59950595 -0.65396915 -0.70988384 -0.74538821 -0.76398511\n  0.21291663  0.36605525  0.54963129  0.48885593  0.56267268  0.374513\n -0.40510824 -0.052443    0.00273255 -0.13724619 -0.10980032 -0.21419985\n  0.10430107  0.18355594  0.15836083  0.03564909  0.19039665  0.01646344\n  0.10757766  0.05600738  0.02827859 -0.04441917  0.08851607 -0.08565017\n  0.25016872  0.47295242  0.52066391  0.27368673  0.45131065  0.23232273\n  0.12632816  0.43057265  0.54590486  0.39472528  0.36664326  0.12544412\n  0.0758524   0.30192277  0.45415252  0.37056592  0.33748344 -0.01618512]"}, "version": 82, "at": 1733684638.481121}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Izmir", "inverse_gamma_dist"], "value": "[1.58326272 0.79166998 1.68924127 ... 1.48767432 0.74629817 1.95760773]"}, "version": 83, "at": 1733684638.481368}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Izmir", "delta_hat"], "value": "[1.01663259 0.99512839 0.87637219 0.82060983 0.78751925 1.01304841\n 1.31908146 1.69135812 2.08057104 2.01295265 1.88887503 1.71542534\n 0.83208087 1.21415276 1.29324172 1.16064158 0.91869872 0.9150131\n 1.29520533 1.66273188 1.66559594 1.44840791 1.40905676 1.47594076\n 1.27602824 1.15470029 1.35768131 1.33264492 1.36909512 1.34817277\n 1.26069753 1.63407417 1.47082761 1.02911081 1.32287277 1.19968276\n 1.01011447 1.68815052 1.79385208 1.43611201 1.40099465 1.08555098\n 1.17850758 1.75981445 2.12196774 1.82167483 1.42373452 0.96296343]"}, "version": 84, "at": 1733684638.4819698}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Miltiadous", "normal_dist"], "value": "[ 0.10913067 -0.15919462  0.1729285  ... -0.39881615  0.10872983\n  0.17153397]"}, "version": 85, "at": 1733684638.4823492}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Miltiadous", "gamma_hat"], "value": "[ 0.87853677 -0.03956629 -0.06818241  0.22819535  0.18896139  0.890817\n -0.03808057 -0.52690655 -0.66218743 -0.49380069 -0.54116752 -0.07313075\n  0.46926074 -0.34679272 -0.4708952  -0.21676852 -0.28622311  0.39215005\n -0.25396024 -0.41975068 -0.44964484 -0.28783223 -0.37804005  0.01984179\n -0.39903821 -0.36828596 -0.30051584 -0.15111149 -0.26317342  0.07892229\n  0.28976837 -0.49419198 -0.70618516 -0.41579564 -0.33100367  0.23899465\n  0.61965384 -0.32227657 -0.636306   -0.42982089 -0.100124    0.59269267\n  0.64234037 -0.06950898 -0.42085358 -0.23786551 -0.00898595  0.84098583]"}, "version": 86, "at": 1733684638.4828422}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Miltiadous", "inverse_gamma_dist"], "value": "[1.03450477 1.71821422 1.10517165 ... 1.06501251 0.64823951 0.57903507]"}, "version": 87, "at": 1733684638.483105}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Miltiadous", "delta_hat"], "value": "[1.30454135 0.77537942 0.78506351 1.23428235 0.78034662 1.25462683\n 0.86488249 0.60105012 0.52511645 0.63873859 0.46010231 0.8290928\n 1.19090796 0.7646952  0.78606687 1.01778881 0.6974647  1.12942637\n 0.84597038 0.68104278 0.74065468 0.83735851 0.83576536 1.05037065\n 0.61329489 0.65736927 0.78992552 0.81255805 0.90004251 0.94150184\n 0.9381895  0.59716525 0.71606367 0.9420856  0.5698635  1.00298429\n 1.54371293 0.52275072 0.45705126 0.71949689 0.77546344 1.42846097\n 1.31512547 0.74565121 0.42623353 0.84380395 0.78758805 1.90712288]"}, "version": 88, "at": 1733684638.4840362}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Newcastle", "normal_dist"], "value": "[-0.09497829 -0.3844897  -0.02614319 ... -0.64303099 -0.09541079\n -0.02764782]"}, "version": 89, "at": 1733684638.484406}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Newcastle", "gamma_hat"], "value": "[ 0.57225631  0.46383709  0.51225575  0.54680645  1.04544113 -0.09955533\n -0.40474128 -0.26003432 -0.29290344 -0.30024702 -0.19302074 -0.72726154\n  0.08351273  0.02293613  0.08729465  0.15647631  0.44810146 -0.46359551\n -0.500513   -0.30180828 -0.3887251  -0.45027569 -0.41522423 -0.82426427\n -0.77396592 -0.40522077 -0.54499486 -0.53801328 -0.68550255 -0.86511886\n -0.74605578 -0.53355236 -0.48888508 -0.43265768 -0.33515903 -1.16408577\n -0.67478378 -0.63745195 -0.53531567 -0.47077323 -0.18493204 -1.17249101\n -0.42562839 -0.52304975 -0.32743226 -0.33828364 -0.05649763 -0.88647875]"}, "version": 90, "at": 1733684638.484937}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Newcastle", "inverse_gamma_dist"], "value": "[1.23378414 0.53058249 1.30487277 ... 0.60666861 0.92628247 0.46937033]"}, "version": 91, "at": 1733684638.485193}
+{"obj": {"type": "AssignString", "path": ["harmonization", "batch_effects_dist", "Newcastle", "delta_hat"], "value": "[0.86258028 0.88730693 1.25248653 1.12497431 1.17746386 0.53218494\n 0.52337743 0.44104158 0.41070947 0.40999907 0.57127043 0.34509079\n 0.73439593 0.69560217 0.8464379  0.75433536 0.91890078 0.43676608\n 0.93190096 0.74053031 0.80612916 0.71774806 0.96282221 0.67679827\n 0.82249859 0.92387005 0.71180924 0.63915207 0.64952964 0.50918689\n 0.60266652 0.60486486 0.79392881 0.6168746  0.89293281 0.42604065\n 0.77661896 0.46407999 0.38361615 0.34385592 1.06443791 0.29852818\n 0.99719865 0.52757633 0.5366938  0.28768825 1.2360413  0.39890075]"}, "version": 92, "at": 1733684638.485725}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stderr"], "values": [{"value": "/Users/saraiva/PycharmProjects/LTBio/venv/lib/python3.10/site-packages/sklearn/manifold/_t_sne.py:795: FutureWarning: The default initialization in TSNE will change from 'random' to 'pca' in 1.2.\n  warnings.warn(\n", "step": null, "ts": 1733684638.642061}]}, "version": 93, "at": 1733684638.642116}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "norm"], "value": "none"}, "version": 94, "at": 1733684644.5019178}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "features"], "value": "['Delta_Frontal', 'Delta_Central', 'Delta_Parietal', 'Delta_Occipital', 'Delta_Temporal', 'Delta_Limbic', 'Alpha1_Frontal', 'Alpha1_Central', 'Alpha1_Parietal', 'Alpha1_Occipital', 'Alpha1_Temporal', 'Alpha1_Limbic', 'Theta_Frontal', 'Theta_Central', 'Theta_Parietal', 'Theta_Occipital', 'Theta_Temporal', 'Theta_Limbic', 'Alpha2_Frontal', 'Alpha2_Central', 'Alpha2_Parietal', 'Alpha2_Occipital', 'Alpha2_Temporal', 'Alpha2_Limbic', 'Alpha3_Frontal', 'Alpha3_Central', 'Alpha3_Parietal', 'Alpha3_Occipital', 'Alpha3_Temporal', 'Alpha3_Limbic', 'Beta1_Frontal', 'Beta1_Central', 'Beta1_Parietal', 'Beta1_Occipital', 'Beta1_Temporal', 'Beta1_Limbic', 'Beta2_Frontal', 'Beta2_Central', 'Beta2_Parietal', 'Beta2_Occipital', 'Beta2_Temporal', 'Beta2_Limbic', 'Gamma_Frontal', 'Gamma_Central', 'Gamma_Parietal', 'Gamma_Occipital', 'Gamma_Temporal', 'Gamma_Limbic']"}, "version": 95, "at": 1733684644.5020711}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Selected features:", "step": null, "ts": 1733684644.5022368}]}, "version": 96, "at": 1733684644.5022862}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.503105}]}, "version": 97, "at": 1733684644.503118}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "['Delta_Frontal', 'Delta_Central', 'Delta_Parietal', 'Delta_Occipital', 'Delta_Temporal', 'Delta_Limbic', 'Alpha1_Frontal', 'Alpha1_Central', 'Alpha1_Parietal', 'Alpha1_Occipital', 'Alpha1_Temporal', 'Alpha1_Limbic', 'Theta_Frontal', 'Theta_Central', 'Theta_Parietal', 'Theta_Occipital', 'Theta_Temporal', 'Theta_Limbic', 'Alpha2_Frontal', 'Alpha2_Central', 'Alpha2_Parietal', 'Alpha2_Occipital', 'Alpha2_Temporal', 'Alpha2_Limbic', 'Alpha3_Frontal', 'Alpha3_Central', 'Alpha3_Parietal', 'Alpha3_Occipital', 'Alpha3_Temporal', 'Alpha3_Limbic', 'Beta1_Frontal', 'Beta1_Central', 'Beta1_Parietal', 'Beta1_Occipital', 'Beta1_Temporal', 'Beta1_Limbic', 'Beta2_Frontal', 'Beta2_Central', 'Beta2_Parietal', 'Beta2_Occipital', 'Beta2_Temporal', 'Beta2_Limbic', 'Gamma_Frontal', 'Gamma_Central', 'Gamma_Parietal', 'Gamma_Occipital', 'Gamma_Temporal', 'Gamma_Limbic']", "step": null, "ts": 1733684644.503242}]}, "version": 98, "at": 1733684644.503254}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.503315}]}, "version": 99, "at": 1733684644.5033228}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "model_description"], "value": "PCA(n_components=4, random_state=0)"}, "version": 100, "at": 1733684644.503905}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Applying min-max norm...", "step": null, "ts": 1733684644.5189052}]}, "version": 101, "at": 1733684644.518978}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.519521}]}, "version": 102, "at": 1733684644.519545}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "norm"], "value": "min-max"}, "version": 103, "at": 1733684644.521479}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Classification with DIAGNOSIS", "step": null, "ts": 1733684644.522084}]}, "version": 104, "at": 1733684644.5221078}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.522846}]}, "version": 105, "at": 1733684644.522869}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "features"], "value": "[0, 1, 2, 3]"}, "version": 106, "at": 1733684644.524062}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Targets:", "step": null, "ts": 1733684644.5247538}]}, "version": 107, "at": 1733684644.524779}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": " ", "step": null, "ts": 1733684644.524888}]}, "version": 108, "at": 1733684644.524906}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "[0 1]", "step": null, "ts": 1733684644.524993}]}, "version": 109, "at": 1733684644.525011}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.5250938}]}, "version": 110, "at": 1733684644.525111}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "{'activation': 'relu', 'alpha': 0.0001, 'batch_size': 'auto', 'beta_1': 0.9, 'beta_2': 0.999, 'early_stopping': False, 'epsilon': 1e-08, 'hidden_layer_sizes': (100, 50, 25, 10), 'learning_rate': 'constant', 'learning_rate_init': 0.001, 'max_fun': 15000, 'max_iter': 1000, 'momentum': 0.9, 'n_iter_no_change': 10, 'nesterovs_momentum': True, 'power_t': 0.5, 'random_state': 0, 'shuffle': True, 'solver': 'adam', 'tol': 0.0001, 'validation_fraction': 0.1, 'verbose': False, 'warm_start': False}", "step": null, "ts": 1733684644.525192}]}, "version": 111, "at": 1733684644.5252092}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.527489}]}, "version": 112, "at": 1733684644.527522}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "Selected features:", "step": null, "ts": 1733684644.527642}]}, "version": 113, "at": 1733684644.5276601}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.5277472}]}, "version": 114, "at": 1733684644.527763}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "RangeIndex(start=0, stop=4, step=1)", "step": null, "ts": 1733684644.527849}]}, "version": 115, "at": 1733684644.5278668}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1733684644.527951}]}, "version": 116, "at": 1733684644.5279691}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 117, "at": 1733684644.528113}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 118, "at": 1733684644.528203}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684648.247173}]}, "version": 119, "at": 1733684648.247463}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.812423706054688, "step": null, "ts": 1733684648.247173}]}, "version": 120, "at": 1733684648.247692}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684658.252513}]}, "version": 121, "at": 1733684658.252807}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.800247192382812, "step": null, "ts": 1733684658.252513}]}, "version": 122, "at": 1733684658.253081}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684668.254838}]}, "version": 123, "at": 1733684668.255108}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.763458251953125, "step": null, "ts": 1733684668.254838}]}, "version": 124, "at": 1733684668.255336}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684678.259129}]}, "version": 125, "at": 1733684678.259418}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.883514404296875, "step": null, "ts": 1733684678.259129}]}, "version": 126, "at": 1733684678.2596211}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684688.263886}]}, "version": 127, "at": 1733684688.264158}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.805816650390625, "step": null, "ts": 1733684688.263886}]}, "version": 128, "at": 1733684688.2643788}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 129, "at": 1733684697.1793768}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 130, "at": 1733684697.182917}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 131, "at": 1733684697.183003}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684698.2691488}]}, "version": 132, "at": 1733684698.26943}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.823043823242188, "step": null, "ts": 1733684698.2691488}]}, "version": 133, "at": 1733684698.269643}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684708.27458}]}, "version": 134, "at": 1733684708.274861}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.716629028320312, "step": null, "ts": 1733684708.27458}]}, "version": 135, "at": 1733684708.275093}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684718.27807}]}, "version": 136, "at": 1733684718.278432}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.714813232421875, "step": null, "ts": 1733684718.27807}]}, "version": 137, "at": 1733684718.2787368}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684728.280187}]}, "version": 138, "at": 1733684728.2804601}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.71173095703125, "step": null, "ts": 1733684728.280187}]}, "version": 139, "at": 1733684728.280668}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 140, "at": 1733684732.561861}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 141, "at": 1733684732.5753222}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 142, "at": 1733684732.575476}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684738.281031}]}, "version": 143, "at": 1733684738.281308}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.734161376953125, "step": null, "ts": 1733684738.281031}]}, "version": 144, "at": 1733684738.281537}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684748.285162}]}, "version": 145, "at": 1733684748.285441}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.697998046875, "step": null, "ts": 1733684748.285162}]}, "version": 146, "at": 1733684748.2856698}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684758.290229}]}, "version": 147, "at": 1733684758.290499}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.69256591796875, "step": null, "ts": 1733684758.290229}]}, "version": 148, "at": 1733684758.290795}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 149, "at": 1733684767.744805}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 150, "at": 1733684767.745912}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 151, "at": 1733684767.745961}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684768.29485}]}, "version": 152, "at": 1733684768.295416}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.688491821289062, "step": null, "ts": 1733684768.29485}]}, "version": 153, "at": 1733684768.295789}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684778.299853}]}, "version": 154, "at": 1733684778.300135}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.698287963867188, "step": null, "ts": 1733684778.299853}]}, "version": 155, "at": 1733684778.3003452}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684788.305213}]}, "version": 156, "at": 1733684788.305481}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.693817138671875, "step": null, "ts": 1733684788.305213}]}, "version": 157, "at": 1733684788.305705}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684798.3106759}]}, "version": 158, "at": 1733684798.3112488}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.694976806640625, "step": null, "ts": 1733684798.3106759}]}, "version": 159, "at": 1733684798.311687}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 160, "at": 1733684802.110494}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 161, "at": 1733684802.114811}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 162, "at": 1733684802.115045}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684808.3166568}]}, "version": 163, "at": 1733684808.317235}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.69073486328125, "step": null, "ts": 1733684808.3166568}]}, "version": 164, "at": 1733684808.317638}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684818.320659}]}, "version": 165, "at": 1733684818.320936}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.68267822265625, "step": null, "ts": 1733684818.320659}]}, "version": 166, "at": 1733684818.32114}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684828.321352}]}, "version": 167, "at": 1733684828.321621}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.733596801757812, "step": null, "ts": 1733684828.321352}]}, "version": 168, "at": 1733684828.321855}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684838.3249779}]}, "version": 169, "at": 1733684838.325254}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.675094604492188, "step": null, "ts": 1733684838.3249779}]}, "version": 170, "at": 1733684838.325471}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 171, "at": 1733684845.3969579}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 172, "at": 1733684845.399628}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 173, "at": 1733684845.399744}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684848.327293}]}, "version": 174, "at": 1733684848.327563}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.663833618164062, "step": null, "ts": 1733684848.327293}]}, "version": 175, "at": 1733684848.327771}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684858.331785}]}, "version": 176, "at": 1733684858.332053}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.65509033203125, "step": null, "ts": 1733684858.331785}]}, "version": 177, "at": 1733684858.332285}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684868.333884}]}, "version": 178, "at": 1733684868.334151}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.650131225585938, "step": null, "ts": 1733684868.333884}]}, "version": 179, "at": 1733684868.334358}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684878.3390532}]}, "version": 180, "at": 1733684878.339332}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.646194458007812, "step": null, "ts": 1733684878.3390532}]}, "version": 181, "at": 1733684878.339553}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684888.339978}]}, "version": 182, "at": 1733684888.340257}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.636886596679688, "step": null, "ts": 1733684888.339978}]}, "version": 183, "at": 1733684888.340481}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684898.344527}]}, "version": 184, "at": 1733684898.344805}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.63372802734375, "step": null, "ts": 1733684898.344527}]}, "version": 185, "at": 1733684898.34514}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 186, "at": 1733684901.642847}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 187, "at": 1733684901.643945}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 188, "at": 1733684901.6439948}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684908.3469079}]}, "version": 189, "at": 1733684908.347181}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.62725830078125, "step": null, "ts": 1733684908.3469079}]}, "version": 190, "at": 1733684908.347401}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684918.3486478}]}, "version": 191, "at": 1733684918.348921}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.625701904296875, "step": null, "ts": 1733684918.3486478}]}, "version": 192, "at": 1733684918.349134}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684928.350183}]}, "version": 193, "at": 1733684928.350442}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.616363525390625, "step": null, "ts": 1733684928.350183}]}, "version": 194, "at": 1733684928.350657}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 195, "at": 1733684930.659683}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 196, "at": 1733684930.662365}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 197, "at": 1733684930.662477}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684938.351295}]}, "version": 198, "at": 1733684938.3515708}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.606674194335938, "step": null, "ts": 1733684938.351295}]}, "version": 199, "at": 1733684938.3518028}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684948.352679}]}, "version": 200, "at": 1733684948.352969}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.05084228515625, "step": null, "ts": 1733684948.352679}]}, "version": 201, "at": 1733684948.3532102}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684958.3545861}]}, "version": 202, "at": 1733684958.35485}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.065032958984375, "step": null, "ts": 1733684958.3545861}]}, "version": 203, "at": 1733684958.3550699}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684968.359085}]}, "version": 204, "at": 1733684968.359374}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 9.822540283203125, "step": null, "ts": 1733684968.359085}]}, "version": 205, "at": 1733684968.359592}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 206, "at": 1733684977.856479}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 207, "at": 1733684977.858241}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 208, "at": 1733684977.858304}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684978.361681}]}, "version": 209, "at": 1733684978.361841}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.059707641601562, "step": null, "ts": 1733684978.361681}]}, "version": 210, "at": 1733684978.3619561}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684988.366834}]}, "version": 211, "at": 1733684988.3671}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.303939819335938, "step": null, "ts": 1733684988.366834}]}, "version": 212, "at": 1733684988.367319}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733684998.372235}]}, "version": 213, "at": 1733684998.372501}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.303390502929688, "step": null, "ts": 1733684998.372235}]}, "version": 214, "at": 1733684998.372725}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685008.376949}]}, "version": 215, "at": 1733685008.377213}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.299957275390625, "step": null, "ts": 1733685008.376949}]}, "version": 216, "at": 1733685008.377438}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 217, "at": 1733685017.916356}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 218, "at": 1733685017.919071}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 219, "at": 1733685017.919253}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685018.3801339}]}, "version": 220, "at": 1733685018.3804018}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.29339599609375, "step": null, "ts": 1733685018.3801339}]}, "version": 221, "at": 1733685018.3806138}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685028.384436}]}, "version": 222, "at": 1733685028.384706}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.300247192382812, "step": null, "ts": 1733685028.384436}]}, "version": 223, "at": 1733685028.384942}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685038.3877351}]}, "version": 224, "at": 1733685038.387996}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.303787231445312, "step": null, "ts": 1733685038.3877351}]}, "version": 225, "at": 1733685038.388227}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 226, "at": 1733685045.986165}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 227, "at": 1733685045.988929}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 228, "at": 1733685045.9890409}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685048.392032}]}, "version": 229, "at": 1733685048.392302}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.305374145507812, "step": null, "ts": 1733685048.392032}]}, "version": 230, "at": 1733685048.392525}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685058.394509}]}, "version": 231, "at": 1733685058.394774}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.304916381835938, "step": null, "ts": 1733685058.394509}]}, "version": 232, "at": 1733685058.3949912}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685068.397595}]}, "version": 233, "at": 1733685068.397871}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.30560302734375, "step": null, "ts": 1733685068.397595}]}, "version": 234, "at": 1733685068.3980951}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685078.402858}]}, "version": 235, "at": 1733685078.403137}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.265274047851562, "step": null, "ts": 1733685078.402858}]}, "version": 236, "at": 1733685078.40337}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 237, "at": 1733685084.759547}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 238, "at": 1733685084.760632}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 239, "at": 1733685084.760675}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685088.406533}]}, "version": 240, "at": 1733685088.406806}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.278427124023438, "step": null, "ts": 1733685088.406533}]}, "version": 241, "at": 1733685088.407018}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685098.4119391}]}, "version": 242, "at": 1733685098.412201}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.277618408203125, "step": null, "ts": 1733685098.4119391}]}, "version": 243, "at": 1733685098.412415}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685108.41614}]}, "version": 244, "at": 1733685108.416404}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.278427124023438, "step": null, "ts": 1733685108.41614}]}, "version": 245, "at": 1733685108.416626}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685118.421553}]}, "version": 246, "at": 1733685118.4218292}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.277481079101562, "step": null, "ts": 1733685118.421553}]}, "version": 247, "at": 1733685118.422055}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 248, "at": 1733685126.934838}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 249, "at": 1733685126.9392798}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 250, "at": 1733685126.939428}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685128.426991}]}, "version": 251, "at": 1733685128.427263}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.287353515625, "step": null, "ts": 1733685128.426991}]}, "version": 252, "at": 1733685128.4274812}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685138.429745}]}, "version": 253, "at": 1733685138.430005}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.289947509765625, "step": null, "ts": 1733685138.429745}]}, "version": 254, "at": 1733685138.430229}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685148.434123}]}, "version": 255, "at": 1733685148.434397}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.298965454101562, "step": null, "ts": 1733685148.434123}]}, "version": 256, "at": 1733685148.434614}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685158.43886}]}, "version": 257, "at": 1733685158.439122}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.29498291015625, "step": null, "ts": 1733685158.43886}]}, "version": 258, "at": 1733685158.439341}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 259, "at": 1733685167.1229079}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 260, "at": 1733685167.1256819}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 261, "at": 1733685167.125799}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685168.441032}]}, "version": 262, "at": 1733685168.441303}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.2930908203125, "step": null, "ts": 1733685168.441032}]}, "version": 263, "at": 1733685168.4415302}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685178.444509}]}, "version": 264, "at": 1733685178.4447842}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.301437377929688, "step": null, "ts": 1733685178.444509}]}, "version": 265, "at": 1733685178.445009}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685188.449953}]}, "version": 266, "at": 1733685188.4502242}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.297958374023438, "step": null, "ts": 1733685188.449953}]}, "version": 267, "at": 1733685188.4504309}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685198.45227}]}, "version": 268, "at": 1733685198.4525282}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.303146362304688, "step": null, "ts": 1733685198.45227}]}, "version": 269, "at": 1733685198.452748}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685208.457675}]}, "version": 270, "at": 1733685208.457949}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.303237915039062, "step": null, "ts": 1733685208.457675}]}, "version": 271, "at": 1733685208.458163}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 272, "at": 1733685214.7781298}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 273, "at": 1733685214.7810931}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 274, "at": 1733685214.7812412}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685218.46117}]}, "version": 275, "at": 1733685218.4614432}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.306121826171875, "step": null, "ts": 1733685218.46117}]}, "version": 276, "at": 1733685218.461658}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685228.463178}]}, "version": 277, "at": 1733685228.4634502}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.306076049804688, "step": null, "ts": 1733685228.463178}]}, "version": 278, "at": 1733685228.46367}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685238.465638}]}, "version": 279, "at": 1733685238.4658911}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.299545288085938, "step": null, "ts": 1733685238.465638}]}, "version": 280, "at": 1733685238.46611}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685248.4667451}]}, "version": 281, "at": 1733685248.467026}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.290802001953125, "step": null, "ts": 1733685248.4667451}]}, "version": 282, "at": 1733685248.467254}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685258.4722}]}, "version": 283, "at": 1733685258.47247}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.2913818359375, "step": null, "ts": 1733685258.4722}]}, "version": 284, "at": 1733685258.472686}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 285, "at": 1733685262.2158809}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 286, "at": 1733685262.218695}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 287, "at": 1733685262.218826}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685268.474308}]}, "version": 288, "at": 1733685268.47459}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.291763305664062, "step": null, "ts": 1733685268.474308}]}, "version": 289, "at": 1733685268.474782}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685278.4761212}]}, "version": 290, "at": 1733685278.476387}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.292205810546875, "step": null, "ts": 1733685278.4761212}]}, "version": 291, "at": 1733685278.476594}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685288.479572}]}, "version": 292, "at": 1733685288.479848}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.296005249023438, "step": null, "ts": 1733685288.479572}]}, "version": 293, "at": 1733685288.4800699}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 294, "at": 1733685291.6123571}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 295, "at": 1733685291.615105}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 296, "at": 1733685291.615226}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685298.4836092}]}, "version": 297, "at": 1733685298.483885}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.299850463867188, "step": null, "ts": 1733685298.4836092}]}, "version": 298, "at": 1733685298.484094}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685308.486321}]}, "version": 299, "at": 1733685308.486579}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.30419921875, "step": null, "ts": 1733685308.486321}]}, "version": 300, "at": 1733685308.486794}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685318.4905548}]}, "version": 301, "at": 1733685318.490818}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.306182861328125, "step": null, "ts": 1733685318.4905548}]}, "version": 302, "at": 1733685318.4910421}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 303, "at": 1733685327.978624}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 304, "at": 1733685327.979729}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 305, "at": 1733685327.979779}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685328.4959738}]}, "version": 306, "at": 1733685328.496246}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.302490234375, "step": null, "ts": 1733685328.4959738}]}, "version": 307, "at": 1733685328.496445}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685338.496504}]}, "version": 308, "at": 1733685338.496783}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.309967041015625, "step": null, "ts": 1733685338.496504}]}, "version": 309, "at": 1733685338.49701}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685348.501894}]}, "version": 310, "at": 1733685348.5021691}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.310455322265625, "step": null, "ts": 1733685348.501894}]}, "version": 311, "at": 1733685348.502392}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685358.5052722}]}, "version": 312, "at": 1733685358.505535}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.30560302734375, "step": null, "ts": 1733685358.5052722}]}, "version": 313, "at": 1733685358.50576}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685368.510478}]}, "version": 314, "at": 1733685368.510751}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.31512451171875, "step": null, "ts": 1733685368.510478}]}, "version": 315, "at": 1733685368.5109608}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685378.511849}]}, "version": 316, "at": 1733685378.512116}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.331756591796875, "step": null, "ts": 1733685378.511849}]}, "version": 317, "at": 1733685378.512338}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 318, "at": 1733685382.644275}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 319, "at": 1733685382.6453671}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 320, "at": 1733685382.645411}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685388.514318}]}, "version": 321, "at": 1733685388.514596}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.349639892578125, "step": null, "ts": 1733685388.514318}]}, "version": 322, "at": 1733685388.514821}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685398.515307}]}, "version": 323, "at": 1733685398.5155709}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.354202270507812, "step": null, "ts": 1733685398.515307}]}, "version": 324, "at": 1733685398.515794}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685408.520695}]}, "version": 325, "at": 1733685408.520958}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.355804443359375, "step": null, "ts": 1733685408.520695}]}, "version": 326, "at": 1733685408.521176}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685418.5220869}]}, "version": 327, "at": 1733685418.522354}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3521728515625, "step": null, "ts": 1733685418.5220869}]}, "version": 328, "at": 1733685418.5225768}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685428.527518}]}, "version": 329, "at": 1733685428.527788}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.351348876953125, "step": null, "ts": 1733685428.527518}]}, "version": 330, "at": 1733685428.5280159}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 331, "at": 1733685429.5588381}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 332, "at": 1733685429.559962}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 333, "at": 1733685429.560006}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685438.532955}]}, "version": 334, "at": 1733685438.5332422}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.358428955078125, "step": null, "ts": 1733685438.532955}]}, "version": 335, "at": 1733685438.533462}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685448.53688}]}, "version": 336, "at": 1733685448.537154}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.356536865234375, "step": null, "ts": 1733685448.53688}]}, "version": 337, "at": 1733685448.537397}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685458.5374348}]}, "version": 338, "at": 1733685458.537707}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.351913452148438, "step": null, "ts": 1733685458.5374348}]}, "version": 339, "at": 1733685458.5379179}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 340, "at": 1733685462.960059}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 341, "at": 1733685462.962761}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 342, "at": 1733685462.962882}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685468.541234}]}, "version": 343, "at": 1733685468.541501}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.365921020507812, "step": null, "ts": 1733685468.541234}]}, "version": 344, "at": 1733685468.541722}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685478.542418}]}, "version": 345, "at": 1733685478.542687}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3671875, "step": null, "ts": 1733685478.542418}]}, "version": 346, "at": 1733685478.542915}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685488.545241}]}, "version": 347, "at": 1733685488.5455182}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3671875, "step": null, "ts": 1733685488.545241}]}, "version": 348, "at": 1733685488.5457458}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685498.5496662}]}, "version": 349, "at": 1733685498.549946}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.359603881835938, "step": null, "ts": 1733685498.5496662}]}, "version": 350, "at": 1733685498.550184}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 351, "at": 1733685502.840849}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 352, "at": 1733685502.841967}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 353, "at": 1733685502.84202}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685508.553066}]}, "version": 354, "at": 1733685508.553366}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.370834350585938, "step": null, "ts": 1733685508.553066}]}, "version": 355, "at": 1733685508.553591}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685518.563514}]}, "version": 356, "at": 1733685518.563782}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.368011474609375, "step": null, "ts": 1733685518.563514}]}, "version": 357, "at": 1733685518.564009}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685528.5683572}]}, "version": 358, "at": 1733685528.568626}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.385421752929688, "step": null, "ts": 1733685528.5683572}]}, "version": 359, "at": 1733685528.568854}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 360, "at": 1733685534.843679}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 361, "at": 1733685534.84642}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 362, "at": 1733685534.8465421}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685538.572146}]}, "version": 363, "at": 1733685538.572417}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.384658813476562, "step": null, "ts": 1733685538.572146}]}, "version": 364, "at": 1733685538.572635}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685548.578388}]}, "version": 365, "at": 1733685548.578657}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3785400390625, "step": null, "ts": 1733685548.578388}]}, "version": 366, "at": 1733685548.57888}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685558.5831838}]}, "version": 367, "at": 1733685558.583308}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.385726928710938, "step": null, "ts": 1733685558.5831838}]}, "version": 368, "at": 1733685558.583413}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685568.5933042}]}, "version": 369, "at": 1733685568.5935612}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.382904052734375, "step": null, "ts": 1733685568.5933042}]}, "version": 370, "at": 1733685568.5937788}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685578.6037}]}, "version": 371, "at": 1733685578.603966}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.380172729492188, "step": null, "ts": 1733685578.6037}]}, "version": 372, "at": 1733685578.604192}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 373, "at": 1733685580.742591}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 374, "at": 1733685580.74369}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 375, "at": 1733685580.743739}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685588.6055849}]}, "version": 376, "at": 1733685588.6058612}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.380523681640625, "step": null, "ts": 1733685588.6055849}]}, "version": 377, "at": 1733685588.606085}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685598.6068952}]}, "version": 378, "at": 1733685598.607182}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.378738403320312, "step": null, "ts": 1733685598.6068952}]}, "version": 379, "at": 1733685598.607415}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685608.6137369}]}, "version": 380, "at": 1733685608.614003}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.35205078125, "step": null, "ts": 1733685608.6137369}]}, "version": 381, "at": 1733685608.6142359}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685618.617224}]}, "version": 382, "at": 1733685618.6174872}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.353240966796875, "step": null, "ts": 1733685618.617224}]}, "version": 383, "at": 1733685618.6177}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 384, "at": 1733685626.4017868}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 385, "at": 1733685626.404566}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 386, "at": 1733685626.404719}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685628.623667}]}, "version": 387, "at": 1733685628.6239328}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.339950561523438, "step": null, "ts": 1733685628.623667}]}, "version": 388, "at": 1733685628.624156}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685638.626666}]}, "version": 389, "at": 1733685638.626924}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.334548950195312, "step": null, "ts": 1733685638.626666}]}, "version": 390, "at": 1733685638.62715}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685648.632169}]}, "version": 391, "at": 1733685648.632451}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.335052490234375, "step": null, "ts": 1733685648.632169}]}, "version": 392, "at": 1733685648.6326919}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685658.642623}]}, "version": 393, "at": 1733685658.642893}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.33514404296875, "step": null, "ts": 1733685658.642623}]}, "version": 394, "at": 1733685658.64313}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685668.653075}]}, "version": 395, "at": 1733685668.6533399}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.336227416992188, "step": null, "ts": 1733685668.653075}]}, "version": 396, "at": 1733685668.653552}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685678.654578}]}, "version": 397, "at": 1733685678.654847}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.333587646484375, "step": null, "ts": 1733685678.654578}]}, "version": 398, "at": 1733685678.655076}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 399, "at": 1733685681.236456}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 400, "at": 1733685681.239136}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 401, "at": 1733685681.239254}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685688.66123}]}, "version": 402, "at": 1733685688.6615229}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.349151611328125, "step": null, "ts": 1733685688.66123}]}, "version": 403, "at": 1733685688.661752}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685698.6711879}]}, "version": 404, "at": 1733685698.671308}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.35205078125, "step": null, "ts": 1733685698.6711879}]}, "version": 405, "at": 1733685698.671415}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685708.681313}]}, "version": 406, "at": 1733685708.681591}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.358245849609375, "step": null, "ts": 1733685708.681313}]}, "version": 407, "at": 1733685708.681806}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685718.682125}]}, "version": 408, "at": 1733685718.68239}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.361907958984375, "step": null, "ts": 1733685718.682125}]}, "version": 409, "at": 1733685718.6826282}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685728.686962}]}, "version": 410, "at": 1733685728.687237}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.35980224609375, "step": null, "ts": 1733685728.686962}]}, "version": 411, "at": 1733685728.687474}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 412, "at": 1733685737.83609}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 413, "at": 1733685737.837197}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 414, "at": 1733685737.837247}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685738.6964512}]}, "version": 415, "at": 1733685738.696725}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.358917236328125, "step": null, "ts": 1733685738.6964512}]}, "version": 416, "at": 1733685738.696938}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685748.706126}]}, "version": 417, "at": 1733685748.7063942}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.356826782226562, "step": null, "ts": 1733685748.706126}]}, "version": 418, "at": 1733685748.706628}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685758.7110772}]}, "version": 419, "at": 1733685758.711432}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.355804443359375, "step": null, "ts": 1733685758.7110772}]}, "version": 420, "at": 1733685758.71167}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685768.7215118}]}, "version": 421, "at": 1733685768.721772}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.355728149414062, "step": null, "ts": 1733685768.7215118}]}, "version": 422, "at": 1733685768.721993}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 423, "at": 1733685769.462312}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 424, "at": 1733685769.4651551}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 425, "at": 1733685769.4652789}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685778.731922}]}, "version": 426, "at": 1733685778.732193}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.337966918945312, "step": null, "ts": 1733685778.731922}]}, "version": 427, "at": 1733685778.732408}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685788.733141}]}, "version": 428, "at": 1733685788.733409}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.378204345703125, "step": null, "ts": 1733685788.733141}]}, "version": 429, "at": 1733685788.733623}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685798.743082}]}, "version": 430, "at": 1733685798.74336}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.38031005859375, "step": null, "ts": 1733685798.743082}]}, "version": 431, "at": 1733685798.743583}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685808.745644}]}, "version": 432, "at": 1733685808.7459068}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.378555297851562, "step": null, "ts": 1733685808.745644}]}, "version": 433, "at": 1733685808.7461162}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 434, "at": 1733685815.2699049}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 435, "at": 1733685815.272807}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 436, "at": 1733685815.272872}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685818.747668}]}, "version": 437, "at": 1733685818.7479382}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.38580322265625, "step": null, "ts": 1733685818.747668}]}, "version": 438, "at": 1733685818.748158}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685828.7532082}]}, "version": 439, "at": 1733685828.753484}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.384002685546875, "step": null, "ts": 1733685828.7532082}]}, "version": 440, "at": 1733685828.7537}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685838.758417}]}, "version": 441, "at": 1733685838.7586849}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3826904296875, "step": null, "ts": 1733685838.758417}]}, "version": 442, "at": 1733685838.7589052}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685848.760152}]}, "version": 443, "at": 1733685848.7602692}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.384002685546875, "step": null, "ts": 1733685848.760152}]}, "version": 444, "at": 1733685848.760371}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685858.7702641}]}, "version": 445, "at": 1733685858.770539}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.382614135742188, "step": null, "ts": 1733685858.7702641}]}, "version": 446, "at": 1733685858.770761}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 447, "at": 1733685866.591029}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 448, "at": 1733685866.592117}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 449, "at": 1733685866.592164}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685868.7708359}]}, "version": 450, "at": 1733685868.771135}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.384552001953125, "step": null, "ts": 1733685868.7708359}]}, "version": 451, "at": 1733685868.771369}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685878.771631}]}, "version": 452, "at": 1733685878.771905}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.392486572265625, "step": null, "ts": 1733685878.771631}]}, "version": 453, "at": 1733685878.772116}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685888.780407}]}, "version": 454, "at": 1733685888.780689}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.368667602539062, "step": null, "ts": 1733685888.780407}]}, "version": 455, "at": 1733685888.7809122}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685898.783475}]}, "version": 456, "at": 1733685898.783745}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.365798950195312, "step": null, "ts": 1733685898.783475}]}, "version": 457, "at": 1733685898.783961}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 458, "at": 1733685906.912608}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 459, "at": 1733685906.9153569}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 460, "at": 1733685906.915457}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685908.785845}]}, "version": 461, "at": 1733685908.78611}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.372360229492188, "step": null, "ts": 1733685908.785845}]}, "version": 462, "at": 1733685908.7863271}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685918.789629}]}, "version": 463, "at": 1733685918.789885}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.383804321289062, "step": null, "ts": 1733685918.789629}]}, "version": 464, "at": 1733685918.790102}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685928.799909}]}, "version": 465, "at": 1733685928.800171}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.38348388671875, "step": null, "ts": 1733685928.799909}]}, "version": 466, "at": 1733685928.800382}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685938.805591}]}, "version": 467, "at": 1733685938.805879}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.389907836914062, "step": null, "ts": 1733685938.805591}]}, "version": 468, "at": 1733685938.8060842}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 469, "at": 1733685947.869025}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 470, "at": 1733685947.871543}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 471, "at": 1733685947.871608}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685948.8091872}]}, "version": 472, "at": 1733685948.809556}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.38421630859375, "step": null, "ts": 1733685948.8091872}]}, "version": 473, "at": 1733685948.8098052}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685958.815846}]}, "version": 474, "at": 1733685958.816121}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.394302368164062, "step": null, "ts": 1733685958.815846}]}, "version": 475, "at": 1733685958.81634}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685968.8210628}]}, "version": 476, "at": 1733685968.821346}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.396316528320312, "step": null, "ts": 1733685968.8210628}]}, "version": 477, "at": 1733685968.8215811}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685978.828362}]}, "version": 478, "at": 1733685978.828631}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.394485473632812, "step": null, "ts": 1733685978.828362}]}, "version": 479, "at": 1733685978.8288372}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685988.831285}]}, "version": 480, "at": 1733685988.83156}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.397369384765625, "step": null, "ts": 1733685988.831285}]}, "version": 481, "at": 1733685988.8317928}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733685998.83869}]}, "version": 482, "at": 1733685998.838958}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.395172119140625, "step": null, "ts": 1733685998.83869}]}, "version": 483, "at": 1733685998.8391838}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 484, "at": 1733686008.696955}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 485, "at": 1733686008.699871}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 486, "at": 1733686008.699986}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686008.846878}]}, "version": 487, "at": 1733686008.847156}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.400588989257812, "step": null, "ts": 1733686008.846878}]}, "version": 488, "at": 1733686008.847358}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686018.8572931}]}, "version": 489, "at": 1733686018.857567}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.373794555664062, "step": null, "ts": 1733686018.8572931}]}, "version": 490, "at": 1733686018.857792}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686028.862985}]}, "version": 491, "at": 1733686028.863252}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.39617919921875, "step": null, "ts": 1733686028.862985}]}, "version": 492, "at": 1733686028.86347}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686038.868911}]}, "version": 493, "at": 1733686038.869187}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.407745361328125, "step": null, "ts": 1733686038.868911}]}, "version": 494, "at": 1733686038.869418}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 495, "at": 1733686048.867123}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 496, "at": 1733686048.8682082}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 497, "at": 1733686048.8682508}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686048.87176}]}, "version": 498, "at": 1733686048.8719969}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.39178466796875, "step": null, "ts": 1733686048.87176}]}, "version": 499, "at": 1733686048.87216}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686058.87522}]}, "version": 500, "at": 1733686058.875506}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.39202880859375, "step": null, "ts": 1733686058.87522}]}, "version": 501, "at": 1733686058.875734}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686068.884546}]}, "version": 502, "at": 1733686068.88482}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.401962280273438, "step": null, "ts": 1733686068.884546}]}, "version": 503, "at": 1733686068.8850381}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686078.893357}]}, "version": 504, "at": 1733686078.893623}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.401657104492188, "step": null, "ts": 1733686078.893357}]}, "version": 505, "at": 1733686078.8938391}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 506, "at": 1733686088.365896}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 507, "at": 1733686088.366997}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 508, "at": 1733686088.367042}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686088.9014962}]}, "version": 509, "at": 1733686088.901768}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.3983154296875, "step": null, "ts": 1733686088.9014962}]}, "version": 510, "at": 1733686088.9019861}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686098.9030662}]}, "version": 511, "at": 1733686098.903328}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.395523071289062, "step": null, "ts": 1733686098.9030662}]}, "version": 512, "at": 1733686098.903552}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686108.9106472}]}, "version": 513, "at": 1733686108.910917}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.390792846679688, "step": null, "ts": 1733686108.9106472}]}, "version": 514, "at": 1733686108.911138}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686118.915333}]}, "version": 515, "at": 1733686118.9156091}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.405181884765625, "step": null, "ts": 1733686118.915333}]}, "version": 516, "at": 1733686118.9158359}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686128.9158552}]}, "version": 517, "at": 1733686128.91613}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.409149169921875, "step": null, "ts": 1733686128.9158552}]}, "version": 518, "at": 1733686128.916342}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 519, "at": 1733686130.0899808}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 520, "at": 1733686130.091296}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 521, "at": 1733686130.0913541}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686138.922248}]}, "version": 522, "at": 1733686138.922517}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.409652709960938, "step": null, "ts": 1733686138.922248}]}, "version": 523, "at": 1733686138.922722}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686148.931104}]}, "version": 524, "at": 1733686148.931381}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.406707763671875, "step": null, "ts": 1733686148.931104}]}, "version": 525, "at": 1733686148.93161}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 526, "at": 1733686158.706402}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 527, "at": 1733686158.709065}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 528, "at": 1733686158.709173}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686158.94052}]}, "version": 529, "at": 1733686158.9407911}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.412490844726562, "step": null, "ts": 1733686158.94052}]}, "version": 530, "at": 1733686158.941004}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686168.9467971}]}, "version": 531, "at": 1733686168.947059}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.41595458984375, "step": null, "ts": 1733686168.9467971}]}, "version": 532, "at": 1733686168.947276}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686178.951432}]}, "version": 533, "at": 1733686178.951704}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.418914794921875, "step": null, "ts": 1733686178.951432}]}, "version": 534, "at": 1733686178.951923}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686188.956817}]}, "version": 535, "at": 1733686188.957085}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.419769287109375, "step": null, "ts": 1733686188.956817}]}, "version": 536, "at": 1733686188.95731}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686198.965385}]}, "version": 537, "at": 1733686198.965662}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.419174194335938, "step": null, "ts": 1733686198.965385}]}, "version": 538, "at": 1733686198.96589}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 539, "at": 1733686206.8939881}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 540, "at": 1733686206.898189}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 541, "at": 1733686206.898255}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686208.9694662}]}, "version": 542, "at": 1733686208.969745}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.421554565429688, "step": null, "ts": 1733686208.9694662}]}, "version": 543, "at": 1733686208.969974}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686218.979894}]}, "version": 544, "at": 1733686218.980159}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.4149169921875, "step": null, "ts": 1733686218.979894}]}, "version": 545, "at": 1733686218.980368}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686228.981895}]}, "version": 546, "at": 1733686228.982173}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.41986083984375, "step": null, "ts": 1733686228.981895}]}, "version": 547, "at": 1733686228.982391}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686238.9922292}]}, "version": 548, "at": 1733686238.992498}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.418548583984375, "step": null, "ts": 1733686238.9922292}]}, "version": 549, "at": 1733686238.99272}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686248.997132}]}, "version": 550, "at": 1733686248.997421}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.422073364257812, "step": null, "ts": 1733686248.997132}]}, "version": 551, "at": 1733686248.99765}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686259.007571}]}, "version": 552, "at": 1733686259.0079381}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.42138671875, "step": null, "ts": 1733686259.007571}]}, "version": 553, "at": 1733686259.008425}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 554, "at": 1733686264.798335}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 555, "at": 1733686264.801002}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 556, "at": 1733686264.801108}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686269.018389}]}, "version": 557, "at": 1733686269.018661}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.424484252929688, "step": null, "ts": 1733686269.018389}]}, "version": 558, "at": 1733686269.018881}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686279.020931}]}, "version": 559, "at": 1733686279.021195}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.405609130859375, "step": null, "ts": 1733686279.020931}]}, "version": 560, "at": 1733686279.021415}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686289.0296252}]}, "version": 561, "at": 1733686289.029896}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.42059326171875, "step": null, "ts": 1733686289.0296252}]}, "version": 562, "at": 1733686289.0301251}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686299.039696}]}, "version": 563, "at": 1733686299.039971}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.421630859375, "step": null, "ts": 1733686299.039696}]}, "version": 564, "at": 1733686299.040202}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 565, "at": 1733686304.867031}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 566, "at": 1733686304.869954}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 567, "at": 1733686304.870081}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686309.047306}]}, "version": 568, "at": 1733686309.0475898}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.41558837890625, "step": null, "ts": 1733686309.047306}]}, "version": 569, "at": 1733686309.0478039}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686319.0537238}]}, "version": 570, "at": 1733686319.053992}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.409637451171875, "step": null, "ts": 1733686319.0537238}]}, "version": 571, "at": 1733686319.054219}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686329.0641448}]}, "version": 572, "at": 1733686329.0644128}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.420074462890625, "step": null, "ts": 1733686329.0641448}]}, "version": 573, "at": 1733686329.0646322}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686339.0736818}]}, "version": 574, "at": 1733686339.073935}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.418716430664062, "step": null, "ts": 1733686339.0736818}]}, "version": 575, "at": 1733686339.074133}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 576, "at": 1733686345.640377}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 577, "at": 1733686345.643104}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 578, "at": 1733686345.643231}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686349.0830872}]}, "version": 579, "at": 1733686349.083359}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.417770385742188, "step": null, "ts": 1733686349.0830872}]}, "version": 580, "at": 1733686349.08358}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686359.0928729}]}, "version": 581, "at": 1733686359.0931551}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.428985595703125, "step": null, "ts": 1733686359.0928729}]}, "version": 582, "at": 1733686359.093385}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686369.100124}]}, "version": 583, "at": 1733686369.100394}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.426101684570312, "step": null, "ts": 1733686369.100124}]}, "version": 584, "at": 1733686369.10061}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686379.104939}]}, "version": 585, "at": 1733686379.1052039}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.424789428710938, "step": null, "ts": 1733686379.104939}]}, "version": 586, "at": 1733686379.10542}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686389.111944}]}, "version": 587, "at": 1733686389.112232}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.430557250976562, "step": null, "ts": 1733686389.111944}]}, "version": 588, "at": 1733686389.112455}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686399.1145191}]}, "version": 589, "at": 1733686399.114797}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.427291870117188, "step": null, "ts": 1733686399.1145191}]}, "version": 590, "at": 1733686399.1150239}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 591, "at": 1733686405.773362}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 592, "at": 1733686405.774493}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 593, "at": 1733686405.774549}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686409.11697}]}, "version": 594, "at": 1733686409.1172328}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.431976318359375, "step": null, "ts": 1733686409.11697}]}, "version": 595, "at": 1733686409.117522}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686419.125678}]}, "version": 596, "at": 1733686419.125956}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.427490234375, "step": null, "ts": 1733686419.125678}]}, "version": 597, "at": 1733686419.126168}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686429.128928}]}, "version": 598, "at": 1733686429.1292002}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.425918579101562, "step": null, "ts": 1733686429.128928}]}, "version": 599, "at": 1733686429.129419}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686439.1393301}]}, "version": 600, "at": 1733686439.1395898}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.418289184570312, "step": null, "ts": 1733686439.1393301}]}, "version": 601, "at": 1733686439.139812}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686449.147458}]}, "version": 602, "at": 1733686449.147737}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.427993774414062, "step": null, "ts": 1733686449.147458}]}, "version": 603, "at": 1733686449.1479502}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 604, "at": 1733686454.8973958}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 605, "at": 1733686454.8990989}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 606, "at": 1733686454.8991628}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686459.148714}]}, "version": 607, "at": 1733686459.1489909}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.425689697265625, "step": null, "ts": 1733686459.148714}]}, "version": 608, "at": 1733686459.149215}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686469.1529012}]}, "version": 609, "at": 1733686469.153171}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.433380126953125, "step": null, "ts": 1733686469.1529012}]}, "version": 610, "at": 1733686469.153388}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686479.1554098}]}, "version": 611, "at": 1733686479.155678}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.434463500976562, "step": null, "ts": 1733686479.1554098}]}, "version": 612, "at": 1733686479.155898}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686489.15778}]}, "version": 613, "at": 1733686489.1580448}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.427383422851562, "step": null, "ts": 1733686489.15778}]}, "version": 614, "at": 1733686489.1582642}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686499.159751}]}, "version": 615, "at": 1733686499.1600409}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.430923461914062, "step": null, "ts": 1733686499.159751}]}, "version": 616, "at": 1733686499.1602602}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 617, "at": 1733686500.485445}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8535714285714285, 1: 1.207070707070707}"}, "version": 618, "at": 1733686500.486544}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 619, "at": 1733686500.486597}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686509.16818}]}, "version": 620, "at": 1733686509.168449}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.41949462890625, "step": null, "ts": 1733686509.16818}]}, "version": 621, "at": 1733686509.1686678}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686519.175036}]}, "version": 622, "at": 1733686519.175307}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.437957763671875, "step": null, "ts": 1733686519.175036}]}, "version": 623, "at": 1733686519.1755269}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686529.1851919}]}, "version": 624, "at": 1733686529.185457}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.433197021484375, "step": null, "ts": 1733686529.1851919}]}, "version": 625, "at": 1733686529.185677}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686539.193512}]}, "version": 626, "at": 1733686539.193779}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.4290771484375, "step": null, "ts": 1733686539.193512}]}, "version": 627, "at": 1733686539.1939971}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 628, "at": 1733686544.652842}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 629, "at": 1733686544.653943}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 630, "at": 1733686544.653995}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686549.1955478}]}, "version": 631, "at": 1733686549.195827}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.42974853515625, "step": null, "ts": 1733686549.1955478}]}, "version": 632, "at": 1733686549.196046}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686559.196079}]}, "version": 633, "at": 1733686559.1963441}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.424957275390625, "step": null, "ts": 1733686559.196079}]}, "version": 634, "at": 1733686559.196568}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686569.206412}]}, "version": 635, "at": 1733686569.2067351}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.426223754882812, "step": null, "ts": 1733686569.206412}]}, "version": 636, "at": 1733686569.206984}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 637, "at": 1733686577.609578}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "88d9e63b", "stderr"], "values": [{"value": "/Users/saraiva/PycharmProjects/LTBio/venv/lib/python3.10/site-packages/sklearn/neural_network/_multilayer_perceptron.py:709: UserWarning: Training interrupted by user.\n  warnings.warn(\"Training interrupted by user.\")\n", "step": null, "ts": 1733686577.612455}]}, "version": 638, "at": 1733686577.612515}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "{0: 0.8475177304964538, 1: 1.219387755102041}"}, "version": 639, "at": 1733686577.612685}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "n.a."}, "version": 640, "at": 1733686577.6127958}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686579.211257}]}, "version": 641, "at": 1733686579.211621}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.378524780273438, "step": null, "ts": 1733686579.211257}]}, "version": 642, "at": 1733686579.211871}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "cpu"], "values": [{"value": 100.0, "step": null, "ts": 1733686589.214972}]}, "version": 643, "at": 1733686589.2152472}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "88d9e63b", "memory"], "values": [{"value": 10.444229125976562, "step": null, "ts": 1733686589.214972}]}, "version": 644, "at": 1733686589.215492}

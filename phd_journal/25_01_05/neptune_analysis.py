@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-x = pd.read_csv("/Users/saraiva/Downloads/CombatManuscript-3.csv")
+x = pd.read_csv("/Users/saraiva/Desktop/CombatManuscript-3.csv")
 x = x.iloc[:1596]
 
 Y = []
@@ -11,7 +11,7 @@ for n_datasets in (2, 3, 4, 5, 6):
     Y.append(y)
 
 # Define number of datasets
-n_datasets = 2
+n_datasets = 4
 print("Number of datasets:", n_datasets)
 
 combat = Y[n_datasets-2][Y[n_datasets-2]['Method'] == 'neuroharmonize']
@@ -19,8 +19,13 @@ none = Y[n_datasets-2][Y[n_datasets-2]['Method'] == 'none']
 
 diffs = []
 for n_pc in range(2, 16):
-    _none = none[none['Features'].apply(lambda x: len(eval(x)) == n_pc)]
-    _combat = combat[combat['Features'].apply(lambda x: len(eval(x)) == n_pc)]
+    _none = none[none['Features'].apply(lambda x: len(eval(x)) == n_pc)][['Datasets', 'F1-Score']]
+    _combat = combat[combat['Features'].apply(lambda x: len(eval(x)) == n_pc)][['Datasets', 'F1-Score']]
+    for i in range(len(_none)):
+        print('Datasets:', eval(_none.iloc[i]['Datasets']))
+        print('None:', _none.iloc[i]['F1-Score'])
+        print('Combat:', _combat.iloc[i]['F1-Score'])
+
     diff = _combat['F1-Score'].mean() - _none['F1-Score'].mean()
     print("Number od PC:", n_pc)
     print("Increase:", diff, '\n')

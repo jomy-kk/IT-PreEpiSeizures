@@ -1,0 +1,13 @@
+{"obj": {"type": "AssignString", "path": ["sys", "name"], "value": "no name"}, "version": 1, "at": 1733765662.137526}
+{"obj": {"type": "AssignString", "path": ["sys", "description"], "value": ""}, "version": 2, "at": 1733765662.1379871}
+{"obj": {"type": "AssignString", "path": ["monitoring", "7322420b", "hostname"], "value": "Macmini.fritz.box"}, "version": 3, "at": 1733765662.138039}
+{"obj": {"type": "AssignString", "path": ["sys", "hostname"], "value": "Macmini.fritz.box"}, "version": 4, "at": 1733765662.138155}
+{"obj": {"type": "AssignString", "path": ["monitoring", "7322420b", "pid"], "value": "13418"}, "version": 5, "at": 1733765662.138193}
+{"obj": {"type": "AssignString", "path": ["monitoring", "7322420b", "tid"], "value": "8631334976"}, "version": 6, "at": 1733765662.1382232}
+{"obj": {"type": "AddStrings", "path": ["sys", "tags"], "values": ["mmse gap 24-26", "11 datasets", "Newcastle", "Izmir"]}, "version": 7, "at": 1733765662.1382651}
+{"obj": {"type": "AssignBool", "path": ["sys", "failed"], "value": false}, "version": 8, "at": 1733765662.138295}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "7322420b", "stdout"]}, "version": 9, "at": 1733765662.138335}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "7322420b", "stderr"]}, "version": 10, "at": 1733765662.138421}
+{"obj": {"type": "AssignString", "path": ["source_code", "entrypoint"], "value": "paper_results_images_each_variant.py"}, "version": 11, "at": 1733765662.138967}
+{"obj": {"type": "UploadFileSet", "path": ["source_code", "files"], "file_globs": ["/Users/saraiva/PycharmProjects/LTBio/phd_journal/24_12_03/*.py"], "reset": "False"}, "version": 12, "at": 1733765662.1390238}
+{"obj": {"type": "UploadFile", "path": ["source_code", "diff"], "ext": "patch", "file_path": null, "tmp_file_name": "source_code_diff-1733765662.249366-2024-12-09_18.34.22.249366.patch", "clean_after_upload": false}, "version": 13, "at": 1733765662.25018}

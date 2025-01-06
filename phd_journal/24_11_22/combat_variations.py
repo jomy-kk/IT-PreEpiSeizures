@@ -16,20 +16,26 @@ def _check_input(_X: pd.DataFrame, _metadata: pd.DataFrame):
     return data, covariates
 
 
-def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True, cov_education=True):
-    # keep only the age and gender columns
-    covariates = covariates[['AGE', 'GENDER', 'EDUCATION YEARS', 'SITE']]
-    # binarize gender: M=1, F=0
-    covariates['GENDER'].replace('M', 1, inplace=True)
-    covariates['GENDER'].replace('F', 0, inplace=True)
+def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True):
+    columns_to_keep = ['SITE', ]
+    if cov_gender:
+        columns_to_keep.append('GENDER')
+    if cov_age:
+        columns_to_keep.append('AGE')
+    if cov_education:
+        columns_to_keep.append('EDUCATION YEARS')
+    if cov_diagnosis:
+        columns_to_keep.append('DIAGNOSIS')
 
-    # test
-    if not cov_gender:
-        covariates.drop(columns='GENDER', inplace=True)
-    if not cov_age:
-        covariates.drop(columns='AGE', inplace=True)
-    if not cov_education:
-        covariates.drop(columns='EDUCATION YEARS', inplace=True)
+    # keep only the age and gender columns
+    covariates = covariates[columns_to_keep]
+    # binarize gender: M=1, F=0
+    if cov_gender:
+        covariates['GENDER'].replace('M', 1, inplace=True)
+        covariates['GENDER'].replace('F', 0, inplace=True)
+    if cov_diagnosis:
+        covariates['DIAGNOSIS'].replace('AD', 1, inplace=True)
+        covariates['DIAGNOSIS'].replace('HC', 0, inplace=True)
 
     print("Covariates:", covariates.columns)
     return covariates
@@ -37,11 +43,10 @@ def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True,
 
 
 
-
 def original_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
-                    cov_gender=True, cov_age=True, cov_education=True) -> pd.DataFrame:
+                    cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> pd.DataFrame:
     data, covariates = _check_input(_X, _metadata)
-    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education)
+    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education, cov_diagnosis)
 
     biological_covars = covariates.copy()
     biological_covars.drop(columns=['SITE'], inplace=True)
@@ -72,17 +77,17 @@ def original_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
 
 
 def neuro_combat(_X: pd.DataFrame, _metadata: pd.DataFrame,
-                 cov_gender=True, cov_age=True, cov_education=True) -> tuple[pd.DataFrame, dict]:
+                 cov_gender=True, cov_age=True, cov_education=True, cov_diagnosis=True) -> tuple[pd.DataFrame, dict]:
 
     data, covariates = _check_input(_X, _metadata)
     data = data.T  # data should be (features, samples)
-    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education)
+    covariates = _prepare_covariates(covariates, cov_gender, cov_age, cov_education, cov_diagnosis)
 
     # To specify the name of the variable that encodes for the batch covariate
     batch_col = 'SITE'
     # To specify names of the variables that are categorical:
-    categorical_cols = ['GENDER', ]
-    continuous_cols = ['AGE', 'EDUCATION YEARS']
+    categorical_cols = ['GENDER', 'DIAGNOSIS']
+    continuous_cols = ['AGE']#, 'EDUCATION YEARS']
 
     # Harmonization step
     res = neuroCombat(dat=data, covars=covariates, batch_col=batch_col, categorical_cols=categorical_cols, continuous_cols=continuous_cols)
