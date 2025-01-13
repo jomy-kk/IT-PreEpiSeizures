@@ -38,8 +38,9 @@ def apply_combat(datasets, datasets_metadata, log_transform, harmonization_metho
         case "none":
             dist_parameters = None
         case "original":
-            X, dist_parameters = original_combat(X, all_metadata, cov_age=cov_age,
+            X = original_combat(X, all_metadata, cov_age=cov_age,
                                                         cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+            dist_parameters = None
         case "neurocombat":
             X, dist_parameters = neuro_combat(X, all_metadata, cov_age=cov_age,
                                                      cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)

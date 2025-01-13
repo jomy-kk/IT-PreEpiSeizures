@@ -63,15 +63,37 @@ def make_results(run, out_path, dataset_names, harmonization_method, cov_age, co
         run[f"datasets/before/{dataset_name}"].upload(File.as_html(dataset))
 
     # Harmonization Step
-    datasets, dist_parameters = apply_combat(run, datasets, datasets_metadata, _out_path=variation_out_path,
-                                             log_transform=True, standardize="none", harmonization_method=harmonization_method,
-                                             cov_age=cov_age, cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+    # Does harmonized data already exist?
+    log_transform = True
+    standardize = "none"
+    if exists(variation_out_path) and all([exists(join(variation_out_path, f"{dataset_name}.csv")) for dataset_name in datasets.keys()]):
+        print("Utilizing harmonized serialised data")
+        for dataset_name in datasets.keys():
+            harmonized_data_path = join(variation_out_path, f"{dataset_name}.csv")
+            datasets[dataset_name] = pd.read_csv(harmonized_data_path, index_col=0)
+            run[f"datasets/after/{dataset_name}_track"].track_files(harmonized_data_path)
+            run[f"datasets/after/{dataset_name}"].upload(harmonized_data_path)
 
-    for dataset_name, _ in datasets.items():
-        out_filepath = join(variation_out_path, f"{dataset_name}.csv")
-        datasets[dataset_name].to_csv(out_filepath)
-        run[f"datasets/after/{dataset_name}_track"].track_files(out_filepath)
-        run[f"datasets/after/{dataset_name}"].upload(out_filepath)
+    else:  # No => apply harmonization
+        datasets, dist_parameters = apply_combat(run, datasets, datasets_metadata, _out_path=variation_out_path,
+                                                 log_transform=log_transform, standardize=standardize, harmonization_method=harmonization_method,
+                                                 cov_age=cov_age, cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+
+        for dataset_name, _ in datasets.items():
+            out_filepath = join(variation_out_path, f"{dataset_name}.csv")
+            datasets[dataset_name].to_csv(out_filepath)
+            run[f"datasets/after/{dataset_name}_track"].track_files(out_filepath)
+            run[f"datasets/after/{dataset_name}"].upload(out_filepath)
+
+    run["harmonization/params"] = {
+        "method": harmonization_method if harmonization_method != "neuroharmonize" else "neuroharmonize2",  # To fix for the fact that in Neptune, 'neuroharmonize' is in fact 'neurocombat' and 'neuroharmonize2' is the true 'neuroharmonize'
+        "log_transform": log_transform,
+        "standardize": standardize,
+        "cov_age": cov_age,
+        "cov_gender": cov_gender,
+        "cov_education": cov_education,
+        "cov_diagnosis": cov_diagnosis
+    }
 
     # --- Process data for plots ---
 

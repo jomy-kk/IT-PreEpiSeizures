@@ -1,15 +1,41 @@
 import itertools
 import gc
+import shutil
 
 import neptune
 from paper_results_each_variant import make_results
 from paper_images_each_variant import make_images
 
-datasets = ['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR']
-n_pcs = (11, ) #range(2, 16) # 2 ... 15
-variants = ['none', 'neuroharmonize', 'neurocombat', 'original']
 
-for n_datasets in range(6, 7):
+class NoRun():
+    class Item():
+        def __init__(self):
+            pass
+        def upload(self, *args, **kwargs):
+            pass
+    def __init__(self):
+        pass
+    def __setitem__(self, key, value):
+        pass
+    def __getitem__(self, key):
+        return NoRun.Item()
+    def stop(self):
+        pass
+
+
+datasets = ['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR']
+n_pcs = {  # n_datasets: [n_pcs]
+    2: [2, 3, 4],
+    3: [3, 4, 7],
+    4: [6, 7, 9],
+    5: [8, 11, 12],
+    6: [8, 11, 12],
+}
+variants = ['nestedcombat+', ]#['none', 'neuroharmonize', 'neurocombat', 'original']
+
+# PC = {6, 5, 4} is done
+# PC = 2, 3 is doing
+for n_datasets in (3, 2):
     dataset_combinations = list(itertools.combinations(datasets, n_datasets))
     print(f"Number of combinations: {len(dataset_combinations)}")
     #print(dataset_combinations)
@@ -17,7 +43,7 @@ for n_datasets in range(6, 7):
     #dataset_combinations = [('Izmir', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR')]
     for dataset_combination in dataset_combinations:
         print(dataset_combination)
-        for n_pc in n_pcs:
+        for n_pc in tuple(set(range(2, 16)) - set(n_pcs[n_datasets])):
             print(f"{n_pc} PCs")
             for variant in variants:
                 print(f"{variant} variant")
@@ -32,6 +58,7 @@ for n_datasets in range(6, 7):
                                            name="no name",
                                            tags=[f"{len(dataset_combination)} datasets", "mmse gap 24-26",] + list(dataset_combination),
                                            )
+
 
                     run['datasets/combination'] = str(list(dataset_combination))
 
@@ -50,16 +77,23 @@ for n_datasets in range(6, 7):
                     # 4. Plot results
                     make_images(run, out_path, list(dataset_combination), variant)
 
+                    # Run garbage collector
+                    print("Collected" + str(gc.collect()) + "unreachable objects.")
+
                     run.stop()
 
                 except Exception as e:
                     print("Error/Exception occurred. Stopping run.")
                     print(e)
                     run.stop()
-                    exit(-1)
 
 
                 # Clean up memory
                 del run
                 gc.collect()
 
+        # Delete all variant directory. Why? To not reuse the same results in the next iteration, when the combination changes.
+        for variant in variants:
+            out_path = f"./each_variation/{variant}"
+            shutil.rmtree(out_path)
+            print(f"Deleted {out_path}")

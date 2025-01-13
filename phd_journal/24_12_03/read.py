@@ -78,6 +78,24 @@ def read_all_metadata(dataset_names):
         else:
             dataset.index = [f"{dataset_name}-{s}" for s in dataset.index]
         dataset['SITE'] = [dataset_name]*len(dataset)
+
+        # Keep only some columns, if Df has them: (AGE, GENDER, DIAGNOSIS, EDUCATION YEARS, MMSE, MoCA, SITE)
+        to_keep = []
+        if 'AGE' in dataset.columns:
+            to_keep.append('AGE')
+        if 'GENDER' in dataset.columns:
+            to_keep.append('GENDER')
+        if 'DIAGNOSIS' in dataset.columns:
+            to_keep.append('DIAGNOSIS')
+        if 'EDUCATION YEARS' in dataset.columns:
+            to_keep.append('EDUCATION YEARS')
+        if 'MMSE' in dataset.columns:
+            to_keep.append('MMSE')
+        if 'MoCA' in dataset.columns:
+            to_keep.append('MoCA')
+        if 'SITE' in dataset.columns:
+            to_keep.append('SITE')
+        dataset = dataset[to_keep]
         datasets_metadata[dataset_name] = dataset
     return datasets_metadata
 

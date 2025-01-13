@@ -1,5 +1,6 @@
 import itertools
 import pickle
+from os.path import exists
 from typing import Sequence
 
 import numpy as np
@@ -26,6 +27,7 @@ bands = ["Delta", "Theta", "Alpha1", "Alpha2", "Alpha3", "Beta1", "Beta2", "Gamm
 
 # 0. Apply Combat
 def apply_combat(run, datasets, datasets_metadata, _out_path, log_transform, standardize, harmonization_method, cov_age, cov_gender, cov_education, cov_diagnosis):
+
     match standardize:
         case "min-max":
             print("Normalizing each dataset before combat...")
@@ -78,6 +80,24 @@ def apply_combat(run, datasets, datasets_metadata, _out_path, log_transform, sta
             print(3)
             X, dist_parameters = neuro_harmonize(X, all_metadata, cov_age=cov_age,
                                                         cov_gender=cov_gender, cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+        case "recombat":
+            print(4)
+            X, dist_parameters = recombat(X, all_metadata, cov_age=cov_age,
+                                                 cov_gender=cov_gender, cov_education=cov_education,
+                                                 cov_diagnosis=cov_diagnosis)
+        case "nestedcombat+":
+            print('5+')
+            X, dist_parameters, gmm_order = nested_combat(X, all_metadata, gmm_type='+', _out_path=_out_path,
+                                          cov_age=cov_age, cov_gender=cov_gender,
+                                          cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+            run["harmonization/gmm/order"] = str(gmm_order)
+            run["harmonization/gmm/n_comp"] = 2
+        case "nestedcombat-":
+            print('5-')
+            X, dist_parameters, gmm_order = nested_combat(X, all_metadata, gmm_type='-', _out_path=_out_path,
+                                                          cov_age=cov_age, cov_gender=cov_gender,
+                                                          cov_education=cov_education, cov_diagnosis=cov_diagnosis)
+            run["harmonization/gmm/order"] = 2
         case _:
             raise ValueError(f"Unknown harmonization method: {harmonization_method}")
 
@@ -94,15 +114,7 @@ def apply_combat(run, datasets, datasets_metadata, _out_path, log_transform, sta
             # Undo standardization
             res = {dataset_name: res[dataset_name] * means_stds[dataset_name]['std'] + means_stds[dataset_name]['mean'] for dataset_name in res.keys()}
 
-    run["harmonization/params"] = {
-        "method": harmonization_method,
-        "log_transform": log_transform,
-        "standardize": standardize,
-        "cov_age": cov_age,
-        "cov_gender": cov_gender,
-        "cov_education": cov_education,
-        "cov_diagnosis": cov_diagnosis
-    }
+
 
     return res, dist_parameters
 
