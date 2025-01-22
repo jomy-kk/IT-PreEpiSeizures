@@ -31,17 +31,18 @@ n_pcs = {  # n_datasets: [n_pcs]
     5: [8, 11, 12],
     6: [8, 11, 12],
 }
-variants = ['nestedcombat+', ]#['none', 'neuroharmonize', 'neurocombat', 'original']
+variants = ['neuroharmonize', ]#['none', 'neuroharmonize', 'neurocombat', 'original']
 
-# PC = {6, 5, 4} is done
-# PC = 2, 3 is doing
-for n_datasets in (3, 2):
+for n_datasets in (2, ):
     dataset_combinations = list(itertools.combinations(datasets, n_datasets))
     print(f"Number of combinations: {len(dataset_combinations)}")
     #print(dataset_combinations)
     #exit(0)
     #dataset_combinations = [('Izmir', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL'), ('Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:AR'), ('Newcastle', 'Miltiadous', 'BrainLat:CL', 'BrainLat:AR'), ('Newcastle', 'Istambul', 'BrainLat:CL', 'BrainLat:AR'), ('Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR')]
     for dataset_combination in dataset_combinations:
+        if dataset_combination == ('Izmir', 'Newcastle') or dataset_combination == ('Izmir', 'Miltiadous') or dataset_combination == ('Izmir', 'Istambul') or dataset_combination == ('Izmir', 'BrainLat:CL') or dataset_combination == ('Izmir', 'BrainLat:AR'):
+            print("Skipping; already done.")
+            continue
         print(dataset_combination)
         for n_pc in tuple(set(range(2, 16)) - set(n_pcs[n_datasets])):
             print(f"{n_pc} PCs")
@@ -78,7 +79,7 @@ for n_datasets in (3, 2):
                     make_images(run, out_path, list(dataset_combination), variant)
 
                     # Run garbage collector
-                    print("Collected" + str(gc.collect()) + "unreachable objects.")
+                    print("Collected", str(gc.collect()), "unreachable objects.")
 
                     run.stop()
 

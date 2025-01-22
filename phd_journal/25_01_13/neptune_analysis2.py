@@ -1,9 +1,12 @@
 import pandas as pd
 import numpy as np
 
+# get pwd
+import os
+print(os.getcwd())
 
-x = pd.read_csv("./25_01_13.csv")
-x = x.iloc[:2110]
+x = pd.read_csv("./25_01_16.csv")
+x = x.iloc[:-49]
 res = []
 
 for n_datasets in (2, 3, 4, 5, 6):
@@ -33,4 +36,4 @@ for n_datasets in (2, 3, 4, 5, 6):
             })
             pass
 res = pd.DataFrame(res)
-res.to_csv("25_01_13_results.csv", index=False)
+res.to_csv("25_01_16_results.csv", index=False)
