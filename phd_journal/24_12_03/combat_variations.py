@@ -27,18 +27,20 @@ def _prepare_covariates(covariates: pd.DataFrame, cov_gender=True, cov_age=True,
     columns_to_keep = ['SITE', ]
     if cov_gender:
         columns_to_keep.append('GENDER')
+        # binarize gender: M=1, F=0
+        covariates['GENDER'].replace('M', 1, inplace=True)
+        covariates['GENDER'].replace('F', 0, inplace=True)
     if cov_age:
         columns_to_keep.append('AGE')
     if cov_education:
         columns_to_keep.append('EDUCATION YEARS')
+        covariates.dropna(subset=['EDUCATION YEARS'], inplace=True)  # drop na
+        covariates['EDUCATION YEARS'] = covariates['EDUCATION YEARS'].astype(int)  # to int
     if cov_diagnosis:
         columns_to_keep.append('DIAGNOSIS')
 
-    # keep only the age and gender columns
+    # keep only wanted columns
     covariates = covariates[columns_to_keep]
-    # binarize gender: M=1, F=0
-    covariates['GENDER'].replace('M', 1, inplace=True)
-    covariates['GENDER'].replace('F', 0, inplace=True)
 
     print("Covariates:", covariates.columns)
     return covariates
@@ -137,6 +139,7 @@ def neuro_harmonize(_X: pd.DataFrame, _metadata: pd.DataFrame,
     covariates.dropna(inplace=True, axis=0)
     _X = _X.loc[covariates.index]
     data = _X.to_numpy(dtype=np.float32)
+    print(f"N={data.shape[0]}, P={data.shape[1]}")
 
     # run
     non_linear_covars = covariates.columns
