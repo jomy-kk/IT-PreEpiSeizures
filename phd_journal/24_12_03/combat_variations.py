@@ -132,8 +132,8 @@ def neuro_harmonize(_X: pd.DataFrame, _metadata: pd.DataFrame,
     print("Applying NeuroHarmonize...")
     assert _X.index.tolist() == _metadata.index.tolist()
     covariates = _prepare_covariates(_metadata, cov_gender, cov_age, cov_education, cov_diagnosis)
-    covariates['DIAGNOSIS'].replace('AD', 1, inplace=True)
-    covariates['DIAGNOSIS'].replace('HC', 0, inplace=True)
+    #covariates['DIAGNOSIS'].replace('AD', 1, inplace=True)
+    #covariates['DIAGNOSIS'].replace('HC', 0, inplace=True)
 
     # Drop rows with missing values in covariates
     covariates.dropna(inplace=True, axis=0)

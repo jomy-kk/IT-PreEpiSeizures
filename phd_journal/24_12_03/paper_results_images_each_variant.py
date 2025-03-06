@@ -58,8 +58,10 @@ for n_datasets in (6, ):
 
                 # 3. Different co-variates configs.
                 # Get all combinations of True/False with 4 elements.
-                #covariates = list(itertools.product([True, False], repeat=4))
-                covariates = [(True, False, True, True)]
+                covariates = [#(False, True, False, True),  # all but age
+                              #(True, False, False, True),  # all but gender
+                              (True, True, False, False),  # all but diagnosis
+                              ]
 
                 for cov_age, cov_gender, cov_education, cov_diagnosis in covariates:
                     print(f"cov_age: {cov_age}, cov_gender: {cov_gender}, cov_education: {cov_education}, cov_diagnosis: {cov_diagnosis}")

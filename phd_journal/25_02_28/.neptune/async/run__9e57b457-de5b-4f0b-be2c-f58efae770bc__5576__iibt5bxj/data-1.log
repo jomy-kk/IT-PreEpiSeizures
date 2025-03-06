@@ -1,0 +1,735 @@
+{"obj": {"type": "AssignString", "path": ["sys", "name"], "value": "no name"}, "version": 1, "at": 1740995250.03507}
+{"obj": {"type": "AssignString", "path": ["sys", "description"], "value": ""}, "version": 2, "at": 1740995250.0353448}
+{"obj": {"type": "AssignString", "path": ["monitoring", "71b3641c", "hostname"], "value": "Macmini.fritz.box"}, "version": 3, "at": 1740995250.0354319}
+{"obj": {"type": "AssignString", "path": ["sys", "hostname"], "value": "Macmini.fritz.box"}, "version": 4, "at": 1740995250.0354931}
+{"obj": {"type": "AssignString", "path": ["monitoring", "71b3641c", "pid"], "value": "5576"}, "version": 5, "at": 1740995250.0355608}
+{"obj": {"type": "AssignString", "path": ["monitoring", "71b3641c", "tid"], "value": "8529557568"}, "version": 6, "at": 1740995250.035618}
+{"obj": {"type": "AddStrings", "path": ["sys", "tags"], "values": ["LogRegClassifier", "3 PCs", "6 datasets", "models eval"]}, "version": 7, "at": 1740995250.035715}
+{"obj": {"type": "AssignBool", "path": ["sys", "failed"], "value": false}, "version": 8, "at": 1740995250.035777}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "71b3641c", "stdout"]}, "version": 9, "at": 1740995250.035848}
+{"obj": {"type": "ClearStringLog", "path": ["monitoring", "71b3641c", "stderr"]}, "version": 10, "at": 1740995250.035897}
+{"obj": {"type": "AssignString", "path": ["source_code", "entrypoint"], "value": "paper_results_images_each_variant.py"}, "version": 11, "at": 1740995250.036504}
+{"obj": {"type": "UploadFileSet", "path": ["source_code", "files"], "file_globs": ["/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/*.py"], "reset": "False"}, "version": 12, "at": 1740995250.036602}
+{"obj": {"type": "UploadFile", "path": ["source_code", "diff"], "ext": "patch", "file_path": null, "tmp_file_name": "source_code_diff-1740995250.093235-2025-03-03_10.47.30.093235.patch", "clean_after_upload": false}, "version": 13, "at": 1740995250.093935}
+{"obj": {"type": "ConfigFloatSeries", "path": ["monitoring", "71b3641c", "cpu"], "min": 0.0, "max": 100.0, "unit": "%"}, "version": 14, "at": 1740995250.097748}
+{"obj": {"type": "ClearFloatLog", "path": ["monitoring", "71b3641c", "cpu"]}, "version": 15, "at": 1740995250.098042}
+{"obj": {"type": "ConfigFloatSeries", "path": ["monitoring", "71b3641c", "memory"], "min": 0.0, "max": 16.0, "unit": "GB"}, "version": 16, "at": 1740995250.0984042}
+{"obj": {"type": "ClearFloatLog", "path": ["monitoring", "71b3641c", "memory"]}, "version": 17, "at": 1740995250.098437}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "71b3641c", "cpu"], "values": [{"value": 42.2, "step": null, "ts": 1740995250.0985029}]}, "version": 18, "at": 1740995250.098599}
+{"obj": {"type": "LogFloats", "path": ["monitoring", "71b3641c", "memory"], "values": [{"value": 10.745986938476562, "step": null, "ts": 1740995250.0985029}]}, "version": 19, "at": 1740995250.098646}
+{"obj": {"type": "AssignString", "path": ["datasets", "combination"], "value": "['Izmir', 'Newcastle', 'Miltiadous', 'Istambul', 'BrainLat:CL', 'BrainLat:AR']"}, "version": 20, "at": 1740995250.09884}
+{"obj": {"type": "AssignString", "path": ["datasets", "criteria"], "value": "AD criteria: AD & (MMSE<=23 | MoCA<=18)\nHC criteria: HC & (MMSE>=27 | MoCA>=24)"}, "version": 21, "at": 1740995250.1158872}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "Utilizing harmonized serialised data", "step": null, "ts": 1740995250.116086}]}, "version": 22, "at": 1740995250.1161091}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1740995250.1161542}]}, "version": 23, "at": 1740995250.11616}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Izmir_track"], "entries": [["neuroharmonize/Izmir.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 24, "at": 1740995250.1173959}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Izmir"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/Izmir.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 25, "at": 1740995250.117481}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Newcastle_track"], "entries": [["neuroharmonize/Newcastle.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 26, "at": 1740995250.118536}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Newcastle"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/Newcastle.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 27, "at": 1740995250.118602}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Miltiadous_track"], "entries": [["neuroharmonize/Miltiadous.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 28, "at": 1740995250.1197262}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Miltiadous"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/Miltiadous.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 29, "at": 1740995250.1197891}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "Istambul_track"], "entries": [["neuroharmonize/Istambul.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 30, "at": 1740995250.120938}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "Istambul"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/Istambul.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 31, "at": 1740995250.1209989}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "BrainLat:CL_track"], "entries": [["neuroharmonize/BrainLat:CL.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 32, "at": 1740995250.12192}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "BrainLat:CL"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/BrainLat:CL.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 33, "at": 1740995250.121978}
+{"obj": {"type": "TrackFilesToArtifact", "path": ["datasets", "after", "BrainLat:AR_track"], "entries": [["neuroharmonize/BrainLat:AR.csv", null]], "project_id": "d437a36f-6ae1-446d-842e-0483a512245b"}, "version": 34, "at": 1740995250.122895}
+{"obj": {"type": "UploadFile", "path": ["datasets", "after", "BrainLat:AR"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/neuroharmonize/BrainLat:AR.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 35, "at": 1740995250.122952}
+{"obj": {"type": "AssignString", "path": ["harmonization", "params", "method"], "value": "neuroharmonize2"}, "version": 36, "at": 1740995250.123024}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "log_transform"], "value": true}, "version": 37, "at": 1740995250.1230621}
+{"obj": {"type": "AssignString", "path": ["harmonization", "params", "standardize"], "value": "none"}, "version": 38, "at": 1740995250.123092}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_age"], "value": true}, "version": 39, "at": 1740995250.123119}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_gender"], "value": true}, "version": 40, "at": 1740995250.1231449}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_education"], "value": false}, "version": 41, "at": 1740995250.1231701}
+{"obj": {"type": "AssignBool", "path": ["harmonization", "params", "cov_diagnosis"], "value": true}, "version": 42, "at": 1740995250.123195}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "norm"], "value": "none"}, "version": 43, "at": 1740995250.1244092}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "features"], "value": "['Delta_Frontal', 'Delta_Central', 'Delta_Parietal', 'Delta_Occipital', 'Delta_Temporal', 'Delta_Limbic', 'Alpha1_Frontal', 'Alpha1_Central', 'Alpha1_Parietal', 'Alpha1_Occipital', 'Alpha1_Temporal', 'Alpha1_Limbic', 'Theta_Frontal', 'Theta_Central', 'Theta_Parietal', 'Theta_Occipital', 'Theta_Temporal', 'Theta_Limbic', 'Alpha2_Frontal', 'Alpha2_Central', 'Alpha2_Parietal', 'Alpha2_Occipital', 'Alpha2_Temporal', 'Alpha2_Limbic', 'Alpha3_Frontal', 'Alpha3_Central', 'Alpha3_Parietal', 'Alpha3_Occipital', 'Alpha3_Temporal', 'Alpha3_Limbic', 'Beta1_Frontal', 'Beta1_Central', 'Beta1_Parietal', 'Beta1_Occipital', 'Beta1_Temporal', 'Beta1_Limbic', 'Beta2_Frontal', 'Beta2_Central', 'Beta2_Parietal', 'Beta2_Occipital', 'Beta2_Temporal', 'Beta2_Limbic', 'Gamma_Frontal', 'Gamma_Central', 'Gamma_Parietal', 'Gamma_Occipital', 'Gamma_Temporal', 'Gamma_Limbic']"}, "version": 44, "at": 1740995250.124465}
+{"obj": {"type": "AssignString", "path": ["simple_diagnosis_discriminant", "model_description"], "value": "PCA(n_components=3, random_state=0)"}, "version": 45, "at": 1740995250.124825}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "norm"], "value": "min-max"}, "version": 46, "at": 1740995250.1302772}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "features"], "value": "[0, 1, 2]"}, "version": 47, "at": 1740995250.130877}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 48, "at": 1740995250.1328042}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 49, "at": 1740995250.134022}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 50, "at": 1740995250.135814}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 51, "at": 1740995250.1369221}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 52, "at": 1740995250.138619}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 53, "at": 1740995250.139771}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 54, "at": 1740995250.141515}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 55, "at": 1740995250.142644}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 56, "at": 1740995250.1443279}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 57, "at": 1740995250.14547}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 58, "at": 1740995250.147139}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 59, "at": 1740995250.148244}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 60, "at": 1740995250.149902}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 61, "at": 1740995250.151236}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 62, "at": 1740995250.152975}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 63, "at": 1740995250.154089}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 64, "at": 1740995250.155839}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 65, "at": 1740995250.156914}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 66, "at": 1740995250.158577}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 67, "at": 1740995250.159648}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 68, "at": 1740995250.1613162}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 69, "at": 1740995250.162372}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 70, "at": 1740995250.164023}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 71, "at": 1740995250.165099}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 72, "at": 1740995250.166749}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 73, "at": 1740995250.1678321}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 74, "at": 1740995250.1694841}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 75, "at": 1740995250.1705642}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 76, "at": 1740995250.172223}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 77, "at": 1740995250.1732988}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 78, "at": 1740995250.174942}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 79, "at": 1740995250.1760051}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 80, "at": 1740995250.177652}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 81, "at": 1740995250.17873}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 82, "at": 1740995250.180398}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 83, "at": 1740995250.181482}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 84, "at": 1740995250.183131}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 85, "at": 1740995250.184225}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 86, "at": 1740995250.185951}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 87, "at": 1740995250.187032}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 88, "at": 1740995250.1886988}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 89, "at": 1740995250.18978}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 90, "at": 1740995250.1914299}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 91, "at": 1740995250.192501}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 92, "at": 1740995250.194156}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 93, "at": 1740995250.19524}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 94, "at": 1740995250.196898}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 95, "at": 1740995250.1979709}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 96, "at": 1740995250.199689}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 97, "at": 1740995250.200812}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 98, "at": 1740995250.2024589}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 99, "at": 1740995250.203566}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 100, "at": 1740995250.205211}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 101, "at": 1740995250.206223}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 102, "at": 1740995250.2078788}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 103, "at": 1740995250.208956}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 104, "at": 1740995250.210599}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 105, "at": 1740995250.21169}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 106, "at": 1740995250.2133608}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 107, "at": 1740995250.214441}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 108, "at": 1740995250.2161448}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 109, "at": 1740995250.217237}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 110, "at": 1740995250.218894}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 111, "at": 1740995250.2199948}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 112, "at": 1740995250.221653}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 113, "at": 1740995250.2227478}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 114, "at": 1740995250.2244108}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 115, "at": 1740995250.225504}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 116, "at": 1740995250.2272089}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 117, "at": 1740995250.228286}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 118, "at": 1740995250.229939}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 119, "at": 1740995250.2309408}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 120, "at": 1740995250.232584}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 121, "at": 1740995250.233695}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 122, "at": 1740995250.235337}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 123, "at": 1740995250.236408}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 124, "at": 1740995250.238057}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 125, "at": 1740995250.2391481}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 126, "at": 1740995250.24078}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 127, "at": 1740995250.241846}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 128, "at": 1740995250.243501}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 129, "at": 1740995250.244569}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 130, "at": 1740995250.246274}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 131, "at": 1740995250.24733}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 132, "at": 1740995250.248984}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 133, "at": 1740995250.2500532}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 134, "at": 1740995250.2517161}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 135, "at": 1740995250.252794}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 136, "at": 1740995250.254442}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 137, "at": 1740995250.255533}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 138, "at": 1740995250.257174}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 139, "at": 1740995250.258235}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 140, "at": 1740995250.25987}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 141, "at": 1740995250.26094}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 142, "at": 1740995250.2625878}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 143, "at": 1740995250.263656}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 144, "at": 1740995250.265321}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 145, "at": 1740995250.2664042}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 146, "at": 1740995250.2686741}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 147, "at": 1740995250.2698119}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 148, "at": 1740995250.2717812}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 149, "at": 1740995250.272924}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 150, "at": 1740995250.274796}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 151, "at": 1740995250.275934}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 152, "at": 1740995250.277908}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 153, "at": 1740995250.279142}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 154, "at": 1740995250.280942}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 155, "at": 1740995250.282191}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 156, "at": 1740995250.284234}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 157, "at": 1740995250.28543}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 158, "at": 1740995250.2871318}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 159, "at": 1740995250.2882292}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 160, "at": 1740995250.289886}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 161, "at": 1740995250.2909482}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 162, "at": 1740995250.2926028}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 163, "at": 1740995250.293675}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 164, "at": 1740995250.2953238}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 165, "at": 1740995250.2963982}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 166, "at": 1740995250.2980428}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 167, "at": 1740995250.299115}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 168, "at": 1740995250.301142}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 169, "at": 1740995250.302623}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 170, "at": 1740995250.304918}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 171, "at": 1740995250.306367}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 172, "at": 1740995250.308544}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 173, "at": 1740995250.309828}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 174, "at": 1740995250.311939}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 175, "at": 1740995250.313211}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 176, "at": 1740995250.31503}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 177, "at": 1740995250.316107}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 178, "at": 1740995250.317798}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 179, "at": 1740995250.318902}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 180, "at": 1740995250.32062}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 181, "at": 1740995250.321708}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 182, "at": 1740995250.323369}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 183, "at": 1740995250.324422}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 184, "at": 1740995250.326097}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 185, "at": 1740995250.3271701}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 186, "at": 1740995250.328833}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 187, "at": 1740995250.329888}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 188, "at": 1740995250.331583}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 189, "at": 1740995250.3326988}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 190, "at": 1740995250.334381}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 191, "at": 1740995250.3354518}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 192, "at": 1740995250.337107}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 193, "at": 1740995250.338194}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 194, "at": 1740995250.339929}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 195, "at": 1740995250.341013}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 196, "at": 1740995250.3426611}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 197, "at": 1740995250.343727}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 198, "at": 1740995250.345396}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 199, "at": 1740995250.346499}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 200, "at": 1740995250.348146}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 201, "at": 1740995250.349208}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 202, "at": 1740995250.35086}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 203, "at": 1740995250.351937}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 204, "at": 1740995250.353612}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 205, "at": 1740995250.35468}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 206, "at": 1740995250.3563259}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 207, "at": 1740995250.357384}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 208, "at": 1740995250.359074}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 209, "at": 1740995250.360141}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 210, "at": 1740995250.3618162}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 211, "at": 1740995250.362889}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 212, "at": 1740995250.364574}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 213, "at": 1740995250.365634}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 214, "at": 1740995250.367326}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 215, "at": 1740995250.368372}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 216, "at": 1740995250.370101}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 217, "at": 1740995250.371156}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 218, "at": 1740995250.372916}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 219, "at": 1740995250.3740249}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 220, "at": 1740995250.375752}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 221, "at": 1740995250.376821}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 222, "at": 1740995250.3784971}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 223, "at": 1740995250.37956}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 224, "at": 1740995250.38121}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 225, "at": 1740995250.382277}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 226, "at": 1740995250.3841002}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 227, "at": 1740995250.3854861}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 228, "at": 1740995250.387428}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 229, "at": 1740995250.3885498}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 230, "at": 1740995250.39032}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 231, "at": 1740995250.391423}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 232, "at": 1740995250.393159}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 233, "at": 1740995250.39431}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 234, "at": 1740995250.3960478}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 235, "at": 1740995250.397141}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 236, "at": 1740995250.398876}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 237, "at": 1740995250.3999739}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 238, "at": 1740995250.401974}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 239, "at": 1740995250.40306}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 240, "at": 1740995250.404763}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 241, "at": 1740995250.405835}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 242, "at": 1740995250.407556}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 243, "at": 1740995250.408664}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 244, "at": 1740995250.410357}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 245, "at": 1740995250.4114492}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 246, "at": 1740995250.4131331}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 247, "at": 1740995250.414199}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 248, "at": 1740995250.415902}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 249, "at": 1740995250.416992}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 250, "at": 1740995250.4186912}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 251, "at": 1740995250.41978}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 252, "at": 1740995250.4214652}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 253, "at": 1740995250.4225311}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 254, "at": 1740995250.424221}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 255, "at": 1740995250.4253042}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 256, "at": 1740995250.4269881}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 257, "at": 1740995250.428072}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 258, "at": 1740995250.42976}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 259, "at": 1740995250.430846}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 260, "at": 1740995250.432585}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 261, "at": 1740995250.4336371}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 262, "at": 1740995250.435334}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 263, "at": 1740995250.4364219}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 264, "at": 1740995250.438111}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 265, "at": 1740995250.439208}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 266, "at": 1740995250.4409118}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 267, "at": 1740995250.441952}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 268, "at": 1740995250.443647}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 269, "at": 1740995250.444709}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 270, "at": 1740995250.4464068}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 271, "at": 1740995250.447484}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 272, "at": 1740995250.449168}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 273, "at": 1740995250.4502301}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 274, "at": 1740995250.4519172}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 275, "at": 1740995250.45298}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 276, "at": 1740995250.4546728}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 277, "at": 1740995250.455754}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 278, "at": 1740995250.4574661}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 279, "at": 1740995250.458509}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 280, "at": 1740995250.460216}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 281, "at": 1740995250.461279}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 282, "at": 1740995250.46303}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 283, "at": 1740995250.4640992}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 284, "at": 1740995250.465777}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 285, "at": 1740995250.466829}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 286, "at": 1740995250.468522}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 287, "at": 1740995250.469561}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 288, "at": 1740995250.471251}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 289, "at": 1740995250.472297}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 290, "at": 1740995250.473973}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 291, "at": 1740995250.475033}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 292, "at": 1740995250.4766982}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 293, "at": 1740995250.477692}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 294, "at": 1740995250.479372}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 295, "at": 1740995250.480428}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 296, "at": 1740995250.48211}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 297, "at": 1740995250.483146}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 298, "at": 1740995250.484812}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 299, "at": 1740995250.485883}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 300, "at": 1740995250.4875789}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 301, "at": 1740995250.488616}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 302, "at": 1740995250.49031}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 303, "at": 1740995250.491355}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 304, "at": 1740995250.4931068}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 305, "at": 1740995250.494155}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 306, "at": 1740995250.495837}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 307, "at": 1740995250.496881}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 308, "at": 1740995250.498576}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 309, "at": 1740995250.4996328}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 310, "at": 1740995250.501347}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 311, "at": 1740995250.50242}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 312, "at": 1740995250.504111}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 313, "at": 1740995250.505186}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 314, "at": 1740995250.506877}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 315, "at": 1740995250.507922}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 316, "at": 1740995250.50961}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 317, "at": 1740995250.510685}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 318, "at": 1740995250.512396}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 319, "at": 1740995250.513484}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 320, "at": 1740995250.515189}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 321, "at": 1740995250.5162292}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 322, "at": 1740995250.517934}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 323, "at": 1740995250.5189812}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 324, "at": 1740995250.520677}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 325, "at": 1740995250.5217211}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 326, "at": 1740995250.523509}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 327, "at": 1740995250.524561}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 328, "at": 1740995250.526269}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 329, "at": 1740995250.5273752}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 330, "at": 1740995250.5292742}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 331, "at": 1740995250.530383}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 332, "at": 1740995250.5320861}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 333, "at": 1740995250.533136}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 334, "at": 1740995250.534831}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 335, "at": 1740995250.535895}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 336, "at": 1740995250.537588}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 337, "at": 1740995250.538642}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 338, "at": 1740995250.54034}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 339, "at": 1740995250.5413692}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 340, "at": 1740995250.543052}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 341, "at": 1740995250.544099}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 342, "at": 1740995250.545783}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 343, "at": 1740995250.546837}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 344, "at": 1740995250.548523}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 345, "at": 1740995250.549592}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 346, "at": 1740995250.551278}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 347, "at": 1740995250.552336}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 348, "at": 1740995250.554095}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 349, "at": 1740995250.555155}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 350, "at": 1740995250.5571089}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 351, "at": 1740995250.558481}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 352, "at": 1740995250.561045}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 353, "at": 1740995250.562239}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 354, "at": 1740995250.564094}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 355, "at": 1740995250.565324}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 356, "at": 1740995250.567708}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 357, "at": 1740995250.5688782}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 358, "at": 1740995250.5707111}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 359, "at": 1740995250.571834}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 360, "at": 1740995250.573555}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 361, "at": 1740995250.5746372}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 362, "at": 1740995250.576381}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 363, "at": 1740995250.577437}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 364, "at": 1740995250.5791621}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 365, "at": 1740995250.58031}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 366, "at": 1740995250.5822039}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 367, "at": 1740995250.5833201}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 368, "at": 1740995250.5850859}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 369, "at": 1740995250.586185}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 370, "at": 1740995250.588093}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 371, "at": 1740995250.589204}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 372, "at": 1740995250.591155}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 373, "at": 1740995250.592345}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 374, "at": 1740995250.594325}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 375, "at": 1740995250.5953972}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 376, "at": 1740995250.59713}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 377, "at": 1740995250.598208}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 378, "at": 1740995250.599908}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 379, "at": 1740995250.6009972}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 380, "at": 1740995250.602705}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 381, "at": 1740995250.603729}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 382, "at": 1740995250.605536}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 383, "at": 1740995250.6067111}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 384, "at": 1740995250.6084979}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 385, "at": 1740995250.6095722}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 386, "at": 1740995250.611304}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 387, "at": 1740995250.61236}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 388, "at": 1740995250.614058}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 389, "at": 1740995250.615154}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 390, "at": 1740995250.61685}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 391, "at": 1740995250.617923}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 392, "at": 1740995250.6197052}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 393, "at": 1740995250.620793}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 394, "at": 1740995250.622527}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 395, "at": 1740995250.623592}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 396, "at": 1740995250.6252968}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 397, "at": 1740995250.626382}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 398, "at": 1740995250.6280901}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 399, "at": 1740995250.629171}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 400, "at": 1740995250.6308742}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 401, "at": 1740995250.631962}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 402, "at": 1740995250.633672}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 403, "at": 1740995250.634725}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 404, "at": 1740995250.6364312}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 405, "at": 1740995250.637513}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 406, "at": 1740995250.6392179}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 407, "at": 1740995250.6403148}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 408, "at": 1740995250.64203}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 409, "at": 1740995250.6431081}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 410, "at": 1740995250.644819}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 411, "at": 1740995250.645895}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 412, "at": 1740995250.6476102}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 413, "at": 1740995250.64869}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 414, "at": 1740995250.650456}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 415, "at": 1740995250.651547}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 416, "at": 1740995250.653255}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 417, "at": 1740995250.6543329}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 418, "at": 1740995250.656024}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 419, "at": 1740995250.6570969}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 420, "at": 1740995250.658797}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 421, "at": 1740995250.6599119}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 422, "at": 1740995250.661936}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 423, "at": 1740995250.6632152}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 424, "at": 1740995250.665706}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 425, "at": 1740995250.6671941}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 426, "at": 1740995250.669371}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 427, "at": 1740995250.670631}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 428, "at": 1740995250.6727989}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 429, "at": 1740995250.674013}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 430, "at": 1740995250.6759832}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 431, "at": 1740995250.6771631}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 432, "at": 1740995250.679041}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 433, "at": 1740995250.680216}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 434, "at": 1740995250.68222}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 435, "at": 1740995250.6834939}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 436, "at": 1740995250.686056}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 437, "at": 1740995250.687768}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 438, "at": 1740995250.6902559}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 439, "at": 1740995250.691543}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 440, "at": 1740995250.693658}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 441, "at": 1740995250.694895}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 442, "at": 1740995250.6969442}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 443, "at": 1740995250.6982222}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 444, "at": 1740995250.700395}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 445, "at": 1740995250.701646}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 446, "at": 1740995250.703758}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 447, "at": 1740995250.705089}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 448, "at": 1740995250.708086}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 449, "at": 1740995250.709646}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 450, "at": 1740995250.712078}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 451, "at": 1740995250.713283}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 452, "at": 1740995250.7152781}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 453, "at": 1740995250.716514}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 454, "at": 1740995250.71941}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 455, "at": 1740995250.720907}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 456, "at": 1740995250.723445}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 457, "at": 1740995250.724998}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 458, "at": 1740995250.727653}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 459, "at": 1740995250.7289422}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 460, "at": 1740995250.731288}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 461, "at": 1740995250.73256}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 462, "at": 1740995250.735331}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 463, "at": 1740995250.7371168}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 464, "at": 1740995250.7397492}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 465, "at": 1740995250.7411}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 466, "at": 1740995250.743711}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 467, "at": 1740995250.7453818}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 468, "at": 1740995250.74813}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 469, "at": 1740995250.749305}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 470, "at": 1740995250.751154}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 471, "at": 1740995250.752256}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 472, "at": 1740995250.754097}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 473, "at": 1740995250.755336}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 474, "at": 1740995250.75722}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 475, "at": 1740995250.758344}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 476, "at": 1740995250.760118}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 477, "at": 1740995250.761255}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 478, "at": 1740995250.76309}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 479, "at": 1740995250.764191}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 480, "at": 1740995250.765971}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 481, "at": 1740995250.767052}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 482, "at": 1740995250.7688751}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 483, "at": 1740995250.769963}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 484, "at": 1740995250.771719}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 485, "at": 1740995250.772804}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 486, "at": 1740995250.7745368}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 487, "at": 1740995250.775637}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 488, "at": 1740995250.777472}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 489, "at": 1740995250.77857}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 490, "at": 1740995250.780322}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 491, "at": 1740995250.781415}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 492, "at": 1740995250.78318}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 493, "at": 1740995250.784427}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 494, "at": 1740995250.7867048}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 495, "at": 1740995250.7879648}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 496, "at": 1740995250.79002}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 497, "at": 1740995250.791253}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 498, "at": 1740995250.7933629}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 499, "at": 1740995250.7946439}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 500, "at": 1740995250.796823}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 501, "at": 1740995250.798065}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 502, "at": 1740995250.800172}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 503, "at": 1740995250.801443}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 504, "at": 1740995250.803587}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 505, "at": 1740995250.804777}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 506, "at": 1740995250.8066912}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 507, "at": 1740995250.807849}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 508, "at": 1740995250.809768}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 509, "at": 1740995250.811327}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 510, "at": 1740995250.822436}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 511, "at": 1740995250.82416}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 512, "at": 1740995250.826912}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 513, "at": 1740995250.82865}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 514, "at": 1740995250.8312151}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 515, "at": 1740995250.832499}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 516, "at": 1740995250.834878}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 517, "at": 1740995250.836169}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 518, "at": 1740995250.838309}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 519, "at": 1740995250.839591}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 520, "at": 1740995250.841713}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 521, "at": 1740995250.842964}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 522, "at": 1740995250.845011}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 523, "at": 1740995250.846219}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 524, "at": 1740995250.8483682}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 525, "at": 1740995250.849601}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 526, "at": 1740995250.851617}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 527, "at": 1740995250.85283}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 528, "at": 1740995250.8549562}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 529, "at": 1740995250.85619}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 530, "at": 1740995250.858221}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 531, "at": 1740995250.859416}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 532, "at": 1740995250.8614452}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 533, "at": 1740995250.862624}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 534, "at": 1740995250.864487}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 535, "at": 1740995250.865648}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 536, "at": 1740995250.8676102}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 537, "at": 1740995250.868872}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 538, "at": 1740995250.871092}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 539, "at": 1740995250.8722932}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 540, "at": 1740995250.874209}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 541, "at": 1740995250.8753679}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 542, "at": 1740995250.877216}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 543, "at": 1740995250.878369}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 544, "at": 1740995250.880386}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 545, "at": 1740995250.881619}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 546, "at": 1740995250.883542}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 547, "at": 1740995250.884717}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 548, "at": 1740995250.8868082}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 549, "at": 1740995250.8880918}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 550, "at": 1740995250.890054}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 551, "at": 1740995250.8912342}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 552, "at": 1740995250.893261}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 553, "at": 1740995250.894628}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 554, "at": 1740995250.89686}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 555, "at": 1740995250.898229}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 556, "at": 1740995250.90043}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 557, "at": 1740995250.901813}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 558, "at": 1740995250.9040341}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 559, "at": 1740995250.9053628}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 560, "at": 1740995250.90767}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 561, "at": 1740995250.9089851}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 562, "at": 1740995250.911077}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 563, "at": 1740995250.91238}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 564, "at": 1740995250.914725}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 565, "at": 1740995250.916107}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 566, "at": 1740995250.918352}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 567, "at": 1740995250.9196448}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 568, "at": 1740995250.921785}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 569, "at": 1740995250.923052}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 570, "at": 1740995250.9253}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 571, "at": 1740995250.9265752}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 572, "at": 1740995250.928888}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 573, "at": 1740995250.930235}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 574, "at": 1740995250.932446}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 575, "at": 1740995250.933729}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 576, "at": 1740995250.935926}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 577, "at": 1740995250.9377081}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 578, "at": 1740995250.940254}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 579, "at": 1740995250.942045}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 580, "at": 1740995250.944347}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 581, "at": 1740995250.945655}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 582, "at": 1740995250.9480052}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 583, "at": 1740995250.949271}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 584, "at": 1740995250.951603}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 585, "at": 1740995250.952875}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 586, "at": 1740995250.955317}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 587, "at": 1740995250.956706}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 588, "at": 1740995250.959136}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 589, "at": 1740995250.960507}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 590, "at": 1740995250.962636}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 591, "at": 1740995250.963872}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 592, "at": 1740995250.9663072}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 593, "at": 1740995250.967686}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 594, "at": 1740995250.970146}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 595, "at": 1740995250.971482}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 596, "at": 1740995250.974018}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 597, "at": 1740995250.9754639}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "class_weight"], "value": "SMOTE augmented"}, "version": 598, "at": 1740995250.977986}
+{"obj": {"type": "AssignBool", "path": ["classification", "DIAGNOSIS", "output_prob"], "value": false}, "version": 599, "at": 1740995250.9794948}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "model_description"], "value": "LogisticRegression(C=10, l1_ratio=0.25, max_iter=1000, penalty='elasticnet',\n                   random_state=0, solver='saga')"}, "version": 600, "at": 1740995250.9802449}
+{"obj": {"type": "AssignString", "path": ["classification", "DIAGNOSIS", "validation"], "value": "LeaveOneOut()"}, "version": 601, "at": 1740995250.9815528}
+{"obj": {"type": "UploadFile", "path": ["classification", "DIAGNOSIS", "test_preds"], "ext": "csv", "file_path": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/each_model/LogisticRegression(C=10, l1_ratio=0.25, max_iter=1000, penalty='elasticnet',\n                   random_state=0, solver='saga')/classification_DIAGNOSIS.csv", "tmp_file_name": null, "clean_after_upload": false}, "version": 602, "at": 1740995250.9830961}
+{"obj": {"type": "UploadFile", "path": ["simple_diagnosis_discriminant", "visual_separation"], "ext": "png", "file_path": null, "tmp_file_name": "simple_diagnosis_discriminant_visual_separation-1740995251.330625-2025-03-03_10.47.31.330625.png", "clean_after_upload": false}, "version": 603, "at": 1740995251.330931}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "0", "precision"], "value": 0.746268656716418}, "version": 604, "at": 1740995251.677403}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "0", "recall"], "value": 0.6289308176100629}, "version": 605, "at": 1740995251.677491}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "0", "f1-score"], "value": 0.6825938566552902}, "version": 606, "at": 1740995251.6775308}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "my_metrics", "0", "support"], "value": 159}, "version": 607, "at": 1740995251.6775758}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "1", "precision"], "value": 0.5845070422535211}, "version": 608, "at": 1740995251.677634}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "1", "recall"], "value": 0.7094017094017094}, "version": 609, "at": 1740995251.6776671}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "1", "f1-score"], "value": 0.6409266409266409}, "version": 610, "at": 1740995251.677699}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "my_metrics", "1", "support"], "value": 117}, "version": 611, "at": 1740995251.6777291}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "accuracy"], "value": 0.6630434782608695}, "version": 612, "at": 1740995251.67776}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "macro avg", "precision"], "value": 0.6653878494849695}, "version": 613, "at": 1740995251.677808}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "macro avg", "recall"], "value": 0.6691662635058861}, "version": 614, "at": 1740995251.677839}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "macro avg", "f1-score"], "value": 0.6617602487909655}, "version": 615, "at": 1740995251.67787}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "my_metrics", "macro avg", "support"], "value": 276}, "version": 616, "at": 1740995251.6779048}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "weighted avg", "precision"], "value": 0.6776957984114943}, "version": 617, "at": 1740995251.677952}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "weighted avg", "recall"], "value": 0.6630434782608695}, "version": 618, "at": 1740995251.6779819}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "my_metrics", "weighted avg", "f1-score"], "value": 0.6649305804224931}, "version": 619, "at": 1740995251.6780102}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "my_metrics", "weighted avg", "support"], "value": 276}, "version": 620, "at": 1740995251.678037}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "0", "precision"], "value": 0.7272727272727273}, "version": 621, "at": 1740995251.679435}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "0", "recall"], "value": 0.6857142857142857}, "version": 622, "at": 1740995251.679499}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "0", "f1-score"], "value": 0.7058823529411764}, "version": 623, "at": 1740995251.679533}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Istambul", "0", "support"], "value": 35}, "version": 624, "at": 1740995251.67957}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "1", "precision"], "value": 0.5769230769230769}, "version": 625, "at": 1740995251.6796238}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "1", "recall"], "value": 0.625}, "version": 626, "at": 1740995251.679658}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "1", "f1-score"], "value": 0.6}, "version": 627, "at": 1740995251.67969}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Istambul", "1", "support"], "value": 24}, "version": 628, "at": 1740995251.67972}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "accuracy"], "value": 0.6610169491525424}, "version": 629, "at": 1740995251.679801}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "macro avg", "precision"], "value": 0.6520979020979021}, "version": 630, "at": 1740995251.679851}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "macro avg", "recall"], "value": 0.6553571428571429}, "version": 631, "at": 1740995251.679883}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "macro avg", "f1-score"], "value": 0.6529411764705881}, "version": 632, "at": 1740995251.679914}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Istambul", "macro avg", "support"], "value": 59}, "version": 633, "at": 1740995251.679944}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "weighted avg", "precision"], "value": 0.6661135474694797}, "version": 634, "at": 1740995251.679992}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "weighted avg", "recall"], "value": 0.6610169491525424}, "version": 635, "at": 1740995251.680023}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Istambul", "weighted avg", "f1-score"], "value": 0.6628115653040877}, "version": 636, "at": 1740995251.680053}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Istambul", "weighted avg", "support"], "value": 59}, "version": 637, "at": 1740995251.680083}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "0", "precision"], "value": 0.7}, "version": 638, "at": 1740995251.6814919}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "0", "recall"], "value": 0.4117647058823529}, "version": 639, "at": 1740995251.681547}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "0", "f1-score"], "value": 0.5185185185185185}, "version": 640, "at": 1740995251.681581}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Newcastle", "0", "support"], "value": 17}, "version": 641, "at": 1740995251.681615}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "1", "precision"], "value": 0.6153846153846154}, "version": 642, "at": 1740995251.681664}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "1", "recall"], "value": 0.8421052631578947}, "version": 643, "at": 1740995251.681694}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "1", "f1-score"], "value": 0.7111111111111111}, "version": 644, "at": 1740995251.6817238}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Newcastle", "1", "support"], "value": 19}, "version": 645, "at": 1740995251.681754}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "accuracy"], "value": 0.6388888888888888}, "version": 646, "at": 1740995251.6817842}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "macro avg", "precision"], "value": 0.6576923076923077}, "version": 647, "at": 1740995251.681831}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "macro avg", "recall"], "value": 0.6269349845201238}, "version": 648, "at": 1740995251.6818619}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "macro avg", "f1-score"], "value": 0.6148148148148148}, "version": 649, "at": 1740995251.6818922}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Newcastle", "macro avg", "support"], "value": 36}, "version": 650, "at": 1740995251.681922}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "weighted avg", "precision"], "value": 0.6553418803418803}, "version": 651, "at": 1740995251.6819682}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "weighted avg", "recall"], "value": 0.6388888888888888}, "version": 652, "at": 1740995251.681998}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Newcastle", "weighted avg", "f1-score"], "value": 0.6201646090534979}, "version": 653, "at": 1740995251.682027}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Newcastle", "weighted avg", "support"], "value": 36}, "version": 654, "at": 1740995251.682057}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "0", "precision"], "value": 0.25}, "version": 655, "at": 1740995251.6833558}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "0", "recall"], "value": 0.3333333333333333}, "version": 656, "at": 1740995251.683406}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "0", "f1-score"], "value": 0.28571428571428575}, "version": 657, "at": 1740995251.683439}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "0", "support"], "value": 3}, "version": 658, "at": 1740995251.683472}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "1", "precision"], "value": 0.7777777777777778}, "version": 659, "at": 1740995251.6835241}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "1", "recall"], "value": 0.7}, "version": 660, "at": 1740995251.6835551}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "1", "f1-score"], "value": 0.7368421052631577}, "version": 661, "at": 1740995251.683585}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "1", "support"], "value": 10}, "version": 662, "at": 1740995251.683616}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "accuracy"], "value": 0.6153846153846154}, "version": 663, "at": 1740995251.683646}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "macro avg", "precision"], "value": 0.5138888888888888}, "version": 664, "at": 1740995251.683692}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "macro avg", "recall"], "value": 0.5166666666666666}, "version": 665, "at": 1740995251.683723}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "macro avg", "f1-score"], "value": 0.5112781954887218}, "version": 666, "at": 1740995251.6837518}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "macro avg", "support"], "value": 13}, "version": 667, "at": 1740995251.6837828}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "weighted avg", "precision"], "value": 0.6559829059829061}, "version": 668, "at": 1740995251.683829}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "weighted avg", "recall"], "value": 0.6153846153846154}, "version": 669, "at": 1740995251.68386}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "weighted avg", "f1-score"], "value": 0.6327356853672642}, "version": 670, "at": 1740995251.683889}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:CL", "weighted avg", "support"], "value": 13}, "version": 671, "at": 1740995251.68392}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "0", "precision"], "value": 0.6428571428571429}, "version": 672, "at": 1740995251.68522}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "0", "recall"], "value": 0.6}, "version": 673, "at": 1740995251.685282}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "0", "f1-score"], "value": 0.6206896551724138}, "version": 674, "at": 1740995251.6853151}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "0", "support"], "value": 15}, "version": 675, "at": 1740995251.685348}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "1", "precision"], "value": 0.3333333333333333}, "version": 676, "at": 1740995251.685408}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "1", "recall"], "value": 0.375}, "version": 677, "at": 1740995251.6854389}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "1", "f1-score"], "value": 0.35294117647058826}, "version": 678, "at": 1740995251.6854699}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "1", "support"], "value": 8}, "version": 679, "at": 1740995251.685499}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "accuracy"], "value": 0.5217391304347826}, "version": 680, "at": 1740995251.685529}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "macro avg", "precision"], "value": 0.48809523809523814}, "version": 681, "at": 1740995251.685575}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "macro avg", "recall"], "value": 0.4875}, "version": 682, "at": 1740995251.685607}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "macro avg", "f1-score"], "value": 0.486815415821501}, "version": 683, "at": 1740995251.685636}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "macro avg", "support"], "value": 23}, "version": 684, "at": 1740995251.685666}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "weighted avg", "precision"], "value": 0.5351966873706004}, "version": 685, "at": 1740995251.6857119}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "weighted avg", "recall"], "value": 0.5217391304347826}, "version": 686, "at": 1740995251.6857421}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "weighted avg", "f1-score"], "value": 0.5275597495369962}, "version": 687, "at": 1740995251.685772}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "BrainLat:AR", "weighted avg", "support"], "value": 23}, "version": 688, "at": 1740995251.685801}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "0", "precision"], "value": 0.7096774193548387}, "version": 689, "at": 1740995251.687273}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "0", "recall"], "value": 0.7586206896551724}, "version": 690, "at": 1740995251.687336}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "0", "f1-score"], "value": 0.7333333333333333}, "version": 691, "at": 1740995251.687368}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Miltiadous", "0", "support"], "value": 29}, "version": 692, "at": 1740995251.687401}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "1", "precision"], "value": 0.7941176470588235}, "version": 693, "at": 1740995251.687449}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "1", "recall"], "value": 0.75}, "version": 694, "at": 1740995251.687479}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "1", "f1-score"], "value": 0.7714285714285715}, "version": 695, "at": 1740995251.687509}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Miltiadous", "1", "support"], "value": 36}, "version": 696, "at": 1740995251.687538}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "accuracy"], "value": 0.7538461538461538}, "version": 697, "at": 1740995251.687568}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "macro avg", "precision"], "value": 0.7518975332068312}, "version": 698, "at": 1740995251.687614}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "macro avg", "recall"], "value": 0.7543103448275862}, "version": 699, "at": 1740995251.687644}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "macro avg", "f1-score"], "value": 0.7523809523809524}, "version": 700, "at": 1740995251.687674}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Miltiadous", "macro avg", "support"], "value": 65}, "version": 701, "at": 1740995251.6877031}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "weighted avg", "precision"], "value": 0.7564443146985842}, "version": 702, "at": 1740995251.6877499}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "weighted avg", "recall"], "value": 0.7538461538461538}, "version": 703, "at": 1740995251.687794}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Miltiadous", "weighted avg", "f1-score"], "value": 0.7544322344322344}, "version": 704, "at": 1740995251.6878238}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Miltiadous", "weighted avg", "support"], "value": 65}, "version": 705, "at": 1740995251.687854}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "0", "precision"], "value": 0.8809523809523809}, "version": 706, "at": 1740995251.6893802}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "0", "recall"], "value": 0.6166666666666667}, "version": 707, "at": 1740995251.68945}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "0", "f1-score"], "value": 0.7254901960784315}, "version": 708, "at": 1740995251.6894841}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Izmir", "0", "support"], "value": 60}, "version": 709, "at": 1740995251.6895208}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "1", "precision"], "value": 0.39473684210526316}, "version": 710, "at": 1740995251.68957}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "1", "recall"], "value": 0.75}, "version": 711, "at": 1740995251.6896}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "1", "f1-score"], "value": 0.5172413793103448}, "version": 712, "at": 1740995251.689631}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Izmir", "1", "support"], "value": 20}, "version": 713, "at": 1740995251.689662}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "accuracy"], "value": 0.65}, "version": 714, "at": 1740995251.689693}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "macro avg", "precision"], "value": 0.6378446115288221}, "version": 715, "at": 1740995251.68974}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "macro avg", "recall"], "value": 0.6833333333333333}, "version": 716, "at": 1740995251.689771}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "macro avg", "f1-score"], "value": 0.6213657876943881}, "version": 717, "at": 1740995251.689801}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Izmir", "macro avg", "support"], "value": 80}, "version": 718, "at": 1740995251.689831}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "weighted avg", "precision"], "value": 0.7593984962406015}, "version": 719, "at": 1740995251.689876}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "weighted avg", "recall"], "value": 0.65}, "version": 720, "at": 1740995251.689906}
+{"obj": {"type": "AssignFloat", "path": ["classification", "DIAGNOSIS", "Izmir", "weighted avg", "f1-score"], "value": 0.6734279918864098}, "version": 721, "at": 1740995251.6899352}
+{"obj": {"type": "AssignInt", "path": ["classification", "DIAGNOSIS", "Izmir", "weighted avg", "support"], "value": 80}, "version": 722, "at": 1740995251.689965}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "W. F1-Score:", "step": null, "ts": 1740995251.702719}]}, "version": 723, "at": 1740995251.702815}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": " ", "step": null, "ts": 1740995251.703069}]}, "version": 724, "at": 1740995251.703079}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "0.6649305804224931", "step": null, "ts": 1740995251.703129}]}, "version": 725, "at": 1740995251.703136}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1740995251.703656}]}, "version": 726, "at": 1740995251.7036648}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stderr"], "values": [{"value": "/Users/saraiva/PycharmProjects/LTBio/phd_journal/25_02_28/plotting.py:69: UserWarning: Tight layout not applied. The left and right margins cannot be made large enough to accommodate all axes decorations.\n  plt.tight_layout()\n", "step": null, "ts": 1740995251.71549}]}, "version": 727, "at": 1740995251.715607}
+{"obj": {"type": "UploadFile", "path": ["classification", "DIAGNOSIS", "confusion_matrix"], "ext": "png", "file_path": null, "tmp_file_name": "classification_DIAGNOSIS_confusion_matrix-1740995251.933819-2025-03-03_10.47.31.933819.png", "clean_after_upload": false}, "version": 728, "at": 1740995251.934303}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "Collected", "step": null, "ts": 1740995252.108227}]}, "version": 729, "at": 1740995252.1083}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": " ", "step": null, "ts": 1740995252.110912}]}, "version": 730, "at": 1740995252.1109571}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "26", "step": null, "ts": 1740995252.111088}]}, "version": 731, "at": 1740995252.111108}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": " ", "step": null, "ts": 1740995252.1111941}]}, "version": 732, "at": 1740995252.111212}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "unreachable objects.", "step": null, "ts": 1740995252.111294}]}, "version": 733, "at": 1740995252.1113112}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "\n", "step": null, "ts": 1740995252.111392}]}, "version": 734, "at": 1740995252.1114082}
+{"obj": {"type": "LogStrings", "path": ["monitoring", "71b3641c", "stdout"], "values": [{"value": "[neptune] [info   ] Shutting down background jobs, please wait a moment...\n", "step": null, "ts": 1740995252.1117928}]}, "version": 735, "at": 1740995252.111819}
